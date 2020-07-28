@@ -11,13 +11,21 @@ namespace R\SEO;
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
+/*
+* Require Modules
+*/
 require_once(__DIR__ . '/inc/class.singleton.php');
+require_once(__DIR__ . '/inc/class.seo-meta-tags.php');
 
+/**
+ * Main Class
+ */
 class SEO extends Singleton {
 
   private $prefix = 'rhseo';
+
   private $deprecated_plugins = [
-    
+    'wordpress-seo/wp-seo.php'
   ];
 
   public function __construct() {
@@ -25,6 +33,16 @@ class SEO extends Singleton {
     add_action('admin_init', [$this, 'admin_init'], 11);
     add_action('admin_notices', array( $this, 'show_admin_notices'));
     
+    $this->init_plugin_modules();
+  }
+
+  /**
+   * Init plugin modules
+   *
+   * @return void
+   */
+  private function init_plugin_modules() {
+    new SEOMetaTags($this->prefix);
   }
 
   /**
@@ -109,7 +127,7 @@ class SEO extends Singleton {
       if( file_exists($plugin_file) ) {
         $plugin_data = get_plugin_data($plugin_file);
         if( delete_plugins([$plugin_slug]) ) {
-          $this->add_admin_notice("plugin-deleted-$id", "[RH Admin Utils] Deleted deprecated plugin „{$plugin_data['Name']}“.", "success");
+          $this->add_admin_notice("plugin-deleted-$id", "[RH SEO] Deleted deprecated plugin „{$plugin_data['Name']}“.", "success");
         }
       }
     }
@@ -162,7 +180,7 @@ SEO::getInstance();
 /**
  * Make AdminUtils instance available API calls
  *
- * @return AdminUtils
+ * @return SEO
  */
 function seo() { 
   return SEO::getInstance(); 
