@@ -15,7 +15,7 @@ class SEOMetaTags extends Singleton {
 
     $this->prefix = $prefix;
 
-    add_action('acf/init', [$this, 'acf_init']);
+    add_action('acf/init', [$this, 'acf_init'], 10);
     add_action('wp_head', [$this, 'wp_head'], 4);
     
     add_filter('pre_option_blogname', [$this, 'filter_blogname']);
@@ -136,6 +136,14 @@ class SEOMetaTags extends Singleton {
    * @return void
    */
   private function add_options_page() {
+    $fields = ['text', 'textarea', 'image'];
+    $is_qtranslate_enabled = defined('QTX_VERSION');
+    $field_types = [];
+    foreach( $fields as $key ) {
+      $field_type = $is_qtranslate_enabled ? "qtranslate_$key" : $key;
+      $field_types[$key] = array_merge( acf_get_field_type($field_type)->defaults, ['type' => $field_type]);
+    }
+    
     acf_add_options_page([
       'page_title' => 'SEO Options',
       'menu_slug' => "{$this->prefix}-options",
@@ -147,29 +155,26 @@ class SEOMetaTags extends Singleton {
       'key' => "group_{$this->prefix}_options",
       'title' => __('Search engine optimization'),
       'fields' => [
-        [ 
+        array_merge($field_types['text'], [ 
           'key' => "key_{$this->prefix}_site_name",
           'name' => "{$this->prefix}_site_name",
-          'type' => 'text',
           'label' => __('Site Name'),
-        ],
-        [ 
+        ]),
+        array_merge($field_types['text'], [ 
           'key' => "key_{$this->prefix}_description",
           'name' => "{$this->prefix}_description",
-          'type' => 'text',
           'label' => __('Description'),
           'required' => false,
           'instructions' => 'Optimal length: 50–160 characters',
           'max' => 200
-        ],
-        [ 
+        ]),
+        array_merge($field_types['image'], [ 
           'key' => "key_{$this->prefix}_image",
           'name' => "{$this->prefix}_image",
-          'type' => 'image',
           'label' => __('Image'),
           'required' => false,
           'instructions' => 'Used for facebook or twitter.',
-        ],
+        ]),
       ],
       'location' => [
         [
