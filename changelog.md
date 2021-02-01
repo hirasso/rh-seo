@@ -1,5 +1,6 @@
 #### 1.0.2 (2021-02-01)
 
+- Remove `users` from `wp-sitemap.xml` (#e83f4f7)
 - add German translation (#e793cd2)
 - Support for terms, deeper integration with qTranslate (#d9afd2d)
 - Compatibility with YOAST SEO (#c9c5f24)

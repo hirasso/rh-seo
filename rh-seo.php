@@ -35,6 +35,7 @@ class SEO extends Singleton {
     add_action('admin_notices', [$this, 'show_admin_notices'] );
     add_action('admin_enqueue_scripts', [$this, 'enqueue_scripts'] );
     add_action('plugins_loaded', [$this, 'load_textdomain']);
+    add_filter('wp_sitemaps_add_provider', [$this, 'sitemaps_providers'], 10, 2);
     
     $this->init_plugin_modules();
   }
@@ -209,6 +210,18 @@ class SEO extends Singleton {
 
     // Load from plugin lang folder.
     return load_textdomain( $domain, $this->get_file_path( 'lang/' . $mofile ) );
+  }
+
+  /**
+   * Filter XML Sitemaps providers
+   *
+   * @param string $provider
+   * @param string $name
+   * @return void
+   */
+  public function sitemaps_providers($provider, $name) {
+    if ( 'users' === $name ) return false;
+    return $provider;
   }
 
 }
