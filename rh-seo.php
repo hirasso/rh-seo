@@ -32,7 +32,8 @@ class SEO extends Singleton {
   public function __construct() {
     
     add_action('admin_init', [$this, 'admin_init'], 11);
-    add_action('admin_notices', array( $this, 'show_admin_notices'));
+    add_action('admin_notices', [$this, 'show_admin_notices'] );
+    add_action('admin_enqueue_scripts', [$this, 'enqueue_scripts'] );
     
     $this->init_plugin_modules();
   }
@@ -81,6 +82,10 @@ class SEO extends Singleton {
     $path = ltrim( $path, '/' );
     $file = plugin_dir_path( __FILE__ ) . $path;
     return $file;
+  }
+
+  public function enqueue_scripts() {
+    wp_enqueue_style('rhseo', $this->asset_uri('assets/rhseo.css'));
   }
 
   /**

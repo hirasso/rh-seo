@@ -92,6 +92,8 @@ class MetaTags extends Singleton {
     $qo = get_queried_object();
     if( $qo instanceof \WP_Post ) {
       $value = $this->get_field('description', $qo->ID);
+    } elseif( $qo instanceof \WP_Term ) {
+      $value = $this->get_field('description', $qo);
     }
     if( !$value ) $value = $this->get_field('description', 'options');
     return $value;
@@ -127,7 +129,7 @@ class MetaTags extends Singleton {
    * @return void
    */
   public function acf_init() {
-    $this->add_options_page();
+    $this->add_admin_ui();
   }
 
   /**
@@ -135,12 +137,11 @@ class MetaTags extends Singleton {
    *
    * @return void
    */
-  private function add_options_page() {
+  private function add_admin_ui() {
     $fields = ['text', 'textarea', 'image'];
-    $is_qtranslate_enabled = defined('QTX_VERSION');
     $field_types = [];
     foreach( $fields as $key ) {
-      $field_type = $is_qtranslate_enabled ? "qtranslate_$key" : $key;
+      $field_type = $this->is_qtranslate_enabled() ? "qtranslate_$key" : $key;
       $field_types[$key] = array_merge( acf_get_field_type($field_type)->defaults, ['type' => $field_type]);
     }
     
@@ -160,13 +161,14 @@ class MetaTags extends Singleton {
           'name' => "{$this->prefix}_site_name",
           'label' => __('Site Name'),
         ]),
-        array_merge($field_types['text'], [ 
+        array_merge($field_types['textarea'], [ 
           'key' => "key_{$this->prefix}_description",
           'name' => "{$this->prefix}_description",
           'label' => __('Description'),
           'required' => false,
           'instructions' => 'Optimal length: 50–160 characters',
-          'max' => 200
+          'max' => 200,
+          'rows' => 2,
         ]),
         array_merge($field_types['image'], [ 
           'key' => "key_{$this->prefix}_image",
@@ -198,11 +200,27 @@ class MetaTags extends Singleton {
             'value' => "post",
           ],
         ],
+        [
+          [
+            'param' => 'taxonomy',
+            'operator' => '==',
+            'value' => "all",
+          ],
+        ],
       ],
-      'menu_order' => 100,
+      'menu_order' => 1000,
       'position' => 'normal',
       'active' => true,
     ]);
+  }
+
+  /**
+   * Checks if qtranslate is enabled
+   *
+   * @return boolean
+   */
+  private function is_qtranslate_enabled() {
+    return defined('QTX_VERSION');
   }
 
   /**
@@ -225,18 +243,21 @@ class MetaTags extends Singleton {
 
     $qo = get_queried_object();
     if( $qo instanceof \WP_Post ) {
-      // first try seo 'rh_seo_image'
-      $value = get_field("{$this->prefix}_image", $qo->ID, false);
+      $value = $this->get_field("image", $qo->ID, false);
       // ... then try post thumbnail
       if( !$value ) $value = get_post_thumbnail_id($qo->ID);
+    } if( $qo instanceof \WP_Term ) {
+      $value = $this->get_field("image", $qo);
     }
 
     // finally try global setting
-    if( !$value ) $value = get_field("{$this->prefix}_image", 'options', false);
+    if( !$value ) $value = $this->get_field("image", 'options', false);
 
-    // get url for value if set
-    if( !empty($value) ) $value = wp_get_attachment_url($value);
+    // bail early if empty
+    if( empty($value) ) return $value;
 
+    $value = wp_get_attachment_url($value['ID'] ?? $value);
+    
     return $value;
   }
 
