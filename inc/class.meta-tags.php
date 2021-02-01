@@ -20,9 +20,7 @@ class MetaTags extends Singleton {
     
     add_filter('pre_option_blogname', [$this, 'filter_blogname']);
     add_filter('pre_option_blogdescription', [$this, 'filter_blogdescription']);
-    add_filter("acf/prepare_field/name={$this->prefix}_site_name", [$this, 'maybe_hide_site_name']);
-    // add_filter('document_title_parts', [$this, 'document_title_parts']);
-    // add_filter('document_title_separator', [$this, 'document_title_separator']);
+    add_filter('document_title_parts', [$this, 'document_title_parts']);
   }
 
   /**
@@ -77,8 +75,24 @@ class MetaTags extends Singleton {
    *
    * @return void
    */
-  public function document_title_parts($parts) {
-    return $parts;
+  public function document_title_parts($title) {
+    $qo = get_queried_object();
+    if( is_tax() ) {
+      $title['title'] = $this->get_term_title($qo);
+    }
+    return $title;
+  }
+
+  /**
+   * Get the title for a term
+   *
+   * @param \WP_Term $term
+   * @return void
+   */
+  private function get_term_title($term): string {
+    $value = $this->get_field('title', $term);
+    if( !$value ) $value = $term->name;
+    return $value;
   }
 
   /**
@@ -107,7 +121,7 @@ class MetaTags extends Singleton {
    */
   public function filter_blogname( $value ) {
     if( $custom_title = $this->get_field('site_name', 'options') ) {
-      return $custom_title;
+      $value = __($custom_title);
     }
     return $value;
   }
@@ -138,6 +152,7 @@ class MetaTags extends Singleton {
    * @return void
    */
   private function add_admin_ui() {
+    
     $fields = ['text', 'textarea', 'image'];
     $field_types = [];
     foreach( $fields as $key ) {
@@ -146,38 +161,58 @@ class MetaTags extends Singleton {
     }
     
     acf_add_options_page([
-      'page_title' => 'SEO Options',
+      'page_title' => __('SEO Options', 'rhseo'),
       'menu_slug' => "{$this->prefix}-options",
       'position' => '59.6',
       'icon_url' => 'dashicons-share'
     ]);
 
-    acf_add_local_field_group([
-      'key' => "group_{$this->prefix}_options",
-      'title' => __('Search engine optimization'),
-      'fields' => [
+    $fields = [
+      array_merge($field_types['textarea'], [ 
+        'key' => "key_{$this->prefix}_description",
+        'name' => "{$this->prefix}_description",
+        'label' => $this->is_options_page() ? __('Site Description', 'rhseo') : __('Description', 'rhseo'),
+        'required' => false,
+        'instructions' => __('Optimal length: 50–160 characters', 'rhseo'),
+        'max' => 200,
+        'rows' => 2,
+        'acfml_multilingual' => true,
+      ]),
+      array_merge($field_types['image'], [ 
+        'key' => "key_{$this->prefix}_image",
+        'name' => "{$this->prefix}_image",
+        'label' => __('Image', 'rhseo'),
+        'required' => false,
+        'instructions' => __('Used for facebook or twitter.', 'rhseo'),
+        'acfml_multilingual' => true,
+      ])
+    ];
+
+    if( $this->is_options_page() ) {
+      $fields = array_merge([
         array_merge($field_types['text'], [ 
           'key' => "key_{$this->prefix}_site_name",
           'name' => "{$this->prefix}_site_name",
-          'label' => __('Site Name'),
+          'label' => __('Site Name', 'rhseo'),
+          'acfml_multilingual' => true
         ]),
-        array_merge($field_types['textarea'], [ 
-          'key' => "key_{$this->prefix}_description",
-          'name' => "{$this->prefix}_description",
-          'label' => __('Description'),
-          'required' => false,
-          'instructions' => 'Optimal length: 50–160 characters',
-          'max' => 200,
-          'rows' => 2,
+      ], $fields);
+    } else {
+      $fields = array_merge([
+        array_merge($field_types['text'], [ 
+          'key' => "key_{$this->prefix}_document_title",
+          'name' => "{$this->prefix}_document_title",
+          'instructions' => __('Optional. Overwrites the title.', 'rhseo'),
+          'label' => __('Document Title', 'rhseo'),
+          'acfml_multilingual' => true
         ]),
-        array_merge($field_types['image'], [ 
-          'key' => "key_{$this->prefix}_image",
-          'name' => "{$this->prefix}_image",
-          'label' => __('Image'),
-          'required' => false,
-          'instructions' => 'Used for facebook or twitter.',
-        ]),
-      ],
+      ], $fields);
+    }
+
+    acf_add_local_field_group([
+      'key' => "group_{$this->prefix}_options",
+      'title' => $this->is_options_page() ? __('SEO Global Defaults', 'rhseo') : __('SEO', 'rhseo'),
+      'fields' => $fields,
       'location' => [
         [
           [
@@ -257,20 +292,19 @@ class MetaTags extends Singleton {
     if( empty($value) ) return $value;
 
     $value = wp_get_attachment_url($value['ID'] ?? $value);
-    
+
     return $value;
   }
 
   /**
-   * Hides site_name on non-options pages
+   * Detects the options page
    *
-   * @param [type] $field
-   * @return void
+   * @return bool
    */
-  public function maybe_hide_site_name( $field ) {
+  public function is_options_page(): bool {
     global $pagenow;
     if( $pagenow !== 'admin.php' ) return false;
-    if( ($_GET['page'] ?? false) !== "{$this->prefix}_options") return false;
-    return $field;
+    if( ($_GET['page'] ?? false) !== "{$this->prefix}-options") return false;
+    return true;
   }
 }

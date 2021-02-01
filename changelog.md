@@ -1,6 +1,7 @@
 #### 1.0.2 (2021-02-01)
 
-- Support for terms, deeper integration with qTranslate (#8e1f474)
+- add German translation (#7d4a764)
+- Support for terms, deeper integration with qTranslate (#d9afd2d)
 - Compatibility with YOAST SEO (#c9c5f24)
 
 #### 1.0.1 (2020-12-08)

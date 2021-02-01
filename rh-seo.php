@@ -34,6 +34,7 @@ class SEO extends Singleton {
     add_action('admin_init', [$this, 'admin_init'], 11);
     add_action('admin_notices', [$this, 'show_admin_notices'] );
     add_action('admin_enqueue_scripts', [$this, 'enqueue_scripts'] );
+    add_action('plugins_loaded', [$this, 'load_textdomain']);
     
     $this->init_plugin_modules();
   }
@@ -65,7 +66,7 @@ class SEO extends Singleton {
    */
   private function asset_uri( $path ) {
     $uri = plugins_url( $path, __FILE__ );
-    $file = $this->get_plugin_path( $path );
+    $file = $this->get_file_path( $path );
     if( file_exists( $file ) ) {
       $version = filemtime( $file );
       $uri .= "?v=$version";
@@ -78,7 +79,7 @@ class SEO extends Singleton {
    *
    * @return void
    */
-  function get_plugin_path( $path ) {
+  function get_file_path( $path ) {
     $path = ltrim( $path, '/' );
     $file = plugin_dir_path( __FILE__ ) . $path;
     return $file;
@@ -114,7 +115,7 @@ class SEO extends Singleton {
    */
   public function get_template($template_name, $value = null) {
     $value = $this->to_object($value);
-    $path = $this->get_plugin_path("templates/$template_name.php");
+    $path = $this->get_file_path("templates/$template_name.php");
     $path = apply_filters("$this->prefix/template/$template_name", $path);
     if( !file_exists($path) ) return "<p>$template_name: Template doesn't exist</p>";
     ob_start();
@@ -176,6 +177,38 @@ class SEO extends Singleton {
       </div>
       <?php echo ob_get_clean();
     }
+  }
+
+  /**
+   * load_textdomain
+   *
+   * Loads the plugin's translated strings similar to load_plugin_textdomain().
+   *
+   * @param	string $locale The plugin's current locale.
+   * @return	void
+   */
+  public function load_textdomain() {
+
+    $domain = 'rhseo';
+    /**
+     * Filters a plugin's locale.
+     *
+     * @date	8/1/19
+     * @since	5.7.10
+     *
+     * @param 	string $locale The plugin's current locale.
+     * @param 	string $domain Text domain. Unique identifier for retrieving translated strings.
+     */
+    $locale = apply_filters( 'plugin_locale', determine_locale(), $domain );
+    $mofile = "$locale.mo";
+
+    // Try to load from the languages directory first.
+    if( load_textdomain( $domain, WP_LANG_DIR . '/plugins/' . $mofile ) ) {
+      return true;
+    }
+
+    // Load from plugin lang folder.
+    return load_textdomain( $domain, $this->get_file_path( 'lang/' . $mofile ) );
   }
 
 }
