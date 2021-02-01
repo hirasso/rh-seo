@@ -3,7 +3,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: RH SEO\n"
-"POT-Creation-Date: 2021-02-01 15:29+0100\n"
+"POT-Creation-Date: 2021-02-01 15:42+0100\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -38,12 +38,12 @@ msgid "Optimal length: 50–160 characters"
 msgstr "Optimale Länge: 50-160 Zeichen"
 
 #: inc/class.meta-tags.php:184
-msgid "Image"
-msgstr "Bild"
+msgid "Preview Image"
+msgstr "Vorschaubild"
 
 #: inc/class.meta-tags.php:186
-msgid "Used for facebook or twitter."
-msgstr "Für Facebook und Twitter."
+msgid "For services like Facebook or Twitter."
+msgstr "Für Websites wie Facebook oder Twitter."
 
 #: inc/class.meta-tags.php:196
 msgid "Site Name"
@@ -64,3 +64,12 @@ msgstr "SEO Globale Standard-Einstellungen"
 #: inc/class.meta-tags.php:214
 msgid "SEO"
 msgstr "SEO"
+
+#~ msgid "Used for facebook and twitter."
+#~ msgstr "Für Facebook und Twitter."
+
+#~ msgid "OpenGraph Image"
+#~ msgstr "OpenGraph Bild"
+
+#~ msgid "Image"
+#~ msgstr "Bild"

@@ -181,9 +181,9 @@ class MetaTags extends Singleton {
       array_merge($field_types['image'], [ 
         'key' => "key_{$this->prefix}_image",
         'name' => "{$this->prefix}_image",
-        'label' => __('Image', 'rhseo'),
+        'label' => __('Preview Image', 'rhseo'),
         'required' => false,
-        'instructions' => __('Used for facebook or twitter.', 'rhseo'),
+        'instructions' => __('For services like Facebook or Twitter.', 'rhseo'),
         'acfml_multilingual' => true,
       ])
     ];
