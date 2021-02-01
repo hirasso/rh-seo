@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name: RH SEO
- * Version: 1.0.1
+ * Version: 1.0.2
  * Author: Rasso Hilber
  * Description: Lightweight SEO optimizations for WordPress
  * Author URI: https://rassohilber.com
@@ -15,17 +15,18 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 * Require Modules
 */
 require_once(__DIR__ . '/inc/class.singleton.php');
-require_once(__DIR__ . '/inc/class.seo-meta-tags.php');
+require_once(__DIR__ . '/inc/class.meta-tags.php');
+require_once(__DIR__ . '/inc/class.yoast-compatibility.php');
 
 /**
  * Main Class
  */
 class SEO extends Singleton {
 
-  private $prefix = 'rhseo';
+  public $prefix = 'rhseo';
 
   private $deprecated_plugins = [
-    'wordpress-seo/wp-seo.php'
+    // 'wordpress-seo/wp-seo.php'
   ];
 
   public function __construct() {
@@ -42,7 +43,8 @@ class SEO extends Singleton {
    * @return void
    */
   private function init_plugin_modules() {
-    new SEOMetaTags($this->prefix);
+    new MetaTags($this);
+    new YOASTCompatibility($this);
   }
 
   /**

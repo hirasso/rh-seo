@@ -7,13 +7,13 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 /**
  * SEO Meta Tags
  */
-class SEOMetaTags extends Singleton {
+class MetaTags extends Singleton {
   
   private $prefix;
 
-  public function __construct($prefix) {
+  public function __construct(SEO $seo) {
 
-    $this->prefix = $prefix;
+    $this->prefix = $seo->prefix;
 
     add_action('acf/init', [$this, 'acf_init'], 10);
     add_action('wp_head', [$this, 'wp_head'], 4);
@@ -33,7 +33,7 @@ class SEOMetaTags extends Singleton {
   public function wp_head() {
     ob_start() ?>
 
-<!-- RH SEO: Start -->
+<!-- SEO: Start -->
 <meta property="og:locale" content="<?= $this->get_locale() ?>" />
 <meta property="og:type" content="website" />
 <meta property="og:title" content="<?= wp_get_document_title() ?>" />
@@ -47,7 +47,7 @@ class SEOMetaTags extends Singleton {
 <?php endif; ?>
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="description" content="<?= $description ?>" />
-<!-- RH SEO: End -->
+<!-- SEO: End -->
 
     <?php echo ob_get_clean();
   }
