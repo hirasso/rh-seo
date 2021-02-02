@@ -250,7 +250,7 @@ class SEO {
    */
   public function object_is_set_to_noindex( $object = null ): bool {
     if( is_a($object, "WP_Post") || is_a($object, "WP_Term") ) {
-      return (bool) seo()->get_field("noindex", $object);
+      return (bool) $this->get_field("noindex", $object);
     }
     return false;
   }
