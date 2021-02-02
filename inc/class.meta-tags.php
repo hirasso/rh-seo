@@ -27,6 +27,7 @@ class MetaTags {
     ob_start() ?>
 
 <!-- SEO: Start -->
+<?php if( seo()->object_is_set_to_noindex(get_queried_object()) ) wp_no_robots(); ?>
 <meta property="og:locale" content="<?= $this->get_locale() ?>" />
 <meta property="og:type" content="website" />
 <meta property="og:title" content="<?= wp_get_document_title() ?>" />

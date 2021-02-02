@@ -87,7 +87,13 @@ class Admin_UI {
       ], $fields);
     } else {
       $fields = array_merge([
-        
+        [
+          'key' => "key_{$this->prefix}_noindex",
+          'name' => "{$this->prefix}_noindex",
+          'label' => __('Hide from search engines', 'rhseo'),
+          'type' => 'true_false',
+          'ui' => true,
+        ],
         array_merge($field_types['text'], [ 
           'key' => "key_{$this->prefix}_document_title",
           'name' => "{$this->prefix}_document_title",

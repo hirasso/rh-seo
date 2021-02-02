@@ -1,6 +1,7 @@
 #### 1.0.2 (2021-02-02)
 
-- cleanup (#2f25438)
+- Option to hide posts from search engines (robots, wp-sitemap.xml) (#12134e1)
+- cleanup (#4925ee2)
 - Redirect Attachments (#6216347)
 - Remove `users` from `wp-sitemap.xml` (#be5c576)
 - add German translation (#e793cd2)

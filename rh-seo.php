@@ -242,6 +242,18 @@ class SEO {
     return get_field("{$this->prefix}_{$name}", $post_id, $format_value);
   }
 
+  /**
+   * checks if an object is set to noindex
+   *
+   * @param [type] $object
+   * @return void
+   */
+  public function object_is_set_to_noindex( $object = null ): bool {
+    if( is_a($object, "WP_Post") || is_a($object, "WP_Term") ) {
+      return (bool) seo()->get_field("noindex", $object);
+    }
+    return false;
+  }
 }
 
 /**

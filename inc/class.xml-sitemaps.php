@@ -9,11 +9,14 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
  */
 class XML_Sitemaps {
   
+  private $prefix;
 
   public function __construct() {
+    $this->prefix = seo()->prefix;
     add_filter('wp_sitemaps_add_provider', [$this, 'sitemaps_providers'], 10, 2);
     add_filter('wp_sitemaps_taxonomies', [$this, 'sitemaps_taxonomies']);
     add_filter('wp_sitemaps_post_types', [$this, 'sitemaps_post_types']);
+    add_filter('wp_sitemaps_posts_query_args', [$this, 'sitemaps_posts_query_args'], 10, 2);
   }
 
   /**
@@ -50,5 +53,31 @@ class XML_Sitemaps {
     unset($post_types['post']);
     return $post_types;
   }
+
+  /**
+   * Alter sitemap query args
+   *
+   * @param array $args
+   * @param [type] $post_type
+   * @return array
+   */
+  public function sitemaps_posts_query_args( $args, $post_type ): array {
+    $meta_query = $args['meta_query'] ?? [];
+    $meta_query[] = [
+      'relation' => 'OR',
+      [
+        'key' => "{$this->prefix}_noindex",
+        'value' => 1,
+        'compare' => '!=',
+        'type' => 'NUMERIC'
+      ],
+      [
+        'key' => "{$this->prefix}_noindex",
+        'compare' => 'NOT EXISTS'
+      ],
+    ];
+    $args['meta_query'] = $meta_query;
+    return $args;
+  } 
 
 }
