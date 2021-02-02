@@ -7,7 +7,7 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 /**
  * Compatibility for YOAST SEO
  */
-class YOASTCompatibility extends Singleton {
+class Yoast_Compatibility extends Singleton {
   
   private $prefix;
 

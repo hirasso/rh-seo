@@ -1,4 +1,5 @@
 01.02.2021:
-  ❍ yoast sitemaps deaktivieren
   ❍ attachments deaktivieren
-  ❍ remove users from wp-sitemap.xml
+  ✔ remove users from wp-sitemap.xml
+  ✔ Remove default taxonomies from wp-sitemap.xml
+  ✔ Remove post_type `post` from wp-sitemap.xml

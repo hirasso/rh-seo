@@ -1,6 +1,7 @@
-#### 1.0.2 (2021-02-01)
+#### 1.0.2 (2021-02-02)
 
-- Remove `users` from `wp-sitemap.xml` (#e83f4f7)
+- Redirect Attachments (#61df041)
+- Remove `users` from `wp-sitemap.xml` (#be5c576)
 - add German translation (#e793cd2)
 - Support for terms, deeper integration with qTranslate (#d9afd2d)
 - Compatibility with YOAST SEO (#c9c5f24)

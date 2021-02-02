@@ -17,6 +17,7 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 require_once(__DIR__ . '/inc/class.singleton.php');
 require_once(__DIR__ . '/inc/class.meta-tags.php');
 require_once(__DIR__ . '/inc/class.yoast-compatibility.php');
+require_once(__DIR__ . '/inc/class.xml-sitemaps.php');
 
 /**
  * Main Class
@@ -35,7 +36,7 @@ class SEO extends Singleton {
     add_action('admin_notices', [$this, 'show_admin_notices'] );
     add_action('admin_enqueue_scripts', [$this, 'enqueue_scripts'] );
     add_action('plugins_loaded', [$this, 'load_textdomain']);
-    add_filter('wp_sitemaps_add_provider', [$this, 'sitemaps_providers'], 10, 2);
+    add_action('template_redirect', [$this, 'redirect_attachment_pages']);
     
     $this->init_plugin_modules();
   }
@@ -47,7 +48,8 @@ class SEO extends Singleton {
    */
   private function init_plugin_modules() {
     new MetaTags($this);
-    new YOASTCompatibility($this);
+    new Yoast_Compatibility($this);
+    new XML_Sitemaps($this);
   }
 
   /**
@@ -213,15 +215,17 @@ class SEO extends Singleton {
   }
 
   /**
-   * Filter XML Sitemaps providers
+   * Redirect Attachment Pages to the actual file
    *
-   * @param string $provider
-   * @param string $name
    * @return void
    */
-  public function sitemaps_providers($provider, $name) {
-    if ( 'users' === $name ) return false;
-    return $provider;
+  public function redirect_attachment_pages() {
+    if( !apply_filters('rhseo/redirect_attachment_pages', true ) ) return;
+    if( !is_attachment() ) return;
+    if( !$object_id = get_queried_object_id() ) return;
+    $url = wp_get_attachment_url( $object_id );
+    wp_redirect( $url, 301 );
+    exit;
   }
 
 }
