@@ -17,6 +17,7 @@ class XML_Sitemaps {
     add_filter('wp_sitemaps_taxonomies', [$this, 'sitemaps_taxonomies']);
     add_filter('wp_sitemaps_post_types', [$this, 'sitemaps_post_types']);
     add_filter('wp_sitemaps_posts_query_args', [$this, 'sitemaps_posts_query_args'], 10, 2);
+    // add_filter('wp_sitemaps_taxonomies_query_args', [$this, 'sitemaps_taxonomies_query_args'], 10, 2);
   }
 
   /**

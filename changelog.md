@@ -1,6 +1,6 @@
 #### 1.0.2 (2021-02-02)
 
-- Option to hide posts from search engines (robots, wp-sitemap.xml) (#12134e1)
+- Option to hide posts from search engines (robots, wp-sitemap.xml) (#e0ab2f2)
 - cleanup (#4925ee2)
 - Redirect Attachments (#6216347)
 - Remove `users` from `wp-sitemap.xml` (#be5c576)

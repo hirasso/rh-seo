@@ -3,3 +3,5 @@
   ✔ remove users from wp-sitemap.xml
   ✔ Remove default taxonomies from wp-sitemap.xml
   ✔ Remove post_type `post` from wp-sitemap.xml
+  ✔ Hide Posts From Search engines (robots, sitemap.xml) @lasted(1h)
+  ❍ Filter for taxonomy terms to exclude them by noindex
