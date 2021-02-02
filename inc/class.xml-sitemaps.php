@@ -7,11 +7,10 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 /**
  * Sitemaps
  */
-class XML_Sitemaps extends Singleton {
+class XML_Sitemaps {
   
-  private $prefix;
 
-  public function __construct(SEO $seo) {
+  public function __construct() {
     add_filter('wp_sitemaps_add_provider', [$this, 'sitemaps_providers'], 10, 2);
     add_filter('wp_sitemaps_taxonomies', [$this, 'sitemaps_taxonomies']);
     add_filter('wp_sitemaps_post_types', [$this, 'sitemaps_post_types']);

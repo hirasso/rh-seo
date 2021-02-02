@@ -14,7 +14,7 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 /*
 * Require Modules
 */
-require_once(__DIR__ . '/inc/class.singleton.php');
+require_once(__DIR__ . '/inc/class.admin-ui.php');
 require_once(__DIR__ . '/inc/class.meta-tags.php');
 require_once(__DIR__ . '/inc/class.yoast-compatibility.php');
 require_once(__DIR__ . '/inc/class.xml-sitemaps.php');
@@ -22,7 +22,7 @@ require_once(__DIR__ . '/inc/class.xml-sitemaps.php');
 /**
  * Main Class
  */
-class SEO extends Singleton {
+class SEO {
 
   public $prefix = 'rhseo';
 
@@ -30,14 +30,17 @@ class SEO extends Singleton {
     // 'wordpress-seo/wp-seo.php'
   ];
 
-  public function __construct() {
-    
+  /**
+   * Initialize function
+   *
+   * @return void
+   */
+  public function initialize() {
     add_action('admin_init', [$this, 'admin_init'], 11);
     add_action('admin_notices', [$this, 'show_admin_notices'] );
     add_action('admin_enqueue_scripts', [$this, 'enqueue_scripts'] );
     add_action('plugins_loaded', [$this, 'load_textdomain']);
     add_action('template_redirect', [$this, 'redirect_attachment_pages']);
-    
     $this->init_plugin_modules();
   }
 
@@ -47,9 +50,10 @@ class SEO extends Singleton {
    * @return void
    */
   private function init_plugin_modules() {
-    new MetaTags($this);
-    new Yoast_Compatibility($this);
-    new XML_Sitemaps($this);
+    new MetaTags();
+    new Yoast_Compatibility();
+    new XML_Sitemaps();
+    new Admin_UI();
   }
 
   /**
@@ -228,17 +232,29 @@ class SEO extends Singleton {
     exit;
   }
 
+  /**
+   * Get a field
+   *
+   * @param string $name
+   * @return mixed
+   */
+  public function get_field($name, $post_id = 0, $format_value = true) {
+    return get_field("{$this->prefix}_{$name}", $post_id, $format_value);
+  }
+
 }
-/**
- * Initialize main class
- */
-SEO::getInstance();
 
 /**
- * Make AdminUtils instance available API calls
+ * Initialize the $seo instance
  *
  * @return SEO
  */
-function seo() { 
-  return SEO::getInstance(); 
+function seo() {
+  static $instance;
+  if( !isset($instance) ) {
+    $instance = new SEO();
+    $instance->initialize();
+  }
+  return $instance;
 }
+seo();
