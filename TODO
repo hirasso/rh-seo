@@ -1,5 +1,5 @@
 01.02.2021:
-  ❍ attachments deaktivieren
+  ✔ Redirect Attachment pages to the actual page
   ✔ remove users from wp-sitemap.xml
   ✔ Remove default taxonomies from wp-sitemap.xml
   ✔ Remove post_type `post` from wp-sitemap.xml

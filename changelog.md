@@ -1,6 +1,6 @@
 #### 1.0.2 (2021-02-02)
 
-- Redirect Attachments (#61df041)
+- Redirect Attachments (#6216347)
 - Remove `users` from `wp-sitemap.xml` (#be5c576)
 - add German translation (#e793cd2)
 - Support for terms, deeper integration with qTranslate (#d9afd2d)
