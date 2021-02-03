@@ -1,6 +1,10 @@
+#### 1.0.3 (2021-02-03)
+
+- Disable Yoast on plugin activation (#162bf7b)
+
 #### 1.0.2 (2021-02-03)
 
-- sitemap: `inject_meta_query_noindex` for posts and terms (#0f5d6b1)
+- sitemap: `inject_meta_query_noindex` for posts and terms (#6ac00d2)
 - Option to hide posts from search engines (robots, wp-sitemap.xml) (#e0ab2f2)
 - cleanup (#4925ee2)
 - Redirect Attachments (#6216347)

@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name: RH SEO
- * Version: 1.0.2
+ * Version: 1.0.3
  * Author: Rasso Hilber
  * Description: Lightweight SEO optimizations for WordPress
  * Author URI: https://rassohilber.com
@@ -27,7 +27,7 @@ class SEO {
   public $prefix = 'rhseo';
 
   private $deprecated_plugins = [
-    // 'wordpress-seo/wp-seo.php'
+    'wordpress-seo/wp-seo.php'
   ];
 
   /**
@@ -51,7 +51,7 @@ class SEO {
    */
   private function init_plugin_modules() {
     new MetaTags();
-    new Yoast_Compatibility();
+    // new Yoast_Compatibility(); // deactivated, Yoast keeps breaking sites badly
     new XML_Sitemaps();
     new Admin_UI();
   }
