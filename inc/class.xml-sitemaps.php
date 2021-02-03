@@ -16,8 +16,8 @@ class XML_Sitemaps {
     add_filter('wp_sitemaps_add_provider', [$this, 'sitemaps_providers'], 10, 2);
     add_filter('wp_sitemaps_taxonomies', [$this, 'sitemaps_taxonomies']);
     add_filter('wp_sitemaps_post_types', [$this, 'sitemaps_post_types']);
-    add_filter('wp_sitemaps_posts_query_args', [$this, 'sitemaps_posts_query_args'], 10, 2);
-    // add_filter('wp_sitemaps_taxonomies_query_args', [$this, 'sitemaps_taxonomies_query_args'], 10, 2);
+    add_filter('wp_sitemaps_posts_query_args', [$this, 'inject_meta_query_noindex']);
+    add_filter('wp_sitemaps_taxonomies_query_args', [$this, 'inject_meta_query_noindex']);
   }
 
   /**
@@ -56,13 +56,12 @@ class XML_Sitemaps {
   }
 
   /**
-   * Alter sitemap query args
+   * Alter sitemap query args to exclude items (posts or terms) with 'noindex' set to true
    *
    * @param array $args
-   * @param [type] $post_type
    * @return array
    */
-  public function sitemaps_posts_query_args( $args, $post_type ): array {
+  public function inject_meta_query_noindex( $args ): array {
     $meta_query = $args['meta_query'] ?? [];
     $meta_query[] = [
       'relation' => 'OR',
@@ -79,6 +78,6 @@ class XML_Sitemaps {
     ];
     $args['meta_query'] = $meta_query;
     return $args;
-  } 
+  }
 
 }
