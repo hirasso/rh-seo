@@ -12,7 +12,6 @@ class MetaTags {
   public function __construct() {
 
     add_action('wp_head', [$this, 'wp_head'], 4);
-    
     add_filter('pre_option_blogname', [$this, 'filter_blogname']);
     add_filter('pre_option_blogdescription', [$this, 'filter_blogdescription']);
     add_filter('document_title_parts', [$this, 'document_title_parts']);
@@ -98,6 +97,7 @@ class MetaTags {
   * @return string|bool
   */
   public function filter_blogdescription( $value ) {
+    remove_filter('pre_option_blogdescription', [$this, 'filter_blogdescription']);
     $value = false;
     $qo = get_queried_object();
     if( $qo instanceof \WP_Post ) {
@@ -106,6 +106,7 @@ class MetaTags {
       $value = seo()->get_field('description', $qo);
     }
     if( !$value ) $value = seo()->get_field('description', 'options');
+    add_filter('pre_option_blogdescription', [$this, 'filter_blogdescription']);
     return $value;
   }
 
@@ -116,9 +117,11 @@ class MetaTags {
    * @return string|bool
    */
   public function filter_blogname( $value ) {
-    if( $custom_title = seo()->get_field('site_name', 'options') ) {
-      $value = __($custom_title);
+    remove_filter('pre_option_blogname', [$this, 'filter_blogname']);
+    if( $custom_site_name = seo()->get_field('site_name', 'options') ) {
+      $value = __($custom_site_name);
     }
+    add_filter('pre_option_blogname', [$this, 'filter_blogname']);
     return $value;
   }
 

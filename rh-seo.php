@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name: RH SEO
- * Version: 1.0.3
+ * Version: 1.0.4
  * Author: Rasso Hilber
  * Description: Lightweight SEO optimizations for WordPress
  * Author URI: https://rassohilber.com
@@ -36,12 +36,12 @@ class SEO {
    * @return void
    */
   public function initialize() {
+    $this->init_plugin_modules();
     add_action('admin_init', [$this, 'admin_init'], 11);
     add_action('admin_notices', [$this, 'show_admin_notices'] );
     add_action('admin_enqueue_scripts', [$this, 'enqueue_scripts'] );
     add_action('plugins_loaded', [$this, 'load_textdomain']);
     add_action('template_redirect', [$this, 'redirect_attachment_pages']);
-    $this->init_plugin_modules();
   }
 
   /**
@@ -50,10 +50,11 @@ class SEO {
    * @return void
    */
   private function init_plugin_modules() {
+    // must be initialized first, to make fields available
+    new Admin_UI();
     new MetaTags();
     // new Yoast_Compatibility(); // deactivated, Yoast keeps breaking sites badly
     new XML_Sitemaps();
-    new Admin_UI();
   }
 
   /**
@@ -239,7 +240,9 @@ class SEO {
    * @return mixed
    */
   public function get_field($name, $post_id = 0, $format_value = true) {
-    return get_field("{$this->prefix}_{$name}", $post_id, $format_value);
+    if( in_array($post_id, ['options', 'option']) ) $post_id = "rhseo-options";
+    $value = \get_field("rhseo_{$name}", $post_id, $format_value);
+    return $value;
   }
 
   /**

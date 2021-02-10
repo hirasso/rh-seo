@@ -13,7 +13,9 @@ class Admin_UI {
 
   public function __construct() {
     $this->prefix = seo()->prefix;
-    add_action('acf/init', [$this, 'acf_init'], 10);
+    $this->add_options_page();
+    $this->add_field_group();
+    // add_action('acf/init', [$this, 'acf_init'], 10);
   }
 
   /**
@@ -22,9 +24,6 @@ class Admin_UI {
    * @return void
    */
   public function acf_init() {
-    
-    $this->add_options_page();
-    $this->add_field_group();
     
   }
 
@@ -36,7 +35,8 @@ class Admin_UI {
   private function add_options_page() {
     acf_add_options_page([
       'page_title' => __('SEO Options', 'rhseo'),
-      'menu_slug' => "{$this->prefix}-options",
+      'menu_slug' => "rhseo-options",
+      'post_id' => "rhseo-options", 
       'position' => '59.6',
       'icon_url' => 'dashicons-share'
     ]);
@@ -52,11 +52,12 @@ class Admin_UI {
     $field_types = [];
     foreach( $fields as $key ) {
       $field_type = $this->is_qtranslate_enabled() ? "qtranslate_$key" : $key;
-      $field_types[$key] = array_merge( acf_get_field_type($field_type)->defaults, ['type' => $field_type]);
+      $field_types[$key] = $field_type;//array_merge( acf_get_field_type($field_type)->defaults, ['type' => $field_type]);
     }
 
     $fields = [
-      array_merge($field_types['textarea'], [ 
+      [ 
+        'type' => $field_types['textarea'],
         'key' => "key_{$this->prefix}_description",
         'name' => "{$this->prefix}_description",
         'label' => $this->is_options_page() ? __('Site Description', 'rhseo') : __('Description', 'rhseo'),
@@ -65,25 +66,27 @@ class Admin_UI {
         'max' => 200,
         'rows' => 2,
         'acfml_multilingual' => true,
-      ]),
-      array_merge($field_types['image'], [ 
+      ],
+      [ 
+        'type' => $field_types['image'],
         'key' => "key_{$this->prefix}_image",
         'name' => "{$this->prefix}_image",
         'label' => __('Preview Image', 'rhseo'),
         'required' => false,
         'instructions' => __('For services like Facebook or Twitter.', 'rhseo'),
         'acfml_multilingual' => true,
-      ])
+      ]
     ];
 
     if( $this->is_options_page() ) {
       $fields = array_merge([
-        array_merge($field_types['text'], [ 
+        [ 
+          'type' => $field_types['text'],
           'key' => "key_{$this->prefix}_site_name",
           'name' => "{$this->prefix}_site_name",
           'label' => __('Site Name', 'rhseo'),
           'acfml_multilingual' => true
-        ]),
+        ],
       ], $fields);
     } else {
       $fields = array_merge([
@@ -94,13 +97,14 @@ class Admin_UI {
           'type' => 'true_false',
           'ui' => true,
         ],
-        array_merge($field_types['text'], [ 
+        [ 
+          'type' => $field_types['text'],
           'key' => "key_{$this->prefix}_document_title",
           'name' => "{$this->prefix}_document_title",
           'instructions' => __('Optional. Overwrites the title.', 'rhseo'),
           'label' => __('Document Title', 'rhseo'),
           'acfml_multilingual' => true
-        ]),
+        ],
       ], $fields);
     }
 
@@ -151,44 +155,6 @@ class Admin_UI {
    */
   private function is_qtranslate_enabled() {
     return defined('QTX_VERSION');
-  }
-
-  /**
-   * Filter document title separator
-   *
-   * @param [type] $sep
-   * @return void
-   */
-  public function document_title_separator( $sep ) {
-    return '—';
-  }
-
-  /**
-   * Get OG Image
-   *
-   * @return mixed
-   */
-  private function get_og_image_url() {
-    $value = false;
-
-    $qo = get_queried_object();
-    if( $qo instanceof \WP_Post ) {
-      $value = seo()->get_field("image", $qo->ID, false);
-      // ... then try post thumbnail
-      if( !$value ) $value = get_post_thumbnail_id($qo->ID);
-    } if( $qo instanceof \WP_Term ) {
-      $value = seo()->get_field("image", $qo);
-    }
-
-    // finally try global setting
-    if( !$value ) $value = seo()->get_field("image", 'options', false);
-
-    // bail early if empty
-    if( empty($value) ) return $value;
-
-    $value = wp_get_attachment_url($value['ID'] ?? $value);
-
-    return $value;
   }
 
   /**

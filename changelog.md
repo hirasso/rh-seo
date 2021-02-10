@@ -1,6 +1,10 @@
+#### 1.0.4 (2021-02-10)
+
+- prevent infinite loops in options filters (#3003fc0)
+
 #### 1.0.3 (2021-02-03)
 
-- Disable Yoast on plugin activation (#162bf7b)
+- Disable Yoast on plugin activation (#f97b785)
 
 #### 1.0.2 (2021-02-03)
 
