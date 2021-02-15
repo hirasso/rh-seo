@@ -13,6 +13,7 @@ class XML_Sitemaps {
 
   public function __construct() {
     $this->prefix = seo()->prefix;
+    add_action('registered_taxonomy', [$this, 'registered_taxonomy'], 10, 3);
     add_filter('wp_sitemaps_add_provider', [$this, 'sitemaps_providers'], 10, 2);
     add_filter('wp_sitemaps_taxonomies', [$this, 'sitemaps_taxonomies']);
     add_filter('wp_sitemaps_post_types', [$this, 'sitemaps_post_types']);
@@ -78,6 +79,23 @@ class XML_Sitemaps {
     ];
     $args['meta_query'] = $meta_query;
     return $args;
+  }
+
+  /**
+   * Perform adjustments on taxonomies (Set taxonomies with object type 'attachment' to private)
+   *
+   * @param string $taxonomy
+   * @param string|array $object_type
+   * @param array $taxonomy_arr
+   * @return void
+   */
+  public function registered_taxonomy( $taxonomy, $object_type, $taxonomy_arr ) {
+    global $wp_taxonomies;
+    if( $object_type === 'attachment' || 
+      ( is_array($object_type) && count($object_type) === 1 && $object_type[0] === 'attachment' ) ) {
+      $wp_taxonomies[$taxonomy]->public = false;
+    }
+    
   }
 
 }

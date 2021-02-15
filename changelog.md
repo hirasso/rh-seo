@@ -1,5 +1,6 @@
 #### 1.0.5 (2021-02-15)
 
+- - Set taxonomies with object type 'attachment' to private - Hide 'noindex' field on post type settings (#a694293)
 - Options for post types with archives (#a138ab2)
 - optimize fields (#b272529)
 - fix document title for posts (#6d7d4c2)

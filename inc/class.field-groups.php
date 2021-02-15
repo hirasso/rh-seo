@@ -14,6 +14,7 @@ class Field_Groups {
 
   public function __construct() {
     $this->prefix = seo()->prefix;
+    add_filter('acf/prepare_field/name=rhseo_noindex', [$this, 'prepare_field_noindex']);
     add_action('init', [$this, 'init'], 11);
   }
 
@@ -155,7 +156,7 @@ class Field_Groups {
       $fields = array_merge([
         [
           'key' => "key_{$this->prefix}_noindex",
-          'name' => "{$this->prefix}_noindex",
+          'name' => "rhseo_noindex",
           'label' => __('Hide from search engines', 'rhseo'),
           'type' => 'true_false',
           'ui' => true,
@@ -235,5 +236,16 @@ class Field_Groups {
       }
     }
     return $post_type;
+  }
+
+  /**
+   * Hide field 'noindex' on post type options pages
+   *
+   * @param array $field
+   * @return mixed
+   */
+  public function prepare_field_noindex($field) {
+    if( $this->is_post_type_options_page() ) return false;
+    return $field;
   }
 }
