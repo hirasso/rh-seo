@@ -3,7 +3,7 @@ const child = require('child_process');
 const argv = require('minimist')(process.argv.slice(2));
 
 const pluginFiles = ['rh-seo.php'];
-const blacklist = ['Merge branch ', 'prepare-commit-msg', 'pre-commit-msg', '#ignore', 'update todo'];
+const blacklist = ['Merge branch ', 'prepare-commit-msg', 'pre-commit-msg', '#ignore', 'update todo', 'cleanup'];
 
 /**
  * Get the plugin version from a file

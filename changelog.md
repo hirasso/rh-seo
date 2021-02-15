@@ -1,6 +1,6 @@
 #### 1.0.5 (2021-02-15)
 
-- Options for post types with archives (#f022303)
+- Options for post types with archives (#a138ab2)
 - optimize fields (#b272529)
 - fix document title for posts (#6d7d4c2)
 
@@ -16,7 +16,6 @@
 
 - sitemap: `inject_meta_query_noindex` for posts and terms (#6ac00d2)
 - Option to hide posts from search engines (robots, wp-sitemap.xml) (#e0ab2f2)
-- cleanup (#4925ee2)
 - Redirect Attachments (#6216347)
 - Remove `users` from `wp-sitemap.xml` (#be5c576)
 - add German translation (#e793cd2)

@@ -29,15 +29,15 @@ class MetaTags {
 <?php if( seo()->object_is_set_to_noindex(get_queried_object()) ) wp_no_robots(); ?>
 <meta property="og:title" content="<?= wp_get_document_title() ?>" />
 <?php if($description = get_bloginfo('description')) : ?>
-<meta name="description" content="<?= $description ?>" />
-<meta property="og:description" content="<?= $description ?>" />
+<meta name="description" content="<?= esc_attr($description) ?>" />
+<meta property="og:description" content="<?= esc_attr($description) ?>" />
 <?php endif; ?>
-<meta property="og:locale" content="<?= $this->get_locale() ?>" />
+<meta property="og:locale" content="<?= esc_attr($this->get_locale()) ?>" />
 <meta property="og:type" content="website" />
-<meta property="og:url" content="<?= $this->get_current_url() ?>" />
-<meta property="og:site_name" content="<?= get_bloginfo('name') ?>" />
+<meta property="og:url" content="<?= esc_attr($this->get_current_url()) ?>" />
+<meta property="og:site_name" content="<?= esc_attr(get_bloginfo('name')) ?>" />
 <?php if($image = $this->get_og_image_url()): ?>
-<meta property="og:image" content="<?= $image ?>" />    
+<meta property="og:image" content="<?= esc_attr($image) ?>" />    
 <?php endif; ?>
 <meta name="twitter:card" content="summary_large_image" />
 <!-- SEO: End -->
@@ -71,7 +71,8 @@ class MetaTags {
    * @return void
    */
   public function document_title_parts($parts) {
-    $parts['title'] = $this->get_seo_value('document_title');
+    $title = $this->get_seo_value('document_title');
+    $parts['title'] = $title;
     return $parts;
   }
 
@@ -113,7 +114,22 @@ class MetaTags {
     $value = null;
     $qo = get_queried_object();
     if( $qo ) $value = seo()->get_field($name, $this->get_acf_post_id($qo));
-    // fall back to global options
+    // fallbacks for document_title
+    if( !$value && $name === 'document_title' ) {
+      if( $qo instanceof \WP_Post ) $value = get_the_title($qo->ID);
+      if( $qo instanceof \WP_Post_Type ) $value = $qo->labels->name;
+      if( $qo instanceof \WP_Term ) $value = $qo->name;
+    }
+    // fallbacks for 'description'
+    if( !$value && $name === 'description' ) {
+      if( $qo instanceof \WP_Post ) $value = get_the_excerpt($qo->ID);
+      if( $qo instanceof \WP_Term ) $value = $qo->description;
+    }
+    // fallbacks for 'image'
+    if( !$value && $name === 'image' ) {
+      if( $qo instanceof \WP_Post ) $value = get_post_thumbnail_id($qo->ID);
+    }
+    // finally fall back to global options
     if( !$value ) $value = seo()->get_field($name, 'rhseo-options');
     return $value;
   }
@@ -152,23 +168,13 @@ class MetaTags {
    * @return mixed
    */
   private function get_og_image_url() {
-    $value = null;
 
-    // first try object value
     $value = $this->get_seo_value('image');
-
-    $qo = get_queried_object();
-    // if no value and current object === \WP_Post, try post thumbnail
-    if( !$value && $qo instanceof \WP_Post ) {
-      $value = get_post_thumbnail_id($qo->ID);
-    }
-
-    // finally try global value
-    if( !$value ) $value = seo()->get_field("image", 'rhseo-options');
 
     // bail early if empty
     if( empty($value) ) return $value;
 
+    // get the URL
     $value = wp_get_attachment_url($value['ID'] ?? $value);
 
     return $value;
