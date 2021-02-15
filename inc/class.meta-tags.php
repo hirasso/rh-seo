@@ -27,19 +27,19 @@ class MetaTags {
 
 <!-- SEO: Start -->
 <?php if( seo()->object_is_set_to_noindex(get_queried_object()) ) wp_no_robots(); ?>
-<meta property="og:locale" content="<?= $this->get_locale() ?>" />
-<meta property="og:type" content="website" />
 <meta property="og:title" content="<?= wp_get_document_title() ?>" />
-<meta property="og:url" content="<?= $this->get_current_url() ?>" />
-<meta property="og:site_name" content="<?= get_bloginfo('name') ?>" />
 <?php if($description = get_bloginfo('description')) : ?>
+<meta name="description" content="<?= $description ?>" />
 <meta property="og:description" content="<?= $description ?>" />
 <?php endif; ?>
+<meta property="og:locale" content="<?= $this->get_locale() ?>" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="<?= $this->get_current_url() ?>" />
+<meta property="og:site_name" content="<?= get_bloginfo('name') ?>" />
 <?php if($image = $this->get_og_image_url()): ?>
 <meta property="og:image" content="<?= $image ?>" />    
 <?php endif; ?>
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="description" content="<?= $description ?>" />
 <!-- SEO: End -->
 
     <?php echo ob_get_clean();

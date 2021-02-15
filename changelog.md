@@ -1,6 +1,7 @@
 #### 1.0.5 (2021-02-15)
 
-- fix document title for posts (#2a550fc)
+- optimize fields (#89ac2ee)
+- fix document title for posts (#6d7d4c2)
 
 #### 1.0.4 (2021-02-10)
 

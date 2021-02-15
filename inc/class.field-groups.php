@@ -5,9 +5,9 @@ namespace R\SEO;
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 /**
- * SEO Meta Tags
+ * SEO Field_Groups
  */
-class Admin_UI {
+class Field_Groups {
   
   private $prefix;
 
@@ -70,6 +70,8 @@ class Admin_UI {
       [ 
         'type' => $field_types['image'],
         'key' => "key_{$this->prefix}_image",
+        'preview_size' => 'medium',
+        'return_format' => 'id',
         'name' => "{$this->prefix}_image",
         'label' => __('Preview Image', 'rhseo'),
         'required' => false,

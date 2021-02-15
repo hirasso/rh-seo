@@ -14,7 +14,7 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 /*
 * Require Modules
 */
-require_once(__DIR__ . '/inc/class.admin-ui.php');
+require_once(__DIR__ . '/inc/class.field-groups.php');
 require_once(__DIR__ . '/inc/class.meta-tags.php');
 require_once(__DIR__ . '/inc/class.yoast-compatibility.php');
 require_once(__DIR__ . '/inc/class.xml-sitemaps.php');
@@ -51,7 +51,7 @@ class SEO {
    */
   private function init_plugin_modules() {
     // must be initialized first, to make fields available
-    new Admin_UI();
+    new Field_Groups();
     new MetaTags();
     // new Yoast_Compatibility(); // deactivated, Yoast keeps breaking sites badly
     new XML_Sitemaps();
