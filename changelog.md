@@ -1,6 +1,10 @@
+#### 1.0.5 (2021-02-15)
+
+- fix document title for posts (#2a550fc)
+
 #### 1.0.4 (2021-02-10)
 
-- prevent infinite loops in options filters (#3003fc0)
+- prevent infinite loops in options filters (#b0ef7da)
 
 #### 1.0.3 (2021-02-03)
 

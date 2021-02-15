@@ -73,20 +73,34 @@ class MetaTags {
   public function document_title_parts($title) {
     $qo = get_queried_object();
     if( is_tax() ) {
-      $title['title'] = $this->get_term_title($qo);
+      $title['title'] = $this->get_term_document_title($qo);
+    } elseif( is_singular() ) {
+      $title['title'] = $this->get_post_document_title($qo);
     }
     return $title;
   }
 
   /**
-   * Get the title for a term
+   * Get the document title for a term
    *
    * @param \WP_Term $term
-   * @return void
+   * @return string
    */
-  private function get_term_title($term): string {
-    $value = seo()->get_field('title', $term);
+  private function get_term_document_title($term): string {
+    $value = seo()->get_field('document_title', $term);
     if( !$value ) $value = $term->name;
+    return $value;
+  }
+
+  /**
+   * Get the documet title for a post
+   *
+   * @param \WP_Post $post
+   * @return string
+   */
+  private function get_post_document_title($post): string {
+    $value = seo()->get_field('document_title', $post);
+    if( !$value ) $value = get_the_title($post->ID);
     return $value;
   }
 
