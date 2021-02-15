@@ -14,6 +14,7 @@ class Field_Groups {
 
   public function __construct() {
     $this->prefix = seo()->prefix;
+    add_action('admin_bar_menu', [$this, 'add_post_type_archive_link_to_admin_bar'], 100);
     add_filter('acf/prepare_field/name=rhseo_noindex', [$this, 'prepare_field_noindex']);
     add_action('init', [$this, 'init'], 11);
   }
@@ -247,5 +248,28 @@ class Field_Groups {
   public function prepare_field_noindex($field) {
     if( $this->is_post_type_options_page() ) return false;
     return $field;
+  }
+
+  /**
+   * Add and item to the admin bar on Post Type Options Pages
+   *
+   * @param \WP_Admin_Bar $wp_adminbar
+   * @return void
+   */
+  public function add_post_type_archive_link_to_admin_bar( $wp_adminbar ) {
+    if( !$post_type = $this->is_post_type_options_page() ) return;
+    if( !is_post_type_viewable($post_type) ) return;
+    if( !$link = get_post_type_archive_link($post_type) ) return;
+
+    $pt_object = get_post_type_object( $post_type );
+    // add Forum sub-menu item
+    $wp_adminbar->add_node([
+      'id' => 'view-post-type',
+      'title' => $pt_object->labels->view_items,
+      'href' => $link,
+      'meta' => [
+        'target' => '_blank'
+      ]
+    ]);
   }
 }
