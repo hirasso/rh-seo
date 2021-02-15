@@ -240,7 +240,6 @@ class SEO {
    * @return mixed
    */
   public function get_field($name, $post_id = 0, $format_value = true) {
-    if( in_array($post_id, ['options', 'option']) ) $post_id = "rhseo-options";
     $value = \get_field("rhseo_{$name}", $post_id, $format_value);
     return $value;
   }

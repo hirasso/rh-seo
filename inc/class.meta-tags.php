@@ -70,37 +70,23 @@ class MetaTags {
    *
    * @return void
    */
-  public function document_title_parts($title) {
-    $qo = get_queried_object();
-    if( is_tax() ) {
-      $title['title'] = $this->get_term_document_title($qo);
-    } elseif( is_singular() ) {
-      $title['title'] = $this->get_post_document_title($qo);
+  public function document_title_parts($parts) {
+    $parts['title'] = $this->get_seo_value('document_title');
+    return $parts;
+  }
+
+  /**
+   * Filters get_bloginfo('name')
+   *
+   * @param string $name
+   * @return string|bool
+   */
+  public function filter_blogname( $value ) {
+    remove_filter('pre_option_blogname', [$this, 'filter_blogname']);
+    if( $custom_site_name = seo()->get_field('site_name', 'rhseo-options') ) {
+      $value = __($custom_site_name);
     }
-    return $title;
-  }
-
-  /**
-   * Get the document title for a term
-   *
-   * @param \WP_Term $term
-   * @return string
-   */
-  private function get_term_document_title($term): string {
-    $value = seo()->get_field('document_title', $term);
-    if( !$value ) $value = $term->name;
-    return $value;
-  }
-
-  /**
-   * Get the documet title for a post
-   *
-   * @param \WP_Post $post
-   * @return string
-   */
-  private function get_post_document_title($post): string {
-    $value = seo()->get_field('document_title', $post);
-    if( !$value ) $value = get_the_title($post->ID);
+    add_filter('pre_option_blogname', [$this, 'filter_blogname']);
     return $value;
   }
 
@@ -112,31 +98,42 @@ class MetaTags {
   */
   public function filter_blogdescription( $value ) {
     remove_filter('pre_option_blogdescription', [$this, 'filter_blogdescription']);
-    $value = false;
-    $qo = get_queried_object();
-    if( $qo instanceof \WP_Post ) {
-      $value = seo()->get_field('description', $qo->ID);
-    } elseif( $qo instanceof \WP_Term ) {
-      $value = seo()->get_field('description', $qo);
-    }
-    if( !$value ) $value = seo()->get_field('description', 'options');
+    $value = $this->get_seo_value('description');
     add_filter('pre_option_blogdescription', [$this, 'filter_blogdescription']);
     return $value;
   }
 
   /**
-   * Filters get_bloginfo('name')
+   * Get an SEO value, fall back to the global default
    *
    * @param string $name
-   * @return string|bool
+   * @return void
    */
-  public function filter_blogname( $value ) {
-    remove_filter('pre_option_blogname', [$this, 'filter_blogname']);
-    if( $custom_site_name = seo()->get_field('site_name', 'options') ) {
-      $value = __($custom_site_name);
-    }
-    add_filter('pre_option_blogname', [$this, 'filter_blogname']);
+  public function get_seo_value( string $name ) {
+    $value = null;
+    $qo = get_queried_object();
+    if( $qo ) $value = seo()->get_field($name, $this->get_acf_post_id($qo));
+    // fall back to global options
+    if( !$value ) $value = seo()->get_field($name, 'rhseo-options');
     return $value;
+  }
+
+  /**
+   * Get the acf post id for different WP Objects
+   *
+   * @param mixed $qo
+   * @return mixed
+   */
+  private function get_acf_post_id( $qo ) {
+    $post_id = null;
+    if( $qo instanceof \WP_Post ) {
+      $post_id = $qo->ID;
+    } elseif( $qo instanceof \WP_Term ) {
+      $post_id = $qo;
+    } elseif( $qo instanceof \WP_Post_Type ) {
+      $post_id = "rhseo-options--$qo->name";
+    }
+    return $post_id;
   }
 
   /**
@@ -155,19 +152,19 @@ class MetaTags {
    * @return mixed
    */
   private function get_og_image_url() {
-    $value = false;
+    $value = null;
+
+    // first try object value
+    $value = $this->get_seo_value('image');
 
     $qo = get_queried_object();
-    if( $qo instanceof \WP_Post ) {
-      $value = seo()->get_field("image", $qo->ID, false);
-      // ... then try post thumbnail
-      if( !$value ) $value = get_post_thumbnail_id($qo->ID);
-    } if( $qo instanceof \WP_Term ) {
-      $value = seo()->get_field("image", $qo);
+    // if no value and current object === \WP_Post, try post thumbnail
+    if( !$value && $qo instanceof \WP_Post ) {
+      $value = get_post_thumbnail_id($qo->ID);
     }
 
-    // finally try global setting
-    if( !$value ) $value = seo()->get_field("image", 'options', false);
+    // finally try global value
+    if( !$value ) $value = seo()->get_field("image", 'rhseo-options');
 
     // bail early if empty
     if( empty($value) ) return $value;

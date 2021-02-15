@@ -10,12 +10,11 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 class Field_Groups {
   
   private $prefix;
+  private $field_group_locations;
 
   public function __construct() {
     $this->prefix = seo()->prefix;
-    $this->add_options_page();
-    $this->add_field_group();
-    // add_action('acf/init', [$this, 'acf_init'], 10);
+    add_action('init', [$this, 'init'], 11);
   }
 
   /**
@@ -23,16 +22,55 @@ class Field_Groups {
    *
    * @return void
    */
-  public function acf_init() {
-    
+  public function init() {
+    $this->setup_field_group_locations();
+    $this->add_options_pages();
+    $this->add_fields();
   }
 
   /**
-   * Adds the options page
+   * Set up the locations for the field group
+   */
+  private function setup_field_group_locations(): void {
+    $this->field_group_locations = [
+      [
+        [
+          'param' => 'options_page',
+          'operator' => '==',
+          'value' => "{$this->prefix}-options",
+        ],
+      ],
+      [
+        [
+          'param' => 'post_type',
+          'operator' => '==',
+          'value' => "post",
+        ],
+      ],
+      [
+        [
+          'param' => 'post_type',
+          'operator' => '!=',
+          'value' => "post",
+        ],
+      ],
+      [
+        [
+          'param' => 'taxonomy',
+          'operator' => '==',
+          'value' => "all",
+        ],
+      ]
+    ];
+  }
+  
+  /**
+   * Adds options pages
    *
    * @return void
    */
-  private function add_options_page() {
+  public function add_options_pages() {
+    // add global options
     acf_add_options_page([
       'page_title' => __('SEO Options', 'rhseo'),
       'menu_slug' => "rhseo-options",
@@ -40,6 +78,29 @@ class Field_Groups {
       'position' => '59.6',
       'icon_url' => 'dashicons-share'
     ]);
+
+    // add post type archive options pages
+    $post_types = get_post_types([
+      'public' => true
+    ]);
+    foreach( $post_types as $post_type ) {
+      $pt_object = get_post_type_object($post_type); 
+      if( !$pt_object->has_archive ) continue;
+      $post_id = "rhseo-options--$post_type";
+      acf_add_options_page([
+        'page_title' => __('SEO Options', 'rhseo'),
+        'menu_slug' => $post_id,
+        'post_id' => $post_id, 
+        'parent_slug' => "edit.php?post_type=$post_type",
+      ]);
+      $this->field_group_locations[] = [
+        [
+          'param' => 'options_page',
+          'operator' => '==',
+          'value' => $post_id,
+        ],
+      ];
+    }
   }
 
   /**
@@ -47,7 +108,7 @@ class Field_Groups {
    *
    * @return void
    */
-  private function add_field_group() {
+  private function add_fields() {
     $fields = ['text', 'textarea', 'image'];
     $field_types = [];
     foreach( $fields as $key ) {
@@ -60,7 +121,7 @@ class Field_Groups {
         'type' => $field_types['textarea'],
         'key' => "key_{$this->prefix}_description",
         'name' => "{$this->prefix}_description",
-        'label' => $this->is_options_page() ? __('Site Description', 'rhseo') : __('Description', 'rhseo'),
+        'label' => $this->is_global_options_page() ? __('Site Description', 'rhseo') : __('Description', 'rhseo'),
         'required' => false,
         'instructions' => __('Optimal length: 50–160 characters', 'rhseo'),
         'max' => 200,
@@ -80,7 +141,7 @@ class Field_Groups {
       ]
     ];
 
-    if( $this->is_options_page() ) {
+    if( $this->is_global_options_page() ) {
       $fields = array_merge([
         [ 
           'type' => $field_types['text'],
@@ -112,42 +173,28 @@ class Field_Groups {
 
     acf_add_local_field_group([
       'key' => "group_{$this->prefix}_options",
-      'title' => $this->is_options_page() ? __('SEO Global Defaults', 'rhseo') : __('SEO', 'rhseo'),
+      'title' => $this->get_field_group_title(),
       'fields' => $fields,
-      'location' => [
-        [
-          [
-            'param' => 'options_page',
-            'operator' => '==',
-            'value' => "{$this->prefix}-options",
-          ],
-        ],
-        [
-          [
-            'param' => 'post_type',
-            'operator' => '==',
-            'value' => "post",
-          ],
-        ],
-        [
-          [
-            'param' => 'post_type',
-            'operator' => '!=',
-            'value' => "post",
-          ],
-        ],
-        [
-          [
-            'param' => 'taxonomy',
-            'operator' => '==',
-            'value' => "all",
-          ],
-        ],
-      ],
+      'location' => $this->field_group_locations,
       'menu_order' => 1000,
       'position' => 'normal',
       'active' => true,
     ]);
+  }
+
+  /**
+   * Get the field group title in different contexts
+   *
+   * @return string
+   */
+  private function get_field_group_title(): string {
+    $title = __('SEO', 'rhseo');
+    if( $this->is_global_options_page() ) $title = __('SEO Global Defaults', 'rhseo');
+    if( $post_type = $this->is_post_type_options_page() ) {
+      $pt_object = get_post_type_object( $post_type );
+      $title = sprintf(__('SEO Options: %s', 'rhseo'), $pt_object->labels->name);
+    }
+    return $title;
   }
 
   /**
@@ -164,10 +211,29 @@ class Field_Groups {
    *
    * @return bool
    */
-  private function is_options_page(): bool {
+  private function is_global_options_page(): bool {
     global $pagenow;
     if( $pagenow !== 'admin.php' ) return false;
     if( ($_GET['page'] ?? false) !== "{$this->prefix}-options") return false;
     return true;
+  }
+
+  /**
+   * Check if on an options page for a post type
+   *
+   * @return string|null
+   */
+  private function is_post_type_options_page(): ?string {
+    global $pagenow;
+    $post_type = null;
+    if( $pagenow !== 'edit.php' ) return $post_type;
+    if( !$page = $_GET['page'] ?? null ) return $post_type;
+    foreach( $this->field_group_locations as $location ) {
+      $location_value = $location[0]['value'] ?? null;
+      if( $page === $location_value ) {
+        $post_type = str_replace("rhseo-options--", "", $page);
+      }
+    }
+    return $post_type;
   }
 }
