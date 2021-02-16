@@ -1,6 +1,7 @@
-#### 1.0.5 (2021-02-15)
+#### 1.0.5 (2021-02-16)
 
-- Add and item to the admin bar on Post Type Options Pages (#b7e2d1a)
+- Remove unused styles (#f672af7)
+- Add and item to the admin bar on Post Type Options Pages (#1059706)
 - - Set taxonomies with object type 'attachment' to private - Hide 'noindex' field on post type settings (#97b4f0d)
 - Options for post types with archives (#a138ab2)
 - optimize fields (#b272529)

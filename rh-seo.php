@@ -39,7 +39,8 @@ class SEO {
     $this->init_plugin_modules();
     add_action('admin_init', [$this, 'admin_init'], 11);
     add_action('admin_notices', [$this, 'show_admin_notices'] );
-    add_action('admin_enqueue_scripts', [$this, 'enqueue_scripts'] );
+    add_action('admin_enqueue_scripts', [$this, 'enqueue_styles'] );
+    add_action('admin_enqueue_scripts', [$this, 'enqueue_scripts'], 100 );
     add_action('plugins_loaded', [$this, 'load_textdomain']);
     add_action('template_redirect', [$this, 'redirect_attachment_pages']);
   }
@@ -87,14 +88,28 @@ class SEO {
    *
    * @return void
    */
-  function get_file_path( $path ) {
+  public function get_file_path( $path ) {
     $path = ltrim( $path, '/' );
     $file = plugin_dir_path( __FILE__ ) . $path;
     return $file;
   }
 
-  public function enqueue_scripts() {
+  /**
+   * enqueue styles
+   *
+   * @return void
+   */
+  public function enqueue_styles() {
     wp_enqueue_style('rhseo', $this->asset_uri('assets/rhseo.css'));
+  }
+
+  /**
+   * enqueue styles
+   *
+   * @return void
+   */
+  public function enqueue_scripts() {
+    wp_enqueue_script('rhseo', $this->asset_uri('assets/rhseo.js'), [], false, true);
   }
 
   /**
