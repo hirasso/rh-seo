@@ -111,8 +111,10 @@ class MetaTags {
    * @return void
    */
   public function get_seo_value( string $name ) {
+    global $wp_query;
     $value = null;
-    $qo = get_queried_object();
+    if( !isset($wp_query) ) return $value;
+    $qo = $wp_query->get_queried_object();
     if( $qo ) $value = seo()->get_field($name, $this->get_acf_post_id($qo));
     // fallbacks for document_title
     if( !$value && $name === 'document_title' ) {
