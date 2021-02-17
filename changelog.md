@@ -1,6 +1,6 @@
 #### 1.0.5 (2021-02-17)
 
-- Check for existance of $wp_query before calling `get_queried_object()` (#de05070)
+- Check for existance of $wp_query before calling `get_queried_object()` (#dba74ce)
 - Remove unused styles (#91e3c25)
 - Add and item to the admin bar on Post Type Options Pages (#1059706)
 - - Set taxonomies with object type 'attachment' to private - Hide 'noindex' field on post type settings (#97b4f0d)
