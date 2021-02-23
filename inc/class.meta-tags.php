@@ -71,8 +71,11 @@ class MetaTags {
    * @return void
    */
   public function document_title_parts($parts) {
-    $title = $this->get_seo_value('document_title');
-    $parts['title'] = $title;
+    $parts['title'] = $this->get_seo_value('document_title');
+    if( !empty($parts['tagline']) ) {
+      $parts['tagline'] = seo()->get_field('description', 'rhseo-options');
+    }
+    
     return $parts;
   }
 
@@ -121,11 +124,6 @@ class MetaTags {
       if( $qo instanceof \WP_Post ) $value = get_the_title($qo->ID);
       if( $qo instanceof \WP_Post_Type ) $value = $qo->labels->name;
       if( $qo instanceof \WP_Term ) $value = $qo->name;
-    }
-    // fallbacks for 'description'
-    if( !$value && $name === 'description' ) {
-      if( $qo instanceof \WP_Post ) $value = get_the_excerpt($qo->ID);
-      if( $qo instanceof \WP_Term ) $value = $qo->description;
     }
     // fallbacks for 'image'
     if( !$value && $name === 'image' ) {

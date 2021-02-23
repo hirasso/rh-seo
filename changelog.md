@@ -1,3 +1,7 @@
+#### 1.0.7 (2021-02-23)
+
+- don't fall back for to wp values for `description` (#f4a5d29)
+
 #### 1.0.5 (2021-02-17)
 
 - Check for existance of $wp_query before calling `get_queried_object()` (#dba74ce)
