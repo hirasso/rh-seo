@@ -23,6 +23,9 @@ class MetaTags {
    * @return void
    */
   public function wp_head() {
+    // allow to disable meta tags
+    if( !apply_filters('rhseo/render_meta_tags', true ) ) return;
+    
     ob_start() ?>
 
 <!-- SEO: Start -->
