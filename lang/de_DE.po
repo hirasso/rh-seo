@@ -3,7 +3,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: RH SEO\n"
-"POT-Creation-Date: 2021-02-01 15:42+0100\n"
+"POT-Creation-Date: 2021-05-12 13:15+0200\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -17,53 +17,62 @@ msgstr ""
 "esc_html__;esc_html_e;esc_html_x:1,2c\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.4.2\n"
+"X-Generator: Poedit 2.4.3\n"
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPathExcluded-0: *.js\n"
 
-#: inc/class.meta-tags.php:164
-msgid "SEO Options"
-msgstr "SEO Optionen"
+#: inc/class.field-groups.php:77 inc/class.field-groups.php:193
+msgid "SEO"
+msgstr "SEO"
 
-#: inc/class.meta-tags.php:174
+#: inc/class.field-groups.php:93
+msgid "Search Engine Optimization"
+msgstr "Suchmaschinen-Optimierung"
+
+#: inc/class.field-groups.php:126
 msgid "Site Description"
 msgstr "Website-Beschreibung"
 
-#: inc/class.meta-tags.php:174
+#: inc/class.field-groups.php:126
 msgid "Description"
 msgstr "Beschreibung"
 
-#: inc/class.meta-tags.php:176
+#: inc/class.field-groups.php:128
 msgid "Optimal length: 50–160 characters"
 msgstr "Optimale Länge: 50-160 Zeichen"
 
-#: inc/class.meta-tags.php:184
+#: inc/class.field-groups.php:139
 msgid "Preview Image"
 msgstr "Vorschaubild"
 
-#: inc/class.meta-tags.php:186
+#: inc/class.field-groups.php:141
 msgid "For services like Facebook or Twitter."
 msgstr "Für Websites wie Facebook oder Twitter."
 
-#: inc/class.meta-tags.php:196
+#: inc/class.field-groups.php:152
 msgid "Site Name"
 msgstr "Website-Name"
 
-#: inc/class.meta-tags.php:205
+#: inc/class.field-groups.php:161
+msgid "Hide from search engines"
+msgstr "Vor Suchmaschinen verstecken"
+
+#: inc/class.field-groups.php:169
 msgid "Optional. Overwrites the title."
 msgstr "Optional. Überschreibt den Titel."
 
-#: inc/class.meta-tags.php:206
+#: inc/class.field-groups.php:170
 msgid "Document Title"
 msgstr "Titel des Dokuments"
 
-#: inc/class.meta-tags.php:214
+#: inc/class.field-groups.php:194
 msgid "SEO Global Defaults"
 msgstr "SEO Globale Standard-Einstellungen"
 
-#: inc/class.meta-tags.php:214
-msgid "SEO"
-msgstr "SEO"
+#: inc/class.field-groups.php:197
+#, php-format
+msgid "SEO Options: %s"
+msgstr "SEO Optionen: %s"
 
 #~ msgid "Used for facebook and twitter."
 #~ msgstr "Für Facebook und Twitter."

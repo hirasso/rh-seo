@@ -1,6 +1,14 @@
+#### 1.0.9 (2021-05-12)
+
+- Rename Global Options Page (#62976d6)
+
+#### 1.0.8 (2021-03-24)
+
+- Add new `boolean` filter `rhseo/render_meta_tags` (#7403f04)
+
 #### 1.0.7 (2021-02-23)
 
-- don't fall back for to wp values for `description` (#f4a5d29)
+- don't fall back for to wp values for `description` (#e92b761)
 
 #### 1.0.5 (2021-02-17)
 

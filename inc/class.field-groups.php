@@ -74,7 +74,8 @@ class Field_Groups {
   public function add_options_pages() {
     // add global options
     acf_add_options_page([
-      'page_title' => __('SEO Options', 'rhseo'),
+      'page_title' => __('Search Engine Optimization', 'rhseo'),
+      'menu_title' => __('SEO', 'rhseo'),
       'menu_slug' => "rhseo-options",
       'post_id' => "rhseo-options", 
       'position' => '59.6',

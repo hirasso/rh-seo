@@ -1,6 +1,5 @@
 # Copyright (C) 2021 RH SEO
 # This file is distributed under the same license as the RH SEO package.
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: RH SEO\n"
@@ -9,56 +8,59 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-Basepath: ..\n"
 "X-Poedit-KeywordsList: __;_e;_ex:1,2c;_n:1,2;_n_noop:1,2;_nx:1,2,4c;_nx_noop:1,2,3c;_x:1,2c;esc_attr__;esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c\n"
-"X-Poedit-SourceCharset: UTF-8\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"POT-Creation-Date: \n"
-"PO-Revision-Date: \n"
-"Last-Translator: \n"
-"Language-Team: \n"
-"X-Generator: Poedit 2.4.2\n"
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPathExcluded-0: *.js\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: inc/class.meta-tags.php:164
-msgid "SEO Options"
+#: ../inc/class.field-groups.php:77, ../inc/class.field-groups.php:193
+msgid "SEO"
 msgstr ""
 
-#: inc/class.meta-tags.php:174
+#: ../inc/class.field-groups.php:93
+msgid "Search Engine Optimization"
+msgstr ""
+
+#: ../inc/class.field-groups.php:126
 msgid "Site Description"
 msgstr ""
 
-#: inc/class.meta-tags.php:174
+#: ../inc/class.field-groups.php:126
 msgid "Description"
 msgstr ""
 
-#: inc/class.meta-tags.php:176
+#: ../inc/class.field-groups.php:128
 msgid "Optimal length: 50–160 characters"
 msgstr ""
 
-#: inc/class.meta-tags.php:184
-msgid "OpenGraph Image"
+#: ../inc/class.field-groups.php:139
+msgid "Preview Image"
 msgstr ""
 
-#: inc/class.meta-tags.php:186
-msgid "Used for facebook or twitter."
+#: ../inc/class.field-groups.php:141
+msgid "For services like Facebook or Twitter."
 msgstr ""
 
-#: inc/class.meta-tags.php:196
-msgid "Site Name"
+#: ../inc/class.field-groups.php:161
+msgid "Hide from search engines"
 msgstr ""
 
-#: inc/class.meta-tags.php:205
+#: ../inc/class.field-groups.php:169
 msgid "Optional. Overwrites the title."
 msgstr ""
 
-#: inc/class.meta-tags.php:206
+#: ../inc/class.field-groups.php:170
 msgid "Document Title"
 msgstr ""
 
-#: inc/class.meta-tags.php:214
+#: ../inc/class.field-groups.php:152
+msgid "Site Name"
+msgstr ""
+
+#: ../inc/class.field-groups.php:194
 msgid "SEO Global Defaults"
 msgstr ""
 
-#: inc/class.meta-tags.php:214
-msgid "SEO"
+#: ../inc/class.field-groups.php:197
+msgid "SEO Options: %s"
 msgstr ""
