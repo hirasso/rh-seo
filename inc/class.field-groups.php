@@ -34,6 +34,7 @@ class Field_Groups {
    * Set up the locations for the field group
    */
   private function setup_field_group_locations(): void {
+
     $this->field_group_locations = [
       [
         [
@@ -44,26 +45,25 @@ class Field_Groups {
       ],
       [
         [
-          'param' => 'post_type',
-          'operator' => '==',
-          'value' => "post",
-        ],
-      ],
-      [
-        [
-          'param' => 'post_type',
-          'operator' => '!=',
-          'value' => "post",
-        ],
-      ],
-      [
-        [
           'param' => 'taxonomy',
           'operator' => '==',
           'value' => "all",
         ],
-      ]
+      ],
     ];
+
+    $post_types = get_post_types(['public' => true]);
+
+    foreach( $post_types as $post_type ) {
+      $this->field_group_locations[] = [
+        [
+          'param' => 'post_type',
+          'operator' => '==',
+          'value' => $post_type,
+        ]
+      ];
+    }
+    
   }
   
   /**

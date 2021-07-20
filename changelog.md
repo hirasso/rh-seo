@@ -1,6 +1,7 @@
-#### 1.0.9 (2021-05-12)
+#### 1.0.9 (2021-07-20)
 
-- Rename Global Options Page (#62976d6)
+- Don't show the SEO Metabox on non-public post types (#06aacbc)
+- Rename Global Options Page (#b3cf24f)
 
 #### 1.0.8 (2021-03-24)
 
