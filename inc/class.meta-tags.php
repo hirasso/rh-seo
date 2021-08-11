@@ -15,10 +15,15 @@ class MetaTags {
     add_filter('pre_option_blogname', [$this, 'filter_blogname']);
     add_filter('pre_option_blogdescription', [$this, 'filter_blogdescription']);
     add_filter('document_title_parts', [$this, 'document_title_parts']);
-    add_action('wp', [$this, 'init']);
+    add_action('wp', [$this, 'adjust_robots']);
   }
 
-  public function init() {
+  /**
+   * Adjust wp_robots to add noindex for selected objects
+   *
+   * @return void
+   */
+  public function adjust_robots() {
     if( is_admin() ) return;
     $is_noindex = seo()->object_is_set_to_noindex(seo()->get_queried_object());
     if( $is_noindex ) add_filter('wp_robots', 'wp_robots_no_robots');
@@ -81,10 +86,13 @@ class MetaTags {
    */
   public function document_title_parts($parts) {
     $parts['title'] = $this->get_seo_value('document_title');
+    if( !seo()->is_front_page() ) {
+      $parts['site'] = get_bloginfo( 'name', 'display' );
+      unset($parts['tagline']);
+    }
     if( !empty($parts['tagline']) ) {
       $parts['tagline'] = seo()->get_field('description', 'rhseo-options');
     }
-    
     return $parts;
   }
 
@@ -120,24 +128,23 @@ class MetaTags {
    * Get an SEO value, fall back to the global default
    *
    * @param string $name
+   * @param $object
    * @return void
    */
-  public function get_seo_value( string $name ) {
+  public function get_seo_value( string $name, $object = null ) {
     
-    global $wp_query;
-    $value = null;
-    if( !isset($wp_query) ) return $value;
-    $queried_object= $wp_query->get_queried_object();
-    if( $queried_object) $value = seo()->get_field($name, $this->get_acf_post_id($queried_object));
+    if( empty($object) ) $object = seo()->get_queried_object();
+
+    if( $object ) $value = seo()->get_field($name, $this->get_acf_post_id($object));
     // fallbacks for document_title
     if( !$value && $name === 'document_title' ) {
-      if( $queried_object instanceof \WP_Post ) $value = get_the_title($queried_object->ID);
-      if( $queried_object instanceof \WP_Post_Type ) $value = $queried_object->labels->name;
-      if( $queried_object instanceof \WP_Term ) $value = $queried_object->name;
+      if( $object instanceof \WP_Post ) $value = get_the_title($object->ID);
+      if( $object instanceof \WP_Post_Type ) $value = $object->labels->name;
+      if( $object instanceof \WP_Term ) $value = $object->name;
     }
     // fallbacks for 'image'
     if( !$value && $name === 'image' ) {
-      if( $queried_object instanceof \WP_Post ) $value = get_post_thumbnail_id($queried_object->ID);
+      if( $object instanceof \WP_Post ) $value = get_post_thumbnail_id($object->ID);
     }
     // finally fall back to global options
     if( !$value ) $value = seo()->get_field($name, 'rhseo-options');
@@ -147,17 +154,17 @@ class MetaTags {
   /**
    * Get the acf post id for different WP Objects
    *
-   * @param mixed $queried_object
+   * @param mixed $object
    * @return mixed
    */
-  private function get_acf_post_id( $queried_object) {
+  private function get_acf_post_id( $object) {
     $post_id = null;
-    if( $queried_object instanceof \WP_Post ) {
-      $post_id = $queried_object;
-    } elseif( $queried_object instanceof \WP_Term ) {
-      $post_id = $queried_object;
-    } elseif( $queried_object instanceof \WP_Post_Type ) {
-      $post_id = "rhseo-options--$queried_object->name";
+    if( $object instanceof \WP_Post ) {
+      $post_id = $object;
+    } elseif( $object instanceof \WP_Term ) {
+      $post_id = $object;
+    } elseif( $object instanceof \WP_Post_Type ) {
+      $post_id = "rhseo-options--$object->name";
     }
     return $post_id;
   }

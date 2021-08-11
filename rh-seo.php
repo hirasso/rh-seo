@@ -275,10 +275,19 @@ class SEO {
   /**
    * Returns the queried object or the front page
    *
-   * @return void
+   * @return object
    */
-  public function get_queried_object() {
+  public function get_queried_object(): object {
     return apply_filters('rhseo/queried_object', get_queried_object());
+  }
+
+  /**
+   * Undocumented function
+   *
+   * @return boolean
+   */
+  public function is_front_page(): bool {
+    return apply_filters('rhseo/is_front_page', is_front_page());
   }
 }
 
