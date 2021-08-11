@@ -70,10 +70,10 @@ class SEO {
   /**
    * Helper function to get versioned asset urls
    *
-   * @param [type] $path
-   * @return void
+   * @param string $path
+   * @return string
    */
-  private function asset_uri( $path ) {
+  private function asset_uri( string $path ): string {
     $uri = plugins_url( $path, __FILE__ );
     $file = $this->get_file_path( $path );
     if( file_exists( $file ) ) {
@@ -86,9 +86,9 @@ class SEO {
   /**
    * Helper function to get a file path inside this plugin's folder
    *
-   * @return void
+   * @return string
    */
-  public function get_file_path( $path ) {
+  public function get_file_path( string $path ): string {
     $path = ltrim( $path, '/' );
     $file = plugin_dir_path( __FILE__ ) . $path;
     return $file;
@@ -126,7 +126,7 @@ class SEO {
    * Helper function to detect a development environment
    */
   private function is_dev() {
-    return defined('WP_ENV') && WP_ENV === 'development';
+    return defined('\WP_ENV') && \WP_ENV === 'development';
   }
 
   /**

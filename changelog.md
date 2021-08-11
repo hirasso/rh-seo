@@ -1,6 +1,6 @@
 #### 1.1.0 (2021-08-11)
 
-- Compatibility with WP 5.7 (#8d9fc1b)
+- Compatibility with WP 5.7 (#4cd385a)
 
 #### 1.0.9 (2021-07-20)
 

@@ -123,20 +123,21 @@ class MetaTags {
    * @return void
    */
   public function get_seo_value( string $name ) {
+    
     global $wp_query;
     $value = null;
     if( !isset($wp_query) ) return $value;
-    $qo = $wp_query->get_queried_object();
-    if( $qo ) $value = seo()->get_field($name, $this->get_acf_post_id($qo));
+    $queried_object= $wp_query->get_queried_object();
+    if( $queried_object) $value = seo()->get_field($name, $this->get_acf_post_id($queried_object));
     // fallbacks for document_title
     if( !$value && $name === 'document_title' ) {
-      if( $qo instanceof \WP_Post ) $value = get_the_title($qo->ID);
-      if( $qo instanceof \WP_Post_Type ) $value = $qo->labels->name;
-      if( $qo instanceof \WP_Term ) $value = $qo->name;
+      if( $queried_object instanceof \WP_Post ) $value = get_the_title($queried_object->ID);
+      if( $queried_object instanceof \WP_Post_Type ) $value = $queried_object->labels->name;
+      if( $queried_object instanceof \WP_Term ) $value = $queried_object->name;
     }
     // fallbacks for 'image'
     if( !$value && $name === 'image' ) {
-      if( $qo instanceof \WP_Post ) $value = get_post_thumbnail_id($qo->ID);
+      if( $queried_object instanceof \WP_Post ) $value = get_post_thumbnail_id($queried_object->ID);
     }
     // finally fall back to global options
     if( !$value ) $value = seo()->get_field($name, 'rhseo-options');
@@ -146,17 +147,17 @@ class MetaTags {
   /**
    * Get the acf post id for different WP Objects
    *
-   * @param mixed $qo
+   * @param mixed $queried_object
    * @return mixed
    */
-  private function get_acf_post_id( $qo ) {
+  private function get_acf_post_id( $queried_object) {
     $post_id = null;
-    if( $qo instanceof \WP_Post ) {
-      $post_id = $qo->ID;
-    } elseif( $qo instanceof \WP_Term ) {
-      $post_id = $qo;
-    } elseif( $qo instanceof \WP_Post_Type ) {
-      $post_id = "rhseo-options--$qo->name";
+    if( $queried_object instanceof \WP_Post ) {
+      $post_id = $queried_object;
+    } elseif( $queried_object instanceof \WP_Term ) {
+      $post_id = $queried_object;
+    } elseif( $queried_object instanceof \WP_Post_Type ) {
+      $post_id = "rhseo-options--$queried_object->name";
     }
     return $post_id;
   }
