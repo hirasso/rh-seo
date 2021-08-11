@@ -1,6 +1,6 @@
 #### 1.1.0 (2021-08-11)
 
-- New filters: `rhseo/queried_object` and `rhseo/is_front_page` (#368000c)
+- New filters: `rhseo/queried_object` and `rhseo/is_front_page` (#ccd8d40)
 - Compatibility with WP 5.7 (#4cd385a)
 
 #### 1.0.9 (2021-07-20)
