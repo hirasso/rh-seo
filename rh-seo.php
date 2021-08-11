@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name: RH SEO
- * Version: 1.0.9
+ * Version: 1.1.0
  * Author: Rasso Hilber
  * Description: Lightweight SEO optimizations for WordPress
  * Author URI: https://rassohilber.com
@@ -270,6 +270,15 @@ class SEO {
       return (bool) $this->get_field("noindex", $object);
     }
     return false;
+  }
+
+  /**
+   * Returns the queried object or the front page
+   *
+   * @return void
+   */
+  public function get_queried_object() {
+    return apply_filters('rhseo/queried_object', get_queried_object());
   }
 }
 

@@ -15,6 +15,13 @@ class MetaTags {
     add_filter('pre_option_blogname', [$this, 'filter_blogname']);
     add_filter('pre_option_blogdescription', [$this, 'filter_blogdescription']);
     add_filter('document_title_parts', [$this, 'document_title_parts']);
+    add_action('wp', [$this, 'init']);
+  }
+
+  public function init() {
+    if( is_admin() ) return;
+    $is_noindex = seo()->object_is_set_to_noindex(seo()->get_queried_object());
+    if( $is_noindex ) add_filter('wp_robots', 'wp_robots_no_robots');
   }
 
   /**
@@ -29,7 +36,6 @@ class MetaTags {
     ob_start() ?>
 
 <!-- SEO: Start -->
-<?php if( seo()->object_is_set_to_noindex(get_queried_object()) ) wp_no_robots(); ?>
 <meta property="og:title" content="<?= wp_get_document_title() ?>" />
 <?php if($description = get_bloginfo('description')) : ?>
 <meta name="description" content="<?= esc_attr($description) ?>" />

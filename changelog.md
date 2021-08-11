@@ -1,6 +1,10 @@
+#### 1.1.0 (2021-08-11)
+
+- Compatibility with WP 5.7 (#8d9fc1b)
+
 #### 1.0.9 (2021-07-20)
 
-- Don't show the SEO Metabox on non-public post types (#06aacbc)
+- Don't show the SEO Metabox on non-public post types (#011111a)
 - Rename Global Options Page (#b3cf24f)
 
 #### 1.0.8 (2021-03-24)
