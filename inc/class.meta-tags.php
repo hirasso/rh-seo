@@ -10,7 +10,9 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 class MetaTags {
 
   public function __construct() {
-
+    
+    if( is_admin() ) return;
+    
     add_action('wp_head', [$this, 'wp_head'], 4);
     add_filter('pre_option_blogname', [$this, 'filter_blogname']);
     add_filter('pre_option_blogdescription', [$this, 'filter_blogdescription']);

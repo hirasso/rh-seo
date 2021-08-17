@@ -275,9 +275,9 @@ class SEO {
   /**
    * Returns the queried object or the front page
    *
-   * @return object
+   * @return null|object
    */
-  public function get_queried_object(): object {
+  public function get_queried_object(): ?object {
     return apply_filters('rhseo/queried_object', get_queried_object());
   }
 

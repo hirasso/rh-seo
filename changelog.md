@@ -1,6 +1,7 @@
-#### 1.1.0 (2021-08-11)
+#### 1.1.0 (2021-08-17)
 
-- New filters: `rhseo/queried_object` and `rhseo/is_front_page` (#368000c)
+- only filter meta tags on frontend (#211514c)
+- New filters: `rhseo/queried_object` and `rhseo/is_front_page` (#ccd8d40)
 - Compatibility with WP 5.7 (#4cd385a)
 
 #### 1.0.9 (2021-07-20)
