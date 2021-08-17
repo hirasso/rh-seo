@@ -1,3 +1,7 @@
+#### 1.1.1 (2021-08-17)
+
+- Support for polylang (#2b9ac52)
+
 #### 1.1.0 (2021-08-17)
 
 - only filter meta tags on frontend (#bee4ba5)

@@ -118,7 +118,7 @@ class SEO {
    * @param array $array
    * @return stdClass
    */
-  private function to_object( $array ) {
+  public function to_object( $array ) {
     return json_decode(json_encode($array));
   }
 
@@ -288,6 +288,34 @@ class SEO {
    */
   public function is_front_page(): bool {
     return apply_filters('rhseo/is_front_page', is_front_page());
+  }
+
+  /**
+   * Checks if polylang is enabled
+   *
+   * @return null|object
+   */
+  public function get_polylang_languages(): ?object {
+    $languages = null;
+    if( !defined('POLYLANG_VERSION') ) return $languages;
+    return seo()->to_object(\pll_the_languages([
+      'echo' => 0,
+      'raw' => 1,
+      'hide_if_empty' => false
+    ]));
+  }
+
+  /**
+   * Retrieve the options page slug
+   *
+   * @return string
+   */
+  public function get_options_page_slug(): string {
+    $slug = "rhseo-options";
+    if( function_exists('\pll_current_language') ) {
+      $slug = "rhseo-options--" . \pll_current_language();
+    }
+    return $slug;
   }
 }
 

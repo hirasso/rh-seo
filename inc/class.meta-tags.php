@@ -10,14 +10,15 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 class MetaTags {
 
   public function __construct() {
-    
-    if( is_admin() ) return;
-    
+    add_action('wp', [$this, 'init']);
+  }
+
+  public function init() {
     add_action('wp_head', [$this, 'wp_head'], 4);
     add_filter('pre_option_blogname', [$this, 'filter_blogname']);
     add_filter('pre_option_blogdescription', [$this, 'filter_blogdescription']);
     add_filter('document_title_parts', [$this, 'document_title_parts']);
-    add_action('wp', [$this, 'adjust_robots']);
+    $this->adjust_robots();
   }
 
   /**
@@ -87,13 +88,14 @@ class MetaTags {
    * @return void
    */
   public function document_title_parts($parts) {
+    
     $parts['title'] = $this->get_seo_value('document_title');
     if( !seo()->is_front_page() ) {
       $parts['site'] = get_bloginfo( 'name', 'display' );
       unset($parts['tagline']);
     }
     if( !empty($parts['tagline']) ) {
-      $parts['tagline'] = seo()->get_field('description', 'rhseo-options');
+      $parts['tagline'] = seo()->get_field('description', seo()->get_options_page_slug());
     }
     return $parts;
   }
@@ -106,7 +108,7 @@ class MetaTags {
    */
   public function filter_blogname( $value ) {
     remove_filter('pre_option_blogname', [$this, 'filter_blogname']);
-    if( $custom_site_name = seo()->get_field('site_name', 'rhseo-options') ) {
+    if( $custom_site_name = seo()->get_field('site_name', seo()->get_options_page_slug()) ) {
       $value = __($custom_site_name);
     }
     add_filter('pre_option_blogname', [$this, 'filter_blogname']);
@@ -138,19 +140,20 @@ class MetaTags {
     if( empty($object) ) $object = seo()->get_queried_object();
 
     if( $object ) $value = seo()->get_field($name, $this->get_acf_post_id($object));
+    
     // fallbacks for document_title
-    if( !$value && $name === 'document_title' ) {
+    if( empty($value) && $name === 'document_title' ) {
       if( $object instanceof \WP_Post ) $value = get_the_title($object->ID);
       if( $object instanceof \WP_Post_Type ) $value = $object->labels->name;
       if( $object instanceof \WP_Term ) $value = $object->name;
     }
     // fallbacks for 'image'
-    if( !$value && $name === 'image' ) {
+    if( empty($value) && $name === 'image' ) {
       if( $object instanceof \WP_Post ) $value = get_post_thumbnail_id($object->ID);
     }
     // finally fall back to global options
-    if( !$value ) $value = seo()->get_field($name, 'rhseo-options');
-    return $value;
+    if( empty($value) ) $value = seo()->get_field($name, 'rhseo-options');
+    return $value ?? null;
   }
 
   /**
@@ -166,7 +169,7 @@ class MetaTags {
     } elseif( $object instanceof \WP_Term ) {
       $post_id = $object;
     } elseif( $object instanceof \WP_Post_Type ) {
-      $post_id = "rhseo-options--$object->name";
+      $post_id = seo()->get_options_page_slug() . "--$object->name";
     }
     return $post_id;
   }

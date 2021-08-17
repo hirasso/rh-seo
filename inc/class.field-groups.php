@@ -40,7 +40,7 @@ class Field_Groups {
         [
           'param' => 'options_page',
           'operator' => '==',
-          'value' => "{$this->prefix}-options",
+          'value' => "rhseo-options",
         ],
       ],
       [
@@ -51,6 +51,18 @@ class Field_Groups {
         ],
       ],
     ];
+
+    if( $pll_languages = seo()->get_polylang_languages() ) {
+      foreach( $pll_languages as $language ) {
+        $this->field_group_locations[] = [
+          [
+            'param' => 'options_page',
+            'operator' => '==',
+            'value' => "rhseo-options--$language->slug"
+          ]
+        ];
+      }
+    }
 
     $post_types = get_post_types(['public' => true]);
 
@@ -65,7 +77,7 @@ class Field_Groups {
     }
     
   }
-  
+
   /**
    * Adds options pages
    *
@@ -73,22 +85,66 @@ class Field_Groups {
    */
   public function add_options_pages() {
     // add global options
-    acf_add_options_page([
+    $parent = acf_add_options_page([
       'page_title' => __('Search Engine Optimization', 'rhseo'),
       'menu_title' => __('SEO', 'rhseo'),
       'menu_slug' => "rhseo-options",
       'post_id' => "rhseo-options", 
       'position' => '59.6',
-      'icon_url' => 'dashicons-share'
+      'icon_url' => 'dashicons-share',
     ]);
+    
+    
+    if( $pll_languages = seo()->get_polylang_languages() ) {
+      foreach( $pll_languages as $language ) {
+        acf_add_options_sub_page([
+          'page_title' => $language->name,
+          'menu_title' => $language->name,
+          'parent_slug' => $parent['menu_slug'],
+          'menu_slug' => $parent['menu_slug'] . "--$language->slug",
+          'post_id' => "rhseo-options--$language->slug"
+        ]);
+      }
+    }
 
     // add post type archive options pages
-    $post_types = get_post_types([
+    $post_types = \get_post_types([
       'public' => true
     ]);
+    
     foreach( $post_types as $post_type ) {
-      $pt_object = get_post_type_object($post_type); 
+      $pt_object = \get_post_type_object($post_type);
       if( !$pt_object->has_archive ) continue;
+      $this->add_post_type_options_page($post_type);
+    }
+  }
+
+  /**
+   * Adds SEO options pages to post types
+   *
+   * @param string $post_type
+   * @return void
+   */
+  private function add_post_type_options_page($post_type) {
+
+    if( $pll_languages = seo()->get_polylang_languages() ) {
+      foreach( $pll_languages as $language ) {
+        $post_id = "rhseo-options--$language->slug--$post_type";
+        acf_add_options_page([
+          'page_title' => "SEO $language->name",
+          'menu_slug' => $post_id,
+          'post_id' => $post_id, 
+          'parent_slug' => "edit.php?post_type=$post_type",
+        ]);
+        $this->field_group_locations[] = [
+          [
+            'param' => 'options_page',
+            'operator' => '==',
+            'value' => $post_id,
+          ],
+        ];
+      }
+    } else {
       $post_id = "rhseo-options--$post_type";
       acf_add_options_page([
         'page_title' => __('SEO Options', 'rhseo'),
@@ -104,6 +160,7 @@ class Field_Groups {
         ],
       ];
     }
+    
   }
 
   /**
@@ -205,7 +262,7 @@ class Field_Groups {
    *
    * @return boolean
    */
-  private function is_qtranslate_enabled() {
+  private function is_qtranslate_enabled(): bool {
     return defined('QTX_VERSION');
   }
 
@@ -217,8 +274,8 @@ class Field_Groups {
   private function is_global_options_page(): bool {
     global $pagenow;
     if( $pagenow !== 'admin.php' ) return false;
-    if( ($_GET['page'] ?? false) !== "{$this->prefix}-options") return false;
-    return true;
+    if( !$page = $_GET['page'] ?? false ) return false;
+    return strpos($page, "rhseo-options") === 0;
   }
 
   /**
@@ -234,7 +291,8 @@ class Field_Groups {
     foreach( $this->field_group_locations as $location ) {
       $location_value = $location[0]['value'] ?? null;
       if( $page === $location_value ) {
-        $post_type = str_replace("rhseo-options--", "", $page);
+        $parts = explode('--', $page);
+        $post_type = end($parts);
       }
     }
     return $post_type;
