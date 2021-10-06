@@ -1,6 +1,14 @@
+#### 1.1.3 (2021-10-06)
+
+- add filter `rhseo/get_seo_value` (#7619876)
+
+#### 1.1.2 (2021-10-06)
+
+- Fall-back to `get_bloginfo('name')` for `document_title` (#e8d61ec)
+
 #### 1.1.1 (2021-08-17)
 
-- Support for polylang (#2b9ac52)
+- Support for polylang (#93524fc)
 
 #### 1.1.0 (2021-08-17)
 

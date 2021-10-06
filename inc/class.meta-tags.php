@@ -155,6 +155,10 @@ class MetaTags {
     }
     // finally fall back to global options
     if( empty($value) ) $value = seo()->get_field($name, 'rhseo-options');
+    /**
+     * Allow themes to filter SEO values
+     */
+    $value = apply_filters("rhseo/get_seo_value/name=$name", $value, $object);
     return $value ?? null;
   }
 
