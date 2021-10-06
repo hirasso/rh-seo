@@ -97,6 +97,7 @@ class MetaTags {
     if( !empty($parts['tagline']) ) {
       $parts['tagline'] = seo()->get_field('description', seo()->get_options_page_slug());
     }
+    
     return $parts;
   }
 
@@ -138,7 +139,7 @@ class MetaTags {
   public function get_seo_value( string $name, $object = null ) {
     
     if( empty($object) ) $object = seo()->get_queried_object();
-
+    
     if( $object ) $value = seo()->get_field($name, $this->get_acf_post_id($object));
     
     // fallbacks for document_title
@@ -146,6 +147,7 @@ class MetaTags {
       if( $object instanceof \WP_Post ) $value = get_the_title($object->ID);
       if( $object instanceof \WP_Post_Type ) $value = $object->labels->name;
       if( $object instanceof \WP_Term ) $value = $object->name;
+      if( !$object ) $value = get_bloginfo('name');
     }
     // fallbacks for 'image'
     if( empty($value) && $name === 'image' ) {
