@@ -13,7 +13,13 @@ class MetaTags {
     add_action('wp', [$this, 'init']);
   }
 
-  public function init() {
+  /**
+   * Initializes the Class
+   *
+   * @return void
+   * @author Rasso Hilber <mail@rassohilber.com>
+   */
+  public function init(): void {
     add_action('wp_head', [$this, 'wp_head'], 4);
     add_filter('pre_option_blogname', [$this, 'filter_blogname']);
     add_filter('pre_option_blogdescription', [$this, 'filter_blogdescription']);
@@ -26,7 +32,7 @@ class MetaTags {
    *
    * @return void
    */
-  public function adjust_robots() {
+  public function adjust_robots(): void {
     if( is_admin() ) return;
     $is_noindex = seo()->object_is_set_to_noindex(seo()->get_queried_object());
     if( $is_noindex ) add_filter('wp_robots', 'wp_robots_no_robots');
@@ -37,7 +43,7 @@ class MetaTags {
    *
    * @return void
    */
-  public function wp_head() {
+  public function wp_head(): void {
     // allow to disable meta tags
     if( !apply_filters('rhseo/render_meta_tags', true ) ) return;
     
@@ -65,9 +71,9 @@ class MetaTags {
   /**
    * Get current URL
    *
-   * @return [string] $url
+   * @return String $url
    */
-  private function get_current_url( $path = '' ) {
+  private function get_current_url( $path = '' ): string {
     $url = set_url_scheme( 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] );
     return $url;
   }
@@ -77,7 +83,7 @@ class MetaTags {
    *
    * @return string Locale
    */
-  private function get_locale() {
+  private function get_locale(): string {
     $lang = get_bloginfo( 'language' );
     return str_replace('-', '_', $lang);
   }
@@ -87,15 +93,18 @@ class MetaTags {
    *
    * @return void
    */
-  public function document_title_parts($parts) {
+  public function document_title_parts(array $parts): array {
     
     $parts['title'] = $this->get_seo_value('document_title');
+    
+    // overwrite 'site', if not on the front page
     if( !seo()->is_front_page() ) {
       $parts['site'] = get_bloginfo( 'name', 'display' );
       unset($parts['tagline']);
     }
+    // Overwrite 'tagline', if present
     if( !empty($parts['tagline']) ) {
-      $parts['tagline'] = seo()->get_field('description', seo()->get_options_page_slug());
+      $parts['tagline'] = seo()->get_global_options_field('description');
     }
     
     return $parts;
@@ -109,7 +118,7 @@ class MetaTags {
    */
   public function filter_blogname( $value ) {
     remove_filter('pre_option_blogname', [$this, 'filter_blogname']);
-    if( $custom_site_name = seo()->get_field('site_name', seo()->get_options_page_slug()) ) {
+    if( $custom_site_name = seo()->get_global_options_field('site_name') ) {
       $value = __($custom_site_name);
     }
     add_filter('pre_option_blogname', [$this, 'filter_blogname']);
@@ -133,39 +142,39 @@ class MetaTags {
    * Get an SEO value, fall back to the global default
    *
    * @param string $name
-   * @param $object
-   * @return void
+   * @return string|null
    */
-  public function get_seo_value( string $name, $object = null ) {
+  public function get_seo_value( string $name ): ?string {
     
-    if( empty($object) ) $object = seo()->get_queried_object();
+    $queried_object = seo()->get_queried_object();
     
-    if( $object ) $value = seo()->get_field($name, $this->get_acf_post_id($object));
-    
+    if( $queried_object ) $value = seo()->get_field($name, $this->get_acf_post_id($queried_object));
+
     // fallbacks for document_title
     if( empty($value) && $name === 'document_title' ) {
-      if( $object instanceof \WP_Post ) $value = get_the_title($object->ID);
-      if( $object instanceof \WP_Post_Type ) $value = $object->labels->name;
-      if( $object instanceof \WP_Term ) $value = $object->name;
-      if( !$object ) $value = get_bloginfo('name');
+      if( $queried_object instanceof \WP_Post ) $value = get_the_title($queried_object->ID);
+      if( $queried_object instanceof \WP_Post_Type ) $value = $queried_object->labels->name;
+      if( $queried_object instanceof \WP_Term ) $value = $queried_object->name;
+      if( !$queried_object ) $value = get_bloginfo('name');
     }
     // fallbacks for 'image'
     if( empty($value) && $name === 'image' ) {
-      if( $object instanceof \WP_Post ) $value = get_post_thumbnail_id($object->ID);
+      if( $queried_object instanceof \WP_Post ) $value = get_post_thumbnail_id($queried_object->ID);
     }
     // finally fall back to global options
-    if( empty($value) ) $value = seo()->get_field($name, 'rhseo-options');
+    if( empty($value) ) $value = seo()->get_global_options_field($name);
     /**
      * Allow themes to filter SEO values
      */
-    $value = apply_filters("rhseo/get_seo_value/name=$name", $value, $object);
+    $value = apply_filters("rhseo/get_seo_value/name=$name", $value, $queried_object);
+
     return $value ?? null;
   }
 
   /**
    * Get the acf post id for different WP Objects
    *
-   * @param mixed $object
+   * @param null|false|WP_Post|WP_Term|WP_Post_Type $object
    * @return mixed
    */
   private function get_acf_post_id( $object) {

@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name: RH SEO
- * Version: 1.1.3
+ * Version: 1.1.4
  * Author: Rasso Hilber
  * Description: Lightweight SEO optimizations for WordPress
  * Author URI: https://rassohilber.com
@@ -254,9 +254,26 @@ class SEO {
    * @param string $name
    * @return mixed
    */
-  public function get_field($name, $post_id = 0, $format_value = true) {
-    $value = \get_field("rhseo_{$name}", $post_id, $format_value);
+  public function get_field($name, $post_id = 0) {
+    $value = \get_field("rhseo_{$name}", $post_id);
+    /**
+     * Set the value to null if it's an array.
+     * This prevents unfiltered ACF field groups from being returned
+     * (ACF 5.11.1 Compatibility)
+     */
+    if( is_array($value) ) $value = null;
     return $value;
+  }
+
+  /**
+   * Gets a field from the SEO options page
+   *
+   * @param string $name
+   * @return mixed
+   * @author Rasso Hilber <mail@rassohilber.com>
+   */
+  public function get_global_options_field(string $name) {
+    return $this->get_field($name, $this->get_options_page_slug());
   }
 
   /**
