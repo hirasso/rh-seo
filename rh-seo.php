@@ -262,8 +262,8 @@ class SEO {
   /**
    * checks if an object is set to noindex
    *
-   * @param [type] $object
-   * @return void
+   * @param null|WP_Post|WP_Term $object
+   * @return boolean
    */
   public function object_is_set_to_noindex( $object = null ): bool {
     if( is_a($object, "WP_Post") || is_a($object, "WP_Term") ) {
