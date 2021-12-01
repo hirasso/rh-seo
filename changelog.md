@@ -1,6 +1,17 @@
-#### 1.1.3 (2021-10-06)
+#### 1.1.5 (2021-12-01)
 
-- add filter `rhseo/get_seo_value` (#7619876)
+- Audit npm vulnerabilities (#4d303ea)
+- Gracefully handle missing ACF (#0361c95)
+
+#### 1.1.4 (2021-12-01)
+
+- Revert hotfixes for ACF 5.11.1  5.11.3 fixed the issues (#9468d76)
+- ACF 5.11.1 Compatibility/Hotfixes for unfiltered fields from unsaved Posts (#e0a9766)
+
+#### 1.1.3 (2021-11-20)
+
+- Add documentation (#f484193)
+- add filter `rhseo/get_seo_value` (#e1231b9)
 
 #### 1.1.2 (2021-10-06)
 
