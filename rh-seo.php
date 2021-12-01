@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name: RH SEO
- * Version: 1.1.4
+ * Version: 1.1.5
  * Author: Rasso Hilber
  * Description: Lightweight SEO optimizations for WordPress
  * Author URI: https://rassohilber.com
@@ -36,9 +36,13 @@ class SEO {
    * @return void
    */
   public function initialize() {
+    add_action('admin_notices', [$this, 'maybe_show_notice_acf_missing'], 9);
+    add_action('admin_notices', [$this, 'show_notices'] );
+
+    if( !defined('ACF') ) return;
+
     $this->init_plugin_modules();
     add_action('admin_init', [$this, 'admin_init'], 11);
-    add_action('admin_notices', [$this, 'show_admin_notices'] );
     add_action('admin_enqueue_scripts', [$this, 'enqueue_styles'] );
     add_action('admin_enqueue_scripts', [$this, 'enqueue_scripts'], 100 );
     add_action('plugins_loaded', [$this, 'load_textdomain']);
@@ -139,7 +143,7 @@ class SEO {
   public function get_template($template_name, $value = null) {
     $value = $this->to_object($value);
     $path = $this->get_file_path("templates/$template_name.php");
-    $path = apply_filters("$this->prefix/template/$template_name", $path);
+    $path = apply_filters("rhseo/template/$template_name", $path);
     if( !file_exists($path) ) return "<p>$template_name: Template doesn't exist</p>";
     ob_start();
     if( $this->is_dev() ) echo "<!-- Template Path: $path -->";
@@ -158,7 +162,7 @@ class SEO {
       if( file_exists($plugin_file) ) {
         $plugin_data = get_plugin_data($plugin_file);
         if( delete_plugins([$plugin_slug]) ) {
-          $this->add_admin_notice("plugin-deleted-$id", "[RH SEO] Deleted deprecated plugin „{$plugin_data['Name']}“.", "success");
+          $this->add_notice("plugin-deleted-$id", "[RH SEO] Deleted deprecated plugin „{$plugin_data['Name']}“.", "success");
         }
       }
     }
@@ -173,15 +177,30 @@ class SEO {
    * @param string $type
    * @return void
    */
-  public function add_admin_notice( $key, $message, $type = 'warning', $is_dismissible = false ) {
-    $notices = get_transient("$this->prefix-admin-notices");
+  public function add_notice( $key, $message, $type = 'warning', $is_dismissible = false ) {
+    $notices = get_transient($this->get_notices_transient_name());
     if( !$notices ) $notices = [];
     $notices[$key] = [
       'message' => $message,
       'type' => $type,
       'is_dismissible' => $is_dismissible
     ];
-    set_transient("$this->prefix-admin-notices", $notices);
+    set_transient($this->get_notices_transient_name(), $notices);
+  }
+
+  /**
+   * Shows an admin notice if ACF is not installed
+   *
+   * @return void
+   * @author Rasso Hilber <mail@rassohilber.com>
+   */
+  public function maybe_show_notice_acf_missing(): void {
+    if( defined('ACF') ) return;
+    $message = wp_sprintf(
+      __("RHSEO requires the plugin %s to be installed and activated.", 'acfml'),
+      '<a href="https://www.advancedcustomfields.com/" target="_blank">Advanced Custom Fields</a>',
+    );
+    $this->add_notice('acf-missing', $message, 'error');
   }
   
   /**
@@ -189,10 +208,9 @@ class SEO {
    *
    * @return void
    */
-  public function show_admin_notices() {
-    $notices = get_transient("$this->prefix-admin-notices");
-    delete_transient("$this->prefix-admin-notices");
-    if( !is_array($notices) ) return;
+  public function show_notices() {
+    $notices = get_transient($this->get_notices_transient_name()) ?: [];
+    delete_transient($this->get_notices_transient_name());
     foreach( $notices as $notice ) {
       ob_start() ?>
       <div class="notice notice-<?= $notice['type'] ?> <?= $notice['is_dismissible'] ? 'is-dismissible' : '' ?>">
@@ -200,6 +218,16 @@ class SEO {
       </div>
       <?php echo ob_get_clean();
     }
+  }
+
+  /**
+   * Get the notices transient name for the current user
+   *
+   * @return string
+   */
+  private function get_notices_transient_name(): string {
+    $user_id = get_current_user_id();
+    return "rhseo-admin-notices-$user_id";
   }
 
   /**
