@@ -256,12 +256,6 @@ class SEO {
    */
   public function get_field($name, $post_id = 0) {
     $value = \get_field("rhseo_{$name}", $post_id);
-    /**
-     * Set the value to null if it's an array.
-     * This prevents unfiltered ACF field groups from being returned
-     * (ACF 5.11.1 Compatibility)
-     */
-    if( is_array($value) ) $value = null;
     return $value;
   }
 
