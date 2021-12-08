@@ -13,6 +13,7 @@ class XML_Sitemaps {
 
   public function __construct() {
     $this->prefix = seo()->prefix;
+    add_action('init', [$this, 'add_qtranslate_sitemaps_provider']);
     add_action('registered_taxonomy', [$this, 'registered_taxonomy'], 10, 3);
     add_filter('wp_sitemaps_add_provider', [$this, 'sitemaps_providers'], 10, 2);
     add_filter('wp_sitemaps_taxonomies', [$this, 'sitemaps_taxonomies']);
@@ -96,6 +97,27 @@ class XML_Sitemaps {
       $wp_taxonomies[$taxonomy]->public = false;
     }
     
+  }
+
+  /**
+   * Adds a custom provider to the WordPress sitemap:
+   *    - adds an entry 'wp-sitemap-languages-1.xml' to the sitemap index for the default language
+   *    - adds urls to the sitemaps for each language to the new sitemap 'wp-sitemap-languages-1.xml'
+   *
+   * @return void
+   */
+  public function add_qtranslate_sitemaps_provider() {
+    if( !defined('QTX_VERSION') ) return;
+
+    $default_language = qtranxf_getLanguageDefault();
+    $current_language = qtranxf_getLanguage();
+    // we only want to add the custom provider for the default language
+    if( $current_language !== $default_language ) return;
+
+    // registers the new provider for the sitemap
+    require_once(RHSEO_DIR . '/inc/class.qtranslate-xt-sitemaps-provider.php');
+    $provider = new Qtranslate_XT_Sitemaps_Provider();
+    wp_register_sitemap_provider( 'languages', $provider );
   }
 
 }
