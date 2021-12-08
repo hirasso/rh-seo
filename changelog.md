@@ -1,6 +1,10 @@
+#### 1.1.6 (2021-12-08)
+
+- Better handling for static front pages (#11f96b6)
+
 #### 1.1.5 (2021-12-08)
 
-- Automatically delete default tagline (#9bff304)
+- Automatically delete default tagline (#71d175f)
 - Audit npm vulnerabilities (#ecedeb6)
 - Gracefully handle missing ACF (#0361c95)
 

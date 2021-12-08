@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name: RH SEO
- * Version: 1.1.5
+ * Version: 1.1.6
  * Author: Rasso Hilber
  * Description: Lightweight SEO optimizations for WordPress
  * Author URI: https://rassohilber.com
@@ -286,6 +286,18 @@ class SEO {
   public function get_field($name, $post_id = 0) {
     $value = \get_field("rhseo_{$name}", $post_id);
     return $value;
+  }
+
+  /**
+   * Get the front Page if set
+   *
+   * @return \WP_Post|null
+   * @author Rasso Hilber <mail@rassohilber.com>
+   */
+  public function get_front_page(): ?\WP_Post {
+    if( 'page' !== get_option('show_on_front') ) return null;
+    $page = get_post(intval(get_option('page_on_front')));
+    return $page instanceof \WP_Post ? $page : null;
   }
 
   /**

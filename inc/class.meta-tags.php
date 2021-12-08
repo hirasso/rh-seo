@@ -21,8 +21,8 @@ class MetaTags {
    */
   public function init(): void {
     add_action('wp_head', [$this, 'wp_head'], 4);
-    add_filter('pre_option_blogname', [$this, 'filter_blogname']);
-    add_filter('pre_option_blogdescription', [$this, 'filter_blogdescription']);
+    add_filter('pre_option_blogname', [$this, 'get_bloginfo_name']);
+    add_filter('pre_option_blogdescription', [$this, 'get_bloginfo_description']);
     add_filter('document_title_parts', [$this, 'document_title_parts']);
     $this->adjust_robots();
   }
@@ -99,9 +99,10 @@ class MetaTags {
     
     // overwrite 'site', if not on the front page
     if( !seo()->is_front_page() ) {
-      $parts['site'] = get_bloginfo( 'name', 'display' );
+      $parts['site'] = get_bloginfo( 'name' );
       unset($parts['tagline']);
     }
+    
     // Overwrite 'tagline', if present
     if( !empty($parts['tagline']) ) {
       $parts['tagline'] = seo()->get_global_options_field('description');
@@ -116,12 +117,15 @@ class MetaTags {
    * @param string $name
    * @return string|bool
    */
-  public function filter_blogname( $value ) {
-    remove_filter('pre_option_blogname', [$this, 'filter_blogname']);
+  public function get_bloginfo_name( $value = null ) {
+    // remove_filter('pre_option_blogname', [$this, 'get_bloginfo_name']);
+    if( $title = $this->get_seo_value('document_title', seo()->get_front_page()) ) {
+      return $title;
+    }
     if( $custom_site_name = seo()->get_global_options_field('site_name') ) {
       $value = __($custom_site_name);
     }
-    add_filter('pre_option_blogname', [$this, 'filter_blogname']);
+    // add_filter('pre_option_blogname', [$this, 'get_bloginfo_name']);
     return $value;
   }
 
@@ -131,10 +135,10 @@ class MetaTags {
   * @param string $name
   * @return string|bool
   */
-  public function filter_blogdescription( $value ) {
-    remove_filter('pre_option_blogdescription', [$this, 'filter_blogdescription']);
+  public function get_bloginfo_description( $value ) {
+    remove_filter('pre_option_blogdescription', [$this, 'get_bloginfo_description']);
     $value = $this->get_seo_value('description');
-    add_filter('pre_option_blogdescription', [$this, 'filter_blogdescription']);
+    add_filter('pre_option_blogdescription', [$this, 'get_bloginfo_description']);
     return $value;
   }
 
@@ -144,29 +148,29 @@ class MetaTags {
    * @param string $name
    * @return string|null
    */
-  public function get_seo_value( string $name ): ?string {
+  public function get_seo_value( string $name, $object = null ): ?string {
     
-    $queried_object = seo()->get_queried_object();
+    if( !$object ) $object = seo()->get_queried_object();
     
-    if( $queried_object ) $value = seo()->get_field($name, $this->get_acf_post_id($queried_object));
+    if( $object ) $value = seo()->get_field($name, $this->get_acf_post_id($object));
 
     // fallbacks for document_title
     if( empty($value) && $name === 'document_title' ) {
-      if( $queried_object instanceof \WP_Post ) $value = get_the_title($queried_object->ID);
-      if( $queried_object instanceof \WP_Post_Type ) $value = $queried_object->labels->name;
-      if( $queried_object instanceof \WP_Term ) $value = $queried_object->name;
-      if( !$queried_object ) $value = get_bloginfo('name');
+      if( $object instanceof \WP_Post ) $value = get_the_title($object->ID);
+      if( $object instanceof \WP_Post_Type ) $value = $object->labels->name;
+      if( $object instanceof \WP_Term ) $value = $object->name;
+      if( !$object ) $value = get_bloginfo('name');
     }
     // fallbacks for 'image'
     if( empty($value) && $name === 'image' ) {
-      if( $queried_object instanceof \WP_Post ) $value = get_post_thumbnail_id($queried_object->ID);
+      if( $object instanceof \WP_Post ) $value = get_post_thumbnail_id($object->ID);
     }
     // finally fall back to global options
     if( empty($value) ) $value = seo()->get_global_options_field($name);
     /**
      * Allow themes to filter SEO values
      */
-    $value = apply_filters("rhseo/get_seo_value/name=$name", $value, $queried_object);
+    $value = apply_filters("rhseo/get_seo_value/name=$name", $value, $object);
 
     return $value ?? null;
   }
