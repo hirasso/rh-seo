@@ -1,6 +1,7 @@
-#### 1.1.5 (2021-12-01)
+#### 1.1.5 (2021-12-08)
 
-- Audit npm vulnerabilities (#4d303ea)
+- Automatically delete default tagline (#9bff304)
+- Audit npm vulnerabilities (#ecedeb6)
 - Gracefully handle missing ACF (#0361c95)
 
 #### 1.1.4 (2021-12-01)

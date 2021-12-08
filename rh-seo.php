@@ -47,6 +47,7 @@ class SEO {
     add_action('admin_enqueue_scripts', [$this, 'enqueue_scripts'], 100 );
     add_action('plugins_loaded', [$this, 'load_textdomain']);
     add_action('template_redirect', [$this, 'redirect_attachment_pages']);
+    add_action('admin_init', [$this, 'delete_tagline']);
   }
 
   /**
@@ -355,6 +356,16 @@ class SEO {
       $slug = "rhseo-options--" . \pll_current_language();
     }
     return $slug;
+  }
+
+  /**
+   * Deletes the default Blog Tagline
+   *
+   * @return void
+   * @author Rasso Hilber <mail@rassohilber.com>
+   */
+  public function delete_tagline(): void {
+    delete_option('blogdescription');
   }
 }
 
