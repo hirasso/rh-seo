@@ -159,7 +159,7 @@ class MetaTags {
       if( $object instanceof \WP_Post ) $value = get_the_title($object->ID);
       if( $object instanceof \WP_Post_Type ) $value = $object->labels->name;
       if( $object instanceof \WP_Term ) $value = $object->name;
-      if( !$object ) $value = get_bloginfo('name');
+      if( !$object ) $value = seo()->get_original_bloginfo('name');
     }
     // fallbacks for 'image'
     if( empty($value) && $name === 'image' ) {

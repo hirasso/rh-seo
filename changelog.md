@@ -1,12 +1,17 @@
-#### 1.1.6 (2021-12-08)
+#### 1.1.7 (2022-01-31)
 
-- Better handling for static front pages (#11f96b6)
+- Fix `get_bloginfo` infinite loop if home page is not set (#fbdf027)
 
 #### 1.1.5 (2021-12-08)
 
+- Add languages sitemaps provider (#b3018ae)
 - Automatically delete default tagline (#71d175f)
 - Audit npm vulnerabilities (#ecedeb6)
 - Gracefully handle missing ACF (#0361c95)
+
+#### 1.1.6 (2021-12-08)
+
+- Better handling for static front pages (#8d4ca6f)
 
 #### 1.1.4 (2021-12-01)
 

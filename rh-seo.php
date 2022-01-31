@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name: RH SEO
- * Version: 1.1.6
+ * Version: 1.1.7
  * Author: Rasso Hilber
  * Description: Lightweight SEO optimizations for WordPress
  * Author URI: https://rassohilber.com
@@ -27,6 +27,13 @@ require_once(RHSEO_DIR . '/inc/class.xml-sitemaps.php');
 class SEO {
 
   public $prefix = 'rhseo';
+  /**
+   * Holds some original WP Bloginfo
+   *
+   * @var array|null
+   * @author Rasso Hilber <mail@rassohilber.com>
+   */
+  private $original_bloginfo = null;
 
   private $deprecated_plugins = [
     'wordpress-seo/wp-seo.php'
@@ -42,6 +49,11 @@ class SEO {
     add_action('admin_notices', [$this, 'show_notices'] );
 
     if( !defined('ACF') ) return;
+
+    $this->original_bloginfo = [
+      'name' => get_bloginfo('name'),
+      'description' => get_bloginfo('description')
+    ];
 
     $this->init_plugin_modules();
     add_action('admin_init', [$this, 'admin_init'], 11);
@@ -380,6 +392,17 @@ class SEO {
    */
   public function delete_tagline(): void {
     delete_option('blogdescription');
+  }
+
+  /**
+   * Get original bloginfo without filters interfering
+   *
+   * @param string $key
+   * @return string|null
+   * @author Rasso Hilber <mail@rassohilber.com>
+   */
+  public function get_original_bloginfo(string $key): ?string {
+    return $this->original_bloginfo[$key] ?? null;
   }
 }
 
