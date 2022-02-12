@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name: RH SEO
- * Version: 1.1.7
+ * Version: 1.1.8
  * Author: Rasso Hilber
  * Description: Lightweight SEO optimizations for WordPress
  * Author URI: https://rassohilber.com
@@ -363,7 +363,7 @@ class SEO {
    */
   public function get_polylang_languages(): ?object {
     $languages = null;
-    if( !defined('POLYLANG_VERSION') ) return $languages;
+    if( !function_exists('\pll_the_languages') ) return $languages;
     return seo()->to_object(\pll_the_languages([
       'echo' => 0,
       'raw' => 1,

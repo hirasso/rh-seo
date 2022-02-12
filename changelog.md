@@ -1,6 +1,10 @@
+#### 1.1.8 (2022-02-12)
+
+- More robust polylang compatibility (#fba931b)
+
 #### 1.1.7 (2022-01-31)
 
-- Fix `get_bloginfo` infinite loop if home page is not set (#fbdf027)
+- Fix `get_bloginfo` infinite loop if home page is not set (#168789e)
 
 #### 1.1.5 (2021-12-08)
 
