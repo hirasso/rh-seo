@@ -126,12 +126,15 @@ class Field_Groups {
    * @return void
    */
   private function add_post_type_options_page($post_type) {
+    
+    $pt_object = get_post_type_object($post_type);
 
     if( $pll_languages = seo()->get_polylang_languages() ) {
       foreach( $pll_languages as $language ) {
         $post_id = "rhseo-options--$language->slug--$post_type";
         acf_add_options_page([
-          'page_title' => "SEO $language->name",
+          'page_title' => "SEO $language->name" . ": {$pt_object->labels->name}",
+          'menu_title' => "SEO $language->name",
           'menu_slug' => $post_id,
           'post_id' => $post_id, 
           'parent_slug' => "edit.php?post_type=$post_type",
@@ -147,7 +150,8 @@ class Field_Groups {
     } else {
       $post_id = "rhseo-options--$post_type";
       acf_add_options_page([
-        'page_title' => __('SEO Options', 'rhseo'),
+        'page_title' => __('SEO Options', 'rhseo') . ": {$pt_object->labels->name}",
+        'menu_title' => __('SEO Options', 'rhseo'),
         'menu_slug' => $post_id,
         'post_id' => $post_id, 
         'parent_slug' => "edit.php?post_type=$post_type",

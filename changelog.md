@@ -1,6 +1,10 @@
+#### 1.1.9 (2022-06-27)
+
+- Better `page_title` for post type options pages (#5924353)
+
 #### 1.1.8 (2022-02-12)
 
-- More robust polylang compatibility (#fba931b)
+- More robust polylang compatibility (#34bdaa0)
 
 #### 1.1.7 (2022-01-31)
 
