@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name: RH SEO
- * Version: 1.1.9
+ * Version: 1.2.0
  * Author: Rasso Hilber
  * Description: Lightweight SEO optimizations for WordPress
  * Author URI: https://rassohilber.com
@@ -61,6 +61,7 @@ class SEO {
     add_action('admin_enqueue_scripts', [$this, 'enqueue_scripts'], 100 );
     add_action('plugins_loaded', [$this, 'load_textdomain']);
     add_action('template_redirect', [$this, 'redirect_attachment_pages']);
+    add_action('template_redirect', [$this, 'redirect_author_archives']);
     add_action('admin_init', [$this, 'delete_tagline']);
   }
 
@@ -288,6 +289,17 @@ class SEO {
     if( !$object_id = get_queried_object_id() ) return;
     $url = wp_get_attachment_url( $object_id );
     wp_redirect( $url, 301 );
+    exit;
+  }
+
+  /**
+   * Redirects Author Archives to the front page
+   *
+   * @return void
+   */
+  public function redirect_author_archives(): void {
+    if( !is_author() ) return;
+    wp_redirect(home_url('/'));
     exit;
   }
 

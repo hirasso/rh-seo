@@ -1,6 +1,10 @@
+#### 1.2.0 (2022-07-19)
+
+- Redirect author archives to the front page (#4c673bf)
+
 #### 1.1.9 (2022-06-27)
 
-- Better `page_title` for post type options pages (#5924353)
+- Better `page_title` for post type options pages (#ca789e8)
 
 #### 1.1.8 (2022-02-12)
 
