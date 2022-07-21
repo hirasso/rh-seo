@@ -1,6 +1,7 @@
-#### 1.2.0 (2022-07-19)
+#### 1.2.0 (2022-07-21)
 
-- Redirect author archives to the front page (#4c673bf)
+- Test for front page before getting document_title from it (#a4cf8fe)
+- Redirect author archives to the front page (#4c35e44)
 
 #### 1.1.9 (2022-06-27)
 
