@@ -96,16 +96,13 @@ class MetaTags {
   public function document_title_parts(array $parts): array {
     
     $parts['title'] = $this->get_seo_value('document_title');
+
+    // We never want the tagline in the document title
+    unset($parts['tagline']);
     
     // overwrite 'site', if not on the front page
     if( !seo()->is_front_page() ) {
       $parts['site'] = get_bloginfo( 'name' );
-      unset($parts['tagline']);
-    }
-    
-    // Overwrite 'tagline', if present
-    if( !empty($parts['tagline']) ) {
-      $parts['tagline'] = seo()->get_global_options_field('description');
     }
     
     return $parts;
@@ -125,6 +122,7 @@ class MetaTags {
     }
     
     $custom_site_name = seo()->get_global_options_field('site_name');
+    
     if( $custom_site_name ) {
       $value = __($custom_site_name);
     }
@@ -162,7 +160,7 @@ class MetaTags {
       if( $object instanceof \WP_Post ) $value = get_the_title($object->ID);
       if( $object instanceof \WP_Post_Type ) $value = $object->labels->name;
       if( $object instanceof \WP_Term ) $value = $object->name;
-      if( !$object ) $value = seo()->get_original_bloginfo('name');
+      if( !$object ) $value = get_bloginfo('name');
     }
     // fallbacks for 'image'
     if( empty($value) && $name === 'image' ) {

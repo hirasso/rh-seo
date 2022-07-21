@@ -1,6 +1,10 @@
+#### 1.2.2 (2022-07-21)
+
+- Clean-up `document_title_parts` (#a16054d)
+
 #### 1.2.1 (2022-07-21)
 
-- Always register the seo fields, so that they can be loaded in every context (#700635d)
+- Always register the seo fields, so that they can be loaded in every context (#a00a955)
 
 #### 1.2.0 (2022-07-21)
 
