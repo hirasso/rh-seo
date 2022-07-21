@@ -124,7 +124,8 @@ class MetaTags {
       return $title;
     }
     
-    if( $custom_site_name = seo()->get_global_options_field('site_name') ) {
+    $custom_site_name = seo()->get_global_options_field('site_name');
+    if( $custom_site_name ) {
       $value = __($custom_site_name);
     }
     

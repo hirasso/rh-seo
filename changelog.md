@@ -1,6 +1,10 @@
+#### 1.2.1 (2022-07-21)
+
+- Always register the seo fields, so that they can be loaded in every context (#700635d)
+
 #### 1.2.0 (2022-07-21)
 
-- Test for front page before getting document_title from it (#a4cf8fe)
+- Test for front page before getting document_title from it (#adaf9ab)
 - Redirect author archives to the front page (#4c35e44)
 
 #### 1.1.9 (2022-06-27)

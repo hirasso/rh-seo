@@ -17,6 +17,7 @@ class Field_Groups {
     add_action('admin_bar_menu', [$this, 'add_post_type_archive_link_to_admin_bar'], 100);
     add_filter('acf/prepare_field/name=rhseo_noindex', [$this, 'prepare_field_noindex']);
     add_action('init', [$this, 'init'], 11);
+    add_filter('acf/prepare_field', [$this, 'maybe_render_field']);
   }
 
   /**
@@ -177,10 +178,35 @@ class Field_Groups {
     $field_types = [];
     foreach( $fields as $key ) {
       $field_type = $this->is_qtranslate_enabled() ? "qtranslate_$key" : $key;
-      $field_types[$key] = $field_type;//array_merge( acf_get_field_type($field_type)->defaults, ['type' => $field_type]);
+      $field_types[$key] = $field_type;
     }
 
     $fields = [
+      [ 
+        'type' => $field_types['text'],
+        'key' => "key_{$this->prefix}_site_name",
+        'name' => "{$this->prefix}_site_name",
+        'label' => __('Site Name', 'rhseo'),
+        'acfml_multilingual' => true,
+        'rhseo_render_field' => $this->is_global_options_page()
+      ],
+      [
+        'key' => "key_{$this->prefix}_noindex",
+        'name' => "rhseo_noindex",
+        'label' => __('Hide from search engines', 'rhseo'),
+        'type' => 'true_false',
+        'ui' => true,
+        'rhseo_render_field' => !$this->is_global_options_page()
+      ],
+      [ 
+        'type' => $field_types['text'],
+        'key' => "key_{$this->prefix}_document_title",
+        'name' => "{$this->prefix}_document_title",
+        'instructions' => __('Optional. Overwrites the title.', 'rhseo'),
+        'label' => __('Document Title', 'rhseo'),
+        'acfml_multilingual' => true,
+        'rhseo_render_field' => !$this->is_global_options_page()
+      ],
       [ 
         'type' => $field_types['textarea'],
         'key' => "key_{$this->prefix}_description",
@@ -205,36 +231,6 @@ class Field_Groups {
       ]
     ];
 
-    if( $this->is_global_options_page() ) {
-      $fields = array_merge([
-        [ 
-          'type' => $field_types['text'],
-          'key' => "key_{$this->prefix}_site_name",
-          'name' => "{$this->prefix}_site_name",
-          'label' => __('Site Name', 'rhseo'),
-          'acfml_multilingual' => true
-        ],
-      ], $fields);
-    } else {
-      $fields = array_merge([
-        [
-          'key' => "key_{$this->prefix}_noindex",
-          'name' => "rhseo_noindex",
-          'label' => __('Hide from search engines', 'rhseo'),
-          'type' => 'true_false',
-          'ui' => true,
-        ],
-        [ 
-          'type' => $field_types['text'],
-          'key' => "key_{$this->prefix}_document_title",
-          'name' => "{$this->prefix}_document_title",
-          'instructions' => __('Optional. Overwrites the title.', 'rhseo'),
-          'label' => __('Document Title', 'rhseo'),
-          'acfml_multilingual' => true
-        ],
-      ], $fields);
-    }
-
     acf_add_local_field_group([
       'key' => "group_{$this->prefix}_options",
       'title' => $this->get_field_group_title(),
@@ -244,6 +240,17 @@ class Field_Groups {
       'position' => 'normal',
       'active' => true,
     ]);
+  }
+
+  /**
+   * Maybe renders a field, based on the key `rhseo_render_field`
+   *
+   * @param [type] $field
+   * @return void
+   */
+  public function maybe_render_field($field) {
+    $render_field = $field['rhseo_render_field'] ?? true;
+    return $render_field ? $field : null;
   }
 
   /**
