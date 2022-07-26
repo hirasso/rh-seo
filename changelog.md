@@ -1,6 +1,10 @@
+#### 1.2.3 (2022-07-26)
+
+- optimize redirects (#3569e33)
+
 #### 1.2.2 (2022-07-21)
 
-- Clean-up `document_title_parts` (#a16054d)
+- Clean-up `document_title_parts` (#8456876)
 
 #### 1.2.1 (2022-07-21)
 
