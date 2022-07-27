@@ -1,6 +1,10 @@
+#### 1.2.4 (2022-07-27)
+
+- Disable built-in rss feeds (#0b7b46a)
+
 #### 1.2.3 (2022-07-26)
 
-- optimize redirects (#3569e33)
+- optimize redirects (#4761710)
 
 #### 1.2.2 (2022-07-21)
 

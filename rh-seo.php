@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name: RH SEO
- * Version: 1.2.3
+ * Version: 1.2.4
  * Author: Rasso Hilber
  * Description: Lightweight SEO optimizations for WordPress
  * Author URI: https://rassohilber.com
@@ -20,6 +20,7 @@ require_once(RHSEO_DIR . '/inc/class.field-groups.php');
 require_once(RHSEO_DIR . '/inc/class.meta-tags.php');
 require_once(RHSEO_DIR . '/inc/class.yoast-compatibility.php');
 require_once(RHSEO_DIR . '/inc/class.xml-sitemaps.php');
+require_once(RHSEO_DIR . '/inc/class.disable-feeds.php');
 
 /**
  * Main Class
@@ -64,6 +65,7 @@ class SEO {
     new MetaTags();
     // new Yoast_Compatibility(); // deactivated, Yoast keeps breaking sites badly
     new XML_Sitemaps();
+    new DisableFeeds();
   }
 
   /**
