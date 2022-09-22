@@ -115,7 +115,8 @@ class MetaTags {
    * @return string|bool
    */
   public function get_bloginfo_name( $value = null ) {
-    
+    remove_filter('pre_option_blogname', [$this, 'get_bloginfo_name']);
+
     $front_page = seo()->get_front_page();
     if( $front_page && $title = $this->get_seo_value('document_title', $front_page) ) {
       return $title;
@@ -126,6 +127,8 @@ class MetaTags {
     if( $custom_site_name ) {
       $value = __($custom_site_name);
     }
+
+    add_filter('pre_option_blogname', [$this, 'get_bloginfo_name']);
     
     return $value;
   }
