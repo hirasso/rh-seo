@@ -1,6 +1,10 @@
+#### 1.2.9 (2023-01-18)
+
+- Restrict 404 redirects to a maximum of 100 entries (#595a785)
+
 #### 1.2.8 (2023-01-18)
 
-- Optimize format and validation of redirect URLs (#d9b2bd1)
+- Optimize format and validation of redirect URLs (#a472d5b)
 
 #### 1.2.7 (2023-01-18)
 

@@ -244,16 +244,17 @@ class Field_Groups {
       [
         'key' => 'key_rhseo_404_redirects',
         'type' => 'repeater',
+        'max' => 100,
+        'instructions' => __('Maximum 100 entries', 'rhseo'),
         'name' => 'rhseo_404_redirects',
         'label' => '404 Redirects',
         'button_label' => 'Add Redirect',
-        'layout' => 'block',
         'rhseo_render_field' => $this->is_global_options_page(),
         'sub_fields' => [
           [
             'key' => 'key_rhseo_redirect_from',
             'name' => 'rhseo_redirect_from',
-            'label' => 'from',
+            'label' => 'From',
             'type' => 'text',
             'required' => 1,
             'wrapper' => [
@@ -263,7 +264,7 @@ class Field_Groups {
           [
             'key' => 'key_rhseo_redirect_to',
             'name' => 'rhseo_redirect_to',
-            'label' => 'to',
+            'label' => 'To',
             'type' => 'text',
             'required' => 1,
             'wrapper' => [
