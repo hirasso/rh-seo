@@ -250,11 +250,13 @@ class Field_Groups {
         'label' => '404 Redirects',
         'button_label' => 'Add Redirect',
         'rhseo_render_field' => $this->is_global_options_page(),
+        'layout' => 'block',
         'sub_fields' => [
           [
             'key' => 'key_rhseo_redirect_from',
             'name' => 'rhseo_redirect_from',
             'label' => __('From', 'rhseo'),
+            'instructions' => __('URL that should be redirected', 'rhseo'),
             'type' => 'text',
             'required' => 1,
             'wrapper' => [
@@ -265,6 +267,7 @@ class Field_Groups {
             'key' => 'key_rhseo_redirect_to',
             'name' => 'rhseo_redirect_to',
             'label' => __('To', 'rhseo'),
+            'instructions' => __('Redirect target URL', 'rhseo'),
             'type' => 'text',
             'required' => 1,
             'wrapper' => [

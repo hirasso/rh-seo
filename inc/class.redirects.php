@@ -10,12 +10,19 @@ if (!defined('ABSPATH')) exit; // Exit if accessed directly
 class Redirects
 {
 
+  private $redirects = null;
+
   public function __construct()
   {
     add_filter('acf/update_value/name=rhseo_redirect_from', [$this, 'update_value_url']);
     add_filter('acf/update_value/name=rhseo_redirect_to', [$this, 'update_value_url']);
+
     add_filter('acf/validate_value/name=rhseo_redirect_from', [$this, 'validate_value_url'], 10, 4);
     add_filter('acf/validate_value/name=rhseo_redirect_to', [$this, 'validate_value_url'], 10, 4);
+
+    add_filter('acf/prepare_field/name=rhseo_redirect_from', [$this, 'prepare_field_url']);
+    add_filter('acf/prepare_field/name=rhseo_redirect_to', [$this, 'prepare_field_url']);
+
     add_action('template_redirect', [$this, 'template_redirect']);
   }
 
@@ -33,28 +40,60 @@ class Redirects
     if ($valid !== true) return $valid;
     if (!is_string($value)) return $valid;
 
+    if (!$this->is_local_url($value)) {
+      return __('Please provide a local URL', 'rhseo');
+    }
+
     $value = $this->get_request_uri($value);
-
-    if (!$this->is_absolute_or_relative_url($value)) {
-      return __('Please provide either an absolute or relative URL', 'rhseo');
-    }
-    $redirects = $this->get_redirects();
-
-    if ($field['_name'] === 'rhseo_redirect_to' && in_array($value, array_column($redirects, 'from'))) {
-      return __('Conflict detected: URL exists in "From" column', 'rhseo');
-    }
-
-    if ($field['_name'] === 'rhseo_redirect_from' && in_array($value, array_column($redirects, 'to'))) {
-      return __('Conflict detected: URL exists in "To" column', 'rhseo');
-    }
 
     return $valid;
   }
 
-  private function is_absolute_or_relative_url(string $value): bool {
-    if (str_starts_with($value, 'http')) return true;
+  /**
+   * Checks if a value is an absolute or relative URL
+   *
+   * @param string $value
+   * @return boolean
+   */
+  private function is_local_url(string $value): bool {
+    if (empty($value)) return false;
+    if ($this->get_url_host($value) === $this->get_url_host(get_option('home'))) return true;
     if (str_starts_with($value, '/')) return true;
     return false;
+  }
+
+  /**
+   * Get the host for a URL
+   *
+   * @param string $url
+   * @return string|null
+   */
+  private function get_url_host(string $url): ?string {
+    $parsed = wp_parse_url($url);
+    return $parsed['host'] ?? null;
+  }
+
+  /**
+   * Render conflict warnings for URL fields
+   *
+   * @param [type] $field
+   * @return void
+   */
+  public function prepare_field_url($field) {
+    if (empty($field)) return $field;
+    if (empty($field['value'])) return $field;
+
+    $redirects = $this->get_redirects();
+
+    if ($field['_name'] === 'rhseo_redirect_from' && in_array($field['value'], array_column($redirects, 'to'))) {
+      $field['instructions'] = "⚠️ " . __('Conflict detected: URL also found in "To" column', 'rhseo');
+    }
+
+    if ($field['_name'] === 'rhseo_redirect_to' && in_array($field['value'], array_column($redirects, 'from'))) {
+      $field['instructions'] = "⚠️ " . __('Conflict detected: URL also found in "From" column', 'rhseo');
+    }
+
+    return $field;
   }
 
   /**
@@ -82,10 +121,8 @@ class Redirects
     $query = $parsed['query'] ?? null;
     if ($query) {
       $uri .= "?$query";
-    } else {
-      $uri = trailingslashit($uri);
     }
-    return strtolower($uri);
+    return untrailingslashit(strtolower($uri));
   }
 
   /**
@@ -95,16 +132,17 @@ class Redirects
    */
   private function get_redirects(): array
   {
+    if ($this->redirects) return $this->redirects;
     $redirects = get_field('rhseo_404_redirects', 'rhseo-options') ?: [];
 
-    $redirects = array_map(function ($redirect) {
+    $this->redirects = array_map(function ($redirect) {
       return [
         'from' => $this->get_request_uri($redirect['rhseo_redirect_from']),
         'to' => $this->get_request_uri($redirect['rhseo_redirect_to']),
       ];
     }, $redirects);
 
-    return $redirects;
+    return $this->redirects;
   }
 
   /**

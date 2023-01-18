@@ -1,6 +1,10 @@
+#### 1.3.1 (2023-01-18)
+
+- Render redirect warnings in `prepare_field` instead of `validate_value` (#406d34c)
+
 #### 1.3.0 (2023-01-18)
 
-- Add cross-column validation for redirects (#4ba4f6f)
+- Add cross-column validation for redirects (#8ae6279)
 
 #### 1.2.9 (2023-01-18)
 
