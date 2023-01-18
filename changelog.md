@@ -1,6 +1,10 @@
+#### 1.3.2 (2023-01-18)
+
+- Do redirects as early as possible (#a11e9e3)
+
 #### 1.3.1 (2023-01-18)
 
-- Update German translations (#e94a5ff)
+- Update German translations (#d42bed5)
 - Render redirect warnings in `prepare_field` instead of `validate_value` (#2e5d1a1)
 
 #### 1.3.0 (2023-01-18)

@@ -23,7 +23,7 @@ class Redirects
     add_filter('acf/prepare_field/name=rhseo_redirect_from', [$this, 'prepare_field_url']);
     add_filter('acf/prepare_field/name=rhseo_redirect_to', [$this, 'prepare_field_url']);
 
-    add_action('template_redirect', [$this, 'template_redirect']);
+    add_action('template_redirect', [$this, 'template_redirect'], 1);
   }
 
   /**
