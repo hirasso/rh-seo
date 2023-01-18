@@ -254,7 +254,7 @@ class Field_Groups {
             'key' => 'key_rhseo_redirect_from',
             'name' => 'rhseo_redirect_from',
             'label' => 'from',
-            'type' => 'url',
+            'type' => 'text',
             'required' => 1,
             'wrapper' => [
               'width' => 50
@@ -263,8 +263,8 @@ class Field_Groups {
           [
             'key' => 'key_rhseo_redirect_to',
             'name' => 'rhseo_redirect_to',
-            'label' => 'from',
-            'type' => 'url',
+            'label' => 'to',
+            'type' => 'text',
             'required' => 1,
             'wrapper' => [
               'width' => 50
