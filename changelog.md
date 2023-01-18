@@ -1,6 +1,10 @@
+#### 1.3.0 (2023-01-18)
+
+- Add cross-column validation for redirects (#4ba4f6f)
+
 #### 1.2.9 (2023-01-18)
 
-- Update German translations (#d3891b3)
+- Update German translations (#5c1db6b)
 - Restrict 404 redirects to a maximum of 100 entries (#4d60003)
 
 #### 1.2.8 (2023-01-18)

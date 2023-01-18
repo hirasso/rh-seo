@@ -65,6 +65,14 @@ msgstr ""
 msgid "Maximum 100 entries"
 msgstr ""
 
+#: ../inc/class.field-groups.php:257
+msgid "From"
+msgstr ""
+
+#: ../inc/class.field-groups.php:267
+msgid "To"
+msgstr ""
+
 #: ../inc/class.field-groups.php:307
 msgid "SEO Global Options"
 msgstr ""
@@ -75,4 +83,12 @@ msgstr ""
 
 #: ../inc/class.redirects.php:39
 msgid "Please provide either an absolute or relative URL"
+msgstr ""
+
+#: ../inc/class.redirects.php:44
+msgid "Conflict detected: URL exists in \"From\" column"
+msgstr ""
+
+#: ../inc/class.redirects.php:48
+msgid "Conflict detected: URL exists in \"To\" column"
 msgstr ""

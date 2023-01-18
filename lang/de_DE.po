@@ -73,6 +73,14 @@ msgstr "Für Websites wie Facebook oder Twitter."
 msgid "Maximum 100 entries"
 msgstr "Maximal 100 Einträge"
 
+#: ../inc/class.field-groups.php:257
+msgid "From"
+msgstr "Von"
+
+#: ../inc/class.field-groups.php:267
+msgid "To"
+msgstr "Nach"
+
 #: ../inc/class.field-groups.php:307
 msgid "SEO Global Options"
 msgstr "SEO Globale Optionen"
@@ -83,7 +91,17 @@ msgstr "SEO Optionen: %s"
 
 #: ../inc/class.redirects.php:39
 msgid "Please provide either an absolute or relative URL"
+msgstr "Bitte geben Sie entweder eine absolute oder relative URL ein"
+
+#: ../inc/class.redirects.php:44
+msgid "Conflict detected: URL exists in \"From\" column"
 msgstr ""
+"Konflikt erkannt: Die URL existiert bereits in der \"Von\"-Spalte"
+
+#: ../inc/class.redirects.php:48
+msgid "Conflict detected: URL exists in \"To\" column"
+msgstr ""
+"Konflikt erkannt: Die URL existiert bereits in der \"Nach\"-Spalte"
 
 #~ msgid "Used for facebook and twitter."
 #~ msgstr "Für Facebook und Twitter."

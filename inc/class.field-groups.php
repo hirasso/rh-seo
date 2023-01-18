@@ -254,7 +254,7 @@ class Field_Groups {
           [
             'key' => 'key_rhseo_redirect_from',
             'name' => 'rhseo_redirect_from',
-            'label' => 'From',
+            'label' => __('From', 'rhseo'),
             'type' => 'text',
             'required' => 1,
             'wrapper' => [
@@ -264,7 +264,7 @@ class Field_Groups {
           [
             'key' => 'key_rhseo_redirect_to',
             'name' => 'rhseo_redirect_to',
-            'label' => 'To',
+            'label' => __('To', 'rhseo'),
             'type' => 'text',
             'required' => 1,
             'wrapper' => [

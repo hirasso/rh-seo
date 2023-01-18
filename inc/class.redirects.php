@@ -33,10 +33,28 @@ class Redirects
     if ($valid !== true) return $valid;
     if (!is_string($value)) return $valid;
 
-    if (str_starts_with($value, 'http')) return $valid;
-    if (str_starts_with($value, '/')) return $valid;
+    $value = $this->get_request_uri($value);
 
-    return __('Please provide either an absolute or relative URL', 'rhseo');
+    if (!$this->is_absolute_or_relative_url($value)) {
+      return __('Please provide either an absolute or relative URL', 'rhseo');
+    }
+    $redirects = $this->get_redirects();
+
+    if ($field['_name'] === 'rhseo_redirect_to' && in_array($value, array_column($redirects, 'from'))) {
+      return __('Conflict detected: URL exists in "From" column', 'rhseo');
+    }
+
+    if ($field['_name'] === 'rhseo_redirect_from' && in_array($value, array_column($redirects, 'to'))) {
+      return __('Conflict detected: URL exists in "To" column', 'rhseo');
+    }
+
+    return $valid;
+  }
+
+  private function is_absolute_or_relative_url(string $value): bool {
+    if (str_starts_with($value, 'http')) return true;
+    if (str_starts_with($value, '/')) return true;
+    return false;
   }
 
   /**
@@ -55,15 +73,38 @@ class Redirects
    * Get the request URI from an URL string
    *
    * @param string $url
-   * @return void
+   * @return string
    */
-  private function get_request_uri(string $url)
+  private function get_request_uri(string $url): string
   {
     $parsed = wp_parse_url($url);
     $uri = $parsed['path'] ?? null ?: '/';
     $query = $parsed['query'] ?? null;
-    if ($query) $uri .= "?$query";
+    if ($query) {
+      $uri .= "?$query";
+    } else {
+      $uri = trailingslashit($uri);
+    }
     return strtolower($uri);
+  }
+
+  /**
+   * Get and sanitize the redirects
+   *
+   * @return array
+   */
+  private function get_redirects(): array
+  {
+    $redirects = get_field('rhseo_404_redirects', 'rhseo-options') ?: [];
+
+    $redirects = array_map(function ($redirect) {
+      return [
+        'from' => $this->get_request_uri($redirect['rhseo_redirect_from']),
+        'to' => $this->get_request_uri($redirect['rhseo_redirect_to']),
+      ];
+    }, $redirects);
+
+    return $redirects;
   }
 
   /**
@@ -75,24 +116,14 @@ class Redirects
 
     $request_uri = $this->get_request_uri(seo()->get_current_url());
 
-    $redirects = get_field('rhseo_404_redirects', 'rhseo-options') ?: [];
 
-    $redirects = array_map(function ($redirect) {
-      return (object) [
-        'from' => $this->get_request_uri($redirect['rhseo_redirect_from']),
-        'to' => $this->get_request_uri($redirect['rhseo_redirect_to']),
-        'target_url' => $redirect['rhseo_redirect_to']
-      ];
-    }, $redirects);
-
-
-    foreach ($redirects as $redirect) {
+    foreach ($this->get_redirects() as $redirect) {
       // ignore non-matches
-      if ($redirect->from !== $request_uri) continue;
+      if ($redirect['from'] !== $request_uri) continue;
       // prevent redirect loops
-      if ($redirect->to === $request_uri) continue;
+      if ($redirect['to'] === $request_uri) continue;
       // Finally, redirect
-      wp_redirect($redirect->target_url, 301);
+      wp_redirect($redirect['to'], 301);
       exit;
     }
   }
