@@ -1,6 +1,7 @@
 #### 1.3.1 (2023-01-18)
 
-- Render redirect warnings in `prepare_field` instead of `validate_value` (#406d34c)
+- Update German translations (#e94a5ff)
+- Render redirect warnings in `prepare_field` instead of `validate_value` (#2e5d1a1)
 
 #### 1.3.0 (2023-01-18)
 

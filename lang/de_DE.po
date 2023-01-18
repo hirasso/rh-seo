@@ -14,8 +14,8 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Poedit-Basepath: ..\n"
 "X-Poedit-KeywordsList: __;_e;_ex:1,2c;_n:1,2;_n_noop:1,2;_nx:1,2,4c;"
-"_nx_noop:1,2,3c;_x:1,2c;esc_attr__;esc_attr_e;esc_attr_x:1,2c;"
-"esc_html__;esc_html_e;esc_html_x:1,2c\n"
+"_nx_noop:1,2,3c;_x:1,2c;esc_attr__;esc_attr_e;esc_attr_x:1,2c;esc_html__;"
+"esc_html_e;esc_html_x:1,2c\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Generator: Poedit 3.2.2\n"
 "X-Poedit-SearchPath-0: .\n"
@@ -25,7 +25,7 @@ msgstr ""
 msgid "Search Engine Optimization"
 msgstr "Suchmaschinen-Optimierung"
 
-#: ../inc/class.field-groups.php:91, ../inc/class.field-groups.php:306
+#: ../inc/class.field-groups.php:91, ../inc/class.field-groups.php:309
 msgid "SEO"
 msgstr "SEO"
 
@@ -73,35 +73,43 @@ msgstr "Für Websites wie Facebook oder Twitter."
 msgid "Maximum 100 entries"
 msgstr "Maximal 100 Einträge"
 
-#: ../inc/class.field-groups.php:257
+#: ../inc/class.field-groups.php:258
 msgid "From"
 msgstr "Von"
 
-#: ../inc/class.field-groups.php:267
+#: ../inc/class.field-groups.php:259
+msgid "URL that should be redirected"
+msgstr "URL die umgeleited werden soll"
+
+#: ../inc/class.field-groups.php:269
 msgid "To"
 msgstr "Nach"
 
-#: ../inc/class.field-groups.php:307
+#: ../inc/class.field-groups.php:270
+msgid "Redirect target URL"
+msgstr "Ziel-URL"
+
+#: ../inc/class.field-groups.php:310
 msgid "SEO Global Options"
 msgstr "SEO Globale Optionen"
 
-#: ../inc/class.field-groups.php:310
+#: ../inc/class.field-groups.php:313
 msgid "SEO Options: %s"
 msgstr "SEO Optionen: %s"
 
-#: ../inc/class.redirects.php:39
-msgid "Please provide either an absolute or relative URL"
-msgstr "Bitte geben Sie entweder eine absolute oder relative URL ein"
-
 #: ../inc/class.redirects.php:44
-msgid "Conflict detected: URL exists in \"From\" column"
-msgstr ""
-"Konflikt erkannt: Die URL existiert bereits in der \"Von\"-Spalte"
+msgid "Please provide a local URL"
+msgstr "Bitte geben Sie eine lokale URL ein"
 
-#: ../inc/class.redirects.php:48
-msgid "Conflict detected: URL exists in \"To\" column"
+#: ../inc/class.redirects.php:89
+msgid "Conflict detected: URL also found in \"To\" column"
 msgstr ""
-"Konflikt erkannt: Die URL existiert bereits in der \"Nach\"-Spalte"
+"Konflikt erkannt: Die URL wurde auch in der \"Nach\"-Spalte gefunden"
+
+#: ../inc/class.redirects.php:93
+msgid "Conflict detected: URL also found in \"From\" column"
+msgstr ""
+"Konflikt erkannt: Die URL wurde auch in der \"Von\"-Spalte gefunden"
 
 #~ msgid "Used for facebook and twitter."
 #~ msgstr "Für Facebook und Twitter."
