@@ -1,4 +1,4 @@
-# Copyright (C) 2021 RH SEO
+# Copyright (C) 2023 RH SEO
 # This file is distributed under the same license as the RH SEO package.
 msgid ""
 msgstr ""
@@ -13,54 +13,66 @@ msgstr ""
 "X-Poedit-SourceCharset: UTF-8\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: ../inc/class.field-groups.php:77, ../inc/class.field-groups.php:193
-msgid "SEO"
-msgstr ""
-
-#: ../inc/class.field-groups.php:93
+#: ../inc/class.field-groups.php:90
 msgid "Search Engine Optimization"
 msgstr ""
 
-#: ../inc/class.field-groups.php:126
-msgid "Site Description"
+#: ../inc/class.field-groups.php:91, ../inc/class.field-groups.php:306
+msgid "SEO"
 msgstr ""
 
-#: ../inc/class.field-groups.php:126
-msgid "Description"
+#: ../inc/class.field-groups.php:154, ../inc/class.field-groups.php:155
+msgid "SEO Options"
 msgstr ""
 
-#: ../inc/class.field-groups.php:128
-msgid "Optimal length: 50–160 characters"
-msgstr ""
-
-#: ../inc/class.field-groups.php:139
-msgid "Preview Image"
-msgstr ""
-
-#: ../inc/class.field-groups.php:141
-msgid "For services like Facebook or Twitter."
-msgstr ""
-
-#: ../inc/class.field-groups.php:161
-msgid "Hide from search engines"
-msgstr ""
-
-#: ../inc/class.field-groups.php:169
-msgid "Optional. Overwrites the title."
-msgstr ""
-
-#: ../inc/class.field-groups.php:170
-msgid "Document Title"
-msgstr ""
-
-#: ../inc/class.field-groups.php:152
+#: ../inc/class.field-groups.php:195
 msgid "Site Name"
 msgstr ""
 
-#: ../inc/class.field-groups.php:194
-msgid "SEO Global Defaults"
+#: ../inc/class.field-groups.php:202
+msgid "Hide from search engines"
 msgstr ""
 
-#: ../inc/class.field-groups.php:197
+#: ../inc/class.field-groups.php:211
+msgid "Optional. Overwrites the title."
+msgstr ""
+
+#: ../inc/class.field-groups.php:212
+msgid "Document Title"
+msgstr ""
+
+#: ../inc/class.field-groups.php:220
+msgid "Site Description"
+msgstr ""
+
+#: ../inc/class.field-groups.php:220
+msgid "Description"
+msgstr ""
+
+#: ../inc/class.field-groups.php:222
+msgid "Optimal length: 50–160 characters"
+msgstr ""
+
+#: ../inc/class.field-groups.php:233
+msgid "Preview Image"
+msgstr ""
+
+#: ../inc/class.field-groups.php:235
+msgid "For services like Facebook or Twitter."
+msgstr ""
+
+#: ../inc/class.field-groups.php:248
+msgid "Maximum 100 entries"
+msgstr ""
+
+#: ../inc/class.field-groups.php:307
+msgid "SEO Global Options"
+msgstr ""
+
+#: ../inc/class.field-groups.php:310
 msgid "SEO Options: %s"
+msgstr ""
+
+#: ../inc/class.redirects.php:39
+msgid "Please provide either an absolute or relative URL"
 msgstr ""

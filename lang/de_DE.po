@@ -3,7 +3,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: RH SEO\n"
-"POT-Creation-Date: 2021-05-12 13:15+0200\n"
+"POT-Creation-Date: \n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -11,68 +11,79 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Poedit-Basepath: ..\n"
 "X-Poedit-KeywordsList: __;_e;_ex:1,2c;_n:1,2;_n_noop:1,2;_nx:1,2,4c;"
 "_nx_noop:1,2,3c;_x:1,2c;esc_attr__;esc_attr_e;esc_attr_x:1,2c;"
 "esc_html__;esc_html_e;esc_html_x:1,2c\n"
 "X-Poedit-SourceCharset: UTF-8\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.4.3\n"
+"X-Generator: Poedit 3.2.2\n"
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPathExcluded-0: *.js\n"
 
-#: inc/class.field-groups.php:77 inc/class.field-groups.php:193
-msgid "SEO"
-msgstr "SEO"
-
-#: inc/class.field-groups.php:93
+#: ../inc/class.field-groups.php:90
 msgid "Search Engine Optimization"
 msgstr "Suchmaschinen-Optimierung"
 
-#: inc/class.field-groups.php:126
-msgid "Site Description"
-msgstr "Website-Beschreibung"
+#: ../inc/class.field-groups.php:91, ../inc/class.field-groups.php:306
+msgid "SEO"
+msgstr "SEO"
 
-#: inc/class.field-groups.php:126
-msgid "Description"
-msgstr "Beschreibung"
+#: ../inc/class.field-groups.php:154, ../inc/class.field-groups.php:155
+msgid "SEO Options"
+msgstr "SEO Optionen"
 
-#: inc/class.field-groups.php:128
-msgid "Optimal length: 50–160 characters"
-msgstr "Optimale Länge: 50-160 Zeichen"
-
-#: inc/class.field-groups.php:139
-msgid "Preview Image"
-msgstr "Vorschaubild"
-
-#: inc/class.field-groups.php:141
-msgid "For services like Facebook or Twitter."
-msgstr "Für Websites wie Facebook oder Twitter."
-
-#: inc/class.field-groups.php:152
+#: ../inc/class.field-groups.php:195
 msgid "Site Name"
 msgstr "Website-Name"
 
-#: inc/class.field-groups.php:161
+#: ../inc/class.field-groups.php:202
 msgid "Hide from search engines"
 msgstr "Vor Suchmaschinen verstecken"
 
-#: inc/class.field-groups.php:169
+#: ../inc/class.field-groups.php:211
 msgid "Optional. Overwrites the title."
 msgstr "Optional. Überschreibt den Titel."
 
-#: inc/class.field-groups.php:170
+#: ../inc/class.field-groups.php:212
 msgid "Document Title"
 msgstr "Titel des Dokuments"
 
-#: inc/class.field-groups.php:194
-msgid "SEO Global Defaults"
-msgstr "SEO Globale Standard-Einstellungen"
+#: ../inc/class.field-groups.php:220
+msgid "Site Description"
+msgstr "Website-Beschreibung"
 
-#: inc/class.field-groups.php:197
-#, php-format
+#: ../inc/class.field-groups.php:220
+msgid "Description"
+msgstr "Beschreibung"
+
+#: ../inc/class.field-groups.php:222
+msgid "Optimal length: 50–160 characters"
+msgstr "Optimale Länge: 50-160 Zeichen"
+
+#: ../inc/class.field-groups.php:233
+msgid "Preview Image"
+msgstr "Vorschaubild"
+
+#: ../inc/class.field-groups.php:235
+msgid "For services like Facebook or Twitter."
+msgstr "Für Websites wie Facebook oder Twitter."
+
+#: ../inc/class.field-groups.php:248
+msgid "Maximum 100 entries"
+msgstr "Maximal 100 Einträge"
+
+#: ../inc/class.field-groups.php:307
+msgid "SEO Global Options"
+msgstr "SEO Globale Optionen"
+
+#: ../inc/class.field-groups.php:310
 msgid "SEO Options: %s"
 msgstr "SEO Optionen: %s"
+
+#: ../inc/class.redirects.php:39
+msgid "Please provide either an absolute or relative URL"
+msgstr ""
 
 #~ msgid "Used for facebook and twitter."
 #~ msgstr "Für Facebook und Twitter."

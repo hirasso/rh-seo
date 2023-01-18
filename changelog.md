@@ -1,6 +1,7 @@
 #### 1.2.9 (2023-01-18)
 
-- Restrict 404 redirects to a maximum of 100 entries (#595a785)
+- Update German translations (#d3891b3)
+- Restrict 404 redirects to a maximum of 100 entries (#4d60003)
 
 #### 1.2.8 (2023-01-18)
 
