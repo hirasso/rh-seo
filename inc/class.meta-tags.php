@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace R\SEO;
 
@@ -46,7 +46,7 @@ class MetaTags {
   public function wp_head(): void {
     // allow to disable meta tags
     if( !apply_filters('rhseo/render_meta_tags', true ) ) return;
-    
+
     ob_start() ?>
 
 <!-- SEO: Start -->
@@ -57,10 +57,10 @@ class MetaTags {
 <?php endif; ?>
 <meta property="og:locale" content="<?= esc_attr($this->get_locale()) ?>" />
 <meta property="og:type" content="website" />
-<meta property="og:url" content="<?= esc_attr($this->get_current_url()) ?>" />
+<meta property="og:url" content="<?= esc_attr(seo()->get_current_url()) ?>" />
 <meta property="og:site_name" content="<?= esc_attr(get_bloginfo('name')) ?>" />
 <?php if($image = $this->get_og_image_url()): ?>
-<meta property="og:image" content="<?= esc_attr($image) ?>" />    
+<meta property="og:image" content="<?= esc_attr($image) ?>" />
 <?php endif; ?>
 <meta name="twitter:card" content="summary_large_image" />
 <!-- SEO: End -->
@@ -68,15 +68,7 @@ class MetaTags {
     <?php echo ob_get_clean();
   }
 
-  /**
-   * Get current URL
-   *
-   * @return String $url
-   */
-  private function get_current_url( $path = '' ): string {
-    $url = set_url_scheme( 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] );
-    return $url;
-  }
+
 
   /**
    * Get locale for tag
@@ -94,17 +86,17 @@ class MetaTags {
    * @return void
    */
   public function document_title_parts(array $parts): array {
-    
+
     $parts['title'] = $this->get_seo_value('document_title');
 
     // We never want the tagline in the document title
     unset($parts['tagline']);
-    
+
     // overwrite 'site', if not on the front page
     if( !seo()->is_front_page() ) {
       $parts['site'] = get_bloginfo( 'name' );
     }
-    
+
     return $parts;
   }
 
@@ -121,15 +113,15 @@ class MetaTags {
     if( $front_page && $title = $this->get_seo_value('document_title', $front_page) ) {
       return $title;
     }
-    
+
     $custom_site_name = seo()->get_global_options_field('site_name');
-    
+
     if( $custom_site_name ) {
       $value = __($custom_site_name);
     }
 
     add_filter('pre_option_blogname', [$this, 'get_bloginfo_name']);
-    
+
     return $value;
   }
 
@@ -153,9 +145,9 @@ class MetaTags {
    * @return string|null
    */
   public function get_seo_value( string $name, $object = null ): ?string {
-    
+
     if( !$object ) $object = seo()->get_queried_object();
-    
+
     if( $object ) $value = seo()->get_field($name, $this->get_acf_post_id($object));
 
     // fallbacks for document_title

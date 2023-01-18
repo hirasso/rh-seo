@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name: RH SEO
- * Version: 1.2.5
+ * Version: 1.2.6
  * Author: Rasso Hilber
  * Description: Lightweight SEO optimizations for WordPress
  * Author URI: https://rassohilber.com
@@ -21,6 +21,7 @@ require_once(RHSEO_DIR . '/inc/class.meta-tags.php');
 require_once(RHSEO_DIR . '/inc/class.yoast-compatibility.php');
 require_once(RHSEO_DIR . '/inc/class.xml-sitemaps.php');
 require_once(RHSEO_DIR . '/inc/class.disable-feeds.php');
+require_once(RHSEO_DIR . '/inc/class.redirects.php');
 
 /**
  * Main Class
@@ -66,6 +67,7 @@ class SEO {
     // new Yoast_Compatibility(); // deactivated, Yoast keeps breaking sites badly
     new XML_Sitemaps();
     new DisableFeeds();
+    new Redirects();
   }
 
   /**
@@ -75,6 +77,16 @@ class SEO {
    */
   public function admin_init() {
     $this->delete_deprecated_plugins();
+  }
+
+  /**
+   * Get current URL
+   *
+   * @return String $url
+   */
+  public function get_current_url( $path = '' ): string {
+    $url = set_url_scheme( 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] );
+    return $url;
   }
 
   /**
@@ -172,7 +184,7 @@ class SEO {
         }
       }
     }
-    // 
+    //
   }
 
   /**
@@ -208,7 +220,7 @@ class SEO {
     );
     $this->add_notice('acf-missing', $message, 'error');
   }
-  
+
   /**
    * Shows admin notices from transient
    *

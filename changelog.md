@@ -1,6 +1,14 @@
+#### 1.2.6 (2023-01-18)
+
+- Feature: 404 Redirects (#8e38472)
+
+#### 1.2.5 (2022-09-22)
+
+- prevent infinite loop in `pre_option_blogname` (#6ca692d)
+
 #### 1.2.4 (2022-07-27)
 
-- Disable built-in rss feeds (#0b7b46a)
+- Disable built-in rss feeds (#1a298f2)
 
 #### 1.2.3 (2022-07-26)
 

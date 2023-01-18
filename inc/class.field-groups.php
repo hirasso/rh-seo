@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace R\SEO;
 
@@ -8,7 +8,7 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
  * SEO Field_Groups
  */
 class Field_Groups {
-  
+
   private $prefix;
   private $field_group_locations;
 
@@ -76,7 +76,7 @@ class Field_Groups {
         ]
       ];
     }
-    
+
   }
 
   /**
@@ -90,12 +90,12 @@ class Field_Groups {
       'page_title' => __('Search Engine Optimization', 'rhseo'),
       'menu_title' => __('SEO', 'rhseo'),
       'menu_slug' => "rhseo-options",
-      'post_id' => "rhseo-options", 
+      'post_id' => "rhseo-options",
       'position' => '59.6',
       'icon_url' => 'dashicons-share',
     ]);
-    
-    
+
+
     if( $pll_languages = seo()->get_polylang_languages() ) {
       foreach( $pll_languages as $language ) {
         acf_add_options_sub_page([
@@ -112,7 +112,7 @@ class Field_Groups {
     $post_types = \get_post_types([
       'public' => true
     ]);
-    
+
     foreach( $post_types as $post_type ) {
       $pt_object = \get_post_type_object($post_type);
       if( !$pt_object->has_archive ) continue;
@@ -127,7 +127,7 @@ class Field_Groups {
    * @return void
    */
   private function add_post_type_options_page($post_type) {
-    
+
     $pt_object = get_post_type_object($post_type);
 
     if( $pll_languages = seo()->get_polylang_languages() ) {
@@ -137,7 +137,7 @@ class Field_Groups {
           'page_title' => "SEO $language->name" . ": {$pt_object->labels->name}",
           'menu_title' => "SEO $language->name",
           'menu_slug' => $post_id,
-          'post_id' => $post_id, 
+          'post_id' => $post_id,
           'parent_slug' => "edit.php?post_type=$post_type",
         ]);
         $this->field_group_locations[] = [
@@ -154,7 +154,7 @@ class Field_Groups {
         'page_title' => __('SEO Options', 'rhseo') . ": {$pt_object->labels->name}",
         'menu_title' => __('SEO Options', 'rhseo'),
         'menu_slug' => $post_id,
-        'post_id' => $post_id, 
+        'post_id' => $post_id,
         'parent_slug' => "edit.php?post_type=$post_type",
       ]);
       $this->field_group_locations[] = [
@@ -165,7 +165,7 @@ class Field_Groups {
         ],
       ];
     }
-    
+
   }
 
   /**
@@ -182,7 +182,13 @@ class Field_Groups {
     }
 
     $fields = [
-      [ 
+      [
+        'key' => 'key_rhseo_tab_general',
+        'type' => 'tab',
+        'label' => 'General',
+        'rhseo_render_field' => $this->is_global_options_page(),
+      ],
+      [
         'type' => $field_types['text'],
         'key' => "key_{$this->prefix}_site_name",
         'name' => "{$this->prefix}_site_name",
@@ -198,7 +204,7 @@ class Field_Groups {
         'ui' => true,
         'rhseo_render_field' => !$this->is_global_options_page()
       ],
-      [ 
+      [
         'type' => $field_types['text'],
         'key' => "key_{$this->prefix}_document_title",
         'name' => "{$this->prefix}_document_title",
@@ -207,7 +213,7 @@ class Field_Groups {
         'acfml_multilingual' => true,
         'rhseo_render_field' => !$this->is_global_options_page()
       ],
-      [ 
+      [
         'type' => $field_types['textarea'],
         'key' => "key_{$this->prefix}_description",
         'name' => "{$this->prefix}_description",
@@ -218,7 +224,7 @@ class Field_Groups {
         'rows' => 2,
         'acfml_multilingual' => true,
       ],
-      [ 
+      [
         'type' => $field_types['image'],
         'key' => "key_{$this->prefix}_image",
         'preview_size' => 'medium',
@@ -228,7 +234,44 @@ class Field_Groups {
         'required' => false,
         'instructions' => __('For services like Facebook or Twitter.', 'rhseo'),
         'acfml_multilingual' => true,
-      ]
+      ],
+      [
+        'key' => 'key_rhseo_tab_redirects',
+        'type' => 'tab',
+        'label' => '404 Redirects',
+        'rhseo_render_field' => $this->is_global_options_page(),
+      ],
+      [
+        'key' => 'key_rhseo_404_redirects',
+        'type' => 'repeater',
+        'name' => 'rhseo_404_redirects',
+        'label' => '404 Redirects',
+        'button_label' => 'Add Redirect',
+        'layout' => 'block',
+        'rhseo_render_field' => $this->is_global_options_page(),
+        'sub_fields' => [
+          [
+            'key' => 'key_rhseo_redirect_from',
+            'name' => 'rhseo_redirect_from',
+            'label' => 'from',
+            'type' => 'url',
+            'required' => 1,
+            'wrapper' => [
+              'width' => 50
+            ]
+          ],
+          [
+            'key' => 'key_rhseo_redirect_to',
+            'name' => 'rhseo_redirect_to',
+            'label' => 'from',
+            'type' => 'url',
+            'required' => 1,
+            'wrapper' => [
+              'width' => 50
+            ]
+          ]
+        ]
+      ],
     ];
 
     acf_add_local_field_group([
