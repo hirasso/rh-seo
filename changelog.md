@@ -1,6 +1,7 @@
 #### 1.2.6 (2023-01-18)
 
-- Feature: 404 Redirects (#8e38472)
+- Rename Field group title (#b23ba59)
+- Feature: 404 Redirects (#b92b6e8)
 
 #### 1.2.5 (2022-09-22)
 

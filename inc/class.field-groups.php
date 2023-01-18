@@ -303,7 +303,7 @@ class Field_Groups {
    */
   private function get_field_group_title(): string {
     $title = __('SEO', 'rhseo');
-    if( $this->is_global_options_page() ) $title = __('SEO Global Defaults', 'rhseo');
+    if( $this->is_global_options_page() ) $title = __('SEO Global Options', 'rhseo');
     if( $post_type = $this->is_post_type_options_page() ) {
       $pt_object = get_post_type_object( $post_type );
       $title = sprintf(__('SEO Options: %s', 'rhseo'), $pt_object->labels->name);
