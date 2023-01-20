@@ -1,6 +1,10 @@
+#### 1.3.3 (2023-01-20)
+
+- Deactivate `NOT EXISTS` check for `inject_meta_query_noindex`  This was slowing down the sitemap query considerably. (#00372e0)
+
 #### 1.3.2 (2023-01-18)
 
-- Do redirects as early as possible (#a11e9e3)
+- Do redirects as early as possible (#c44ee98)
 
 #### 1.3.1 (2023-01-18)
 

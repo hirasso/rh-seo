@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace R\SEO;
 
@@ -8,7 +8,7 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
  * Sitemaps
  */
 class XML_Sitemaps {
-  
+
   private $prefix;
 
   public function __construct() {
@@ -66,16 +66,12 @@ class XML_Sitemaps {
   public function inject_meta_query_noindex( $args ): array {
     $meta_query = $args['meta_query'] ?? [];
     $meta_query[] = [
-      'relation' => 'OR',
+      'relation' => 'AND',
       [
         'key' => "{$this->prefix}_noindex",
         'value' => 1,
         'compare' => '!=',
         'type' => 'NUMERIC'
-      ],
-      [
-        'key' => "{$this->prefix}_noindex",
-        'compare' => 'NOT EXISTS'
       ],
     ];
     $args['meta_query'] = $meta_query;
@@ -92,11 +88,11 @@ class XML_Sitemaps {
    */
   public function registered_taxonomy( $taxonomy, $object_type, $taxonomy_arr ) {
     global $wp_taxonomies;
-    if( $object_type === 'attachment' || 
+    if( $object_type === 'attachment' ||
       ( is_array($object_type) && count($object_type) === 1 && $object_type[0] === 'attachment' ) ) {
       $wp_taxonomies[$taxonomy]->public = false;
     }
-    
+
   }
 
   /**
