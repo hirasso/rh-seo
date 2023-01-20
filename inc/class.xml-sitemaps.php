@@ -2,16 +2,18 @@
 
 namespace R\SEO;
 
-if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+if (!defined('ABSPATH')) exit; // Exit if accessed directly
 
 /**
  * Sitemaps
  */
-class XML_Sitemaps {
+class XML_Sitemaps
+{
 
   private $prefix;
 
-  public function __construct() {
+  public function __construct()
+  {
     $this->prefix = seo()->prefix;
     add_action('init', [$this, 'add_qtranslate_sitemaps_provider']);
     add_action('registered_taxonomy', [$this, 'registered_taxonomy'], 10, 3);
@@ -20,6 +22,7 @@ class XML_Sitemaps {
     add_filter('wp_sitemaps_post_types', [$this, 'sitemaps_post_types']);
     add_filter('wp_sitemaps_posts_query_args', [$this, 'inject_meta_query_noindex']);
     add_filter('wp_sitemaps_taxonomies_query_args', [$this, 'inject_meta_query_noindex']);
+    add_action('save_post', [$this, 'ensure_post_has_noindex_value']);
   }
 
   /**
@@ -29,8 +32,9 @@ class XML_Sitemaps {
    * @param string $name
    * @return void
    */
-  public function sitemaps_providers($provider, $name) {
-    if ( 'users' === $name ) return false;
+  public function sitemaps_providers($provider, $name)
+  {
+    if ('users' === $name) return false;
     return $provider;
   }
 
@@ -40,7 +44,8 @@ class XML_Sitemaps {
    * @param array $taxonomies
    * @return array
    */
-  public function sitemaps_taxonomies($taxonomies): array {
+  public function sitemaps_taxonomies($taxonomies): array
+  {
     unset($taxonomies['category']);
     unset($taxonomies['post_tag']);
     return $taxonomies;
@@ -52,7 +57,8 @@ class XML_Sitemaps {
    * @param array $post_types
    * @return array
    */
-  public function sitemaps_post_types($post_types): array {
+  public function sitemaps_post_types($post_types): array
+  {
     unset($post_types['post']);
     return $post_types;
   }
@@ -63,7 +69,8 @@ class XML_Sitemaps {
    * @param array $args
    * @return array
    */
-  public function inject_meta_query_noindex( $args ): array {
+  public function inject_meta_query_noindex($args): array
+  {
     $meta_query = $args['meta_query'] ?? [];
     $meta_query[] = [
       'relation' => 'AND',
@@ -86,13 +93,15 @@ class XML_Sitemaps {
    * @param array $taxonomy_arr
    * @return void
    */
-  public function registered_taxonomy( $taxonomy, $object_type, $taxonomy_arr ) {
+  public function registered_taxonomy($taxonomy, $object_type, $taxonomy_arr)
+  {
     global $wp_taxonomies;
-    if( $object_type === 'attachment' ||
-      ( is_array($object_type) && count($object_type) === 1 && $object_type[0] === 'attachment' ) ) {
+    if (
+      $object_type === 'attachment' ||
+      (is_array($object_type) && count($object_type) === 1 && $object_type[0] === 'attachment')
+    ) {
       $wp_taxonomies[$taxonomy]->public = false;
     }
-
   }
 
   /**
@@ -102,18 +111,31 @@ class XML_Sitemaps {
    *
    * @return void
    */
-  public function add_qtranslate_sitemaps_provider() {
-    if( !defined('QTX_VERSION') ) return;
+  public function add_qtranslate_sitemaps_provider()
+  {
+    if (!defined('QTX_VERSION')) return;
 
     $default_language = qtranxf_getLanguageDefault();
     $current_language = qtranxf_getLanguage();
     // we only want to add the custom provider for the default language
-    if( $current_language !== $default_language ) return;
+    if ($current_language !== $default_language) return;
 
     // registers the new provider for the sitemap
     require_once(RHSEO_DIR . '/inc/class.qtranslate-xt-sitemaps-provider.php');
     $provider = new Qtranslate_XT_Sitemaps_Provider();
-    wp_register_sitemap_provider( 'languages', $provider );
+    wp_register_sitemap_provider('languages', $provider);
   }
 
+  /**
+   * Make sure a post contains a "rhseo_noindex" value
+   *
+   * @param integer $post_id
+   * @return void
+   */
+  public function ensure_post_has_noindex_value(int $post_id): void {
+    $noindex_key = "{$this->prefix}_noindex";
+    $noindex = get_post_meta($post_id, $noindex_key, true);
+    // If noindex is empty, set it to 0
+    if ($noindex === "") update_post_meta($post_id, $noindex_key, 0);
+  }
 }

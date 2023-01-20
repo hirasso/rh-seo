@@ -1,6 +1,10 @@
+#### 1.3.4 (2023-01-20)
+
+- Ensure posts always have a `rhseo_noindex` value (#9df67dc)
+
 #### 1.3.3 (2023-01-20)
 
-- Deactivate `NOT EXISTS` check for `inject_meta_query_noindex`  This was slowing down the sitemap query considerably. (#00372e0)
+- Deactivate `NOT EXISTS` check for `inject_meta_query_noindex`  This was slowing down the sitemap query considerably. (#6bbd74d)
 
 #### 1.3.2 (2023-01-18)
 
