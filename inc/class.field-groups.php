@@ -73,6 +73,11 @@ class Field_Groups {
           'param' => 'post_type',
           'operator' => '==',
           'value' => $post_type,
+        ],
+        [
+          'param' => 'page_type',
+          'operator' => '!=',
+          'value' => 'front_page',
         ]
       ];
     }
