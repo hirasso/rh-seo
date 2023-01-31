@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name: RH SEO
- * Version: 1.3.4
+ * Version: 1.3.5
  * Author: Rasso Hilber
  * Description: Lightweight SEO optimizations for WordPress
  * Author URI: https://rassohilber.com
@@ -405,7 +405,7 @@ class SEO {
    * @author Rasso Hilber <mail@rassohilber.com>
    */
   public function delete_tagline(): void {
-    delete_option('blogdescription');
+    update_option('blogdescription', '', true);
   }
 
 }
