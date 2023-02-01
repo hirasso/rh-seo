@@ -122,6 +122,7 @@ class Redirects
     if ($query) {
       $uri .= "?$query";
     }
+    if ($uri === "/") return $uri;
     return untrailingslashit(strtolower($uri));
   }
 

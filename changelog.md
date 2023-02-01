@@ -1,6 +1,7 @@
 #### 1.3.7 (2023-02-01)
 
-- Make blog name and description in general options `readonly` (#d71586d)
+- Allow single slash in `get_request_uri` (#71ee534)
+- Make blog name and description in general options `readonly` (#561272d)
 
 #### 1.3.6 (2023-02-01)
 
