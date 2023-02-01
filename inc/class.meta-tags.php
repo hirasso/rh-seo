@@ -12,7 +12,7 @@ class MetaTags
 
   public function __construct()
   {
-    add_action('wp', [$this, 'init']);
+    add_action('plugins_loaded', [$this, 'init']);
   }
 
   /**
@@ -24,10 +24,10 @@ class MetaTags
   public function init(): void
   {
     add_action('wp_head', [$this, 'wp_head'], 4);
-    add_filter('option_blogname', [$this, 'filter_option_blogname']);
+    add_filter('pre_option_blogname', [$this, 'filter_option_blogname']);
     add_filter('pre_option_blogdescription', [$this, 'filter_option_blogdescription']);
     add_filter('document_title_parts', [$this, 'document_title_parts']);
-    $this->adjust_robots();
+    add_action('wp', [$this, 'adjust_robots']);
   }
 
   /**
