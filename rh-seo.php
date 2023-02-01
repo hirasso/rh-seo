@@ -1,55 +1,55 @@
 <?php
+
 /**
  * Plugin Name: RH SEO
  * Version: 1.3.5
  * Author: Rasso Hilber
  * Description: Lightweight SEO optimizations for WordPress
  * Author URI: https://rassohilber.com
-**/
+ **/
 
 namespace R\SEO;
 
-if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+if (!defined('ABSPATH')) exit; // Exit if accessed directly
 
-define('RHSEO_DIR', __DIR__ );
-
-/*
-* Require Modules
-*/
-require_once(RHSEO_DIR . '/inc/class.field-groups.php');
-require_once(RHSEO_DIR . '/inc/class.meta-tags.php');
-require_once(RHSEO_DIR . '/inc/class.yoast-compatibility.php');
-require_once(RHSEO_DIR . '/inc/class.xml-sitemaps.php');
-require_once(RHSEO_DIR . '/inc/class.disable-feeds.php');
-require_once(RHSEO_DIR . '/inc/class.redirects.php');
+define('RHSEO_DIR', __DIR__);
 
 /**
  * Main Class
  */
-class SEO {
+class SEO
+{
 
-  public $prefix = 'rhseo';
+  public string $prefix = 'rhseo';
+  private array $instances = [];
 
   private $deprecated_plugins = [
     'wordpress-seo/wp-seo.php'
   ];
+
+  public function __construct()
+  {
+    add_action('plugins_loaded', [$this, 'initialize']);
+  }
 
   /**
    * Initialize function
    *
    * @return void
    */
-  public function initialize() {
+  public function initialize()
+  {
     add_action('admin_notices', [$this, 'maybe_show_notice_acf_missing'], 9);
-    add_action('admin_notices', [$this, 'show_notices'] );
+    add_action('admin_notices', [$this, 'show_notices']);
 
-    if( !defined('ACF') ) return;
+    if (!defined('ACF')) return;
 
     $this->init_plugin_modules();
+    $this->load_textdomain();
+
     add_action('admin_init', [$this, 'admin_init'], 11);
-    add_action('admin_enqueue_scripts', [$this, 'enqueue_styles'] );
-    add_action('admin_enqueue_scripts', [$this, 'enqueue_scripts'], 100 );
-    add_action('plugins_loaded', [$this, 'load_textdomain']);
+    add_action('admin_enqueue_scripts', [$this, 'enqueue_styles']);
+    add_action('admin_enqueue_scripts', [$this, 'enqueue_scripts'], 100);
     add_action('template_redirect', [$this, 'redirect_attachment_pages']);
     add_action('template_redirect', [$this, 'redirect_author_archives']);
     add_action('admin_init', [$this, 'delete_tagline']);
@@ -60,13 +60,31 @@ class SEO {
    *
    * @return void
    */
-  private function init_plugin_modules() {
-    // must be initialized first, to make fields available
-    new Field_Groups();
-    new MetaTags();
-    new XML_Sitemaps();
-    new DisableFeeds();
-    new Redirects();
+  private function init_plugin_modules()
+  {
+    require_once(RHSEO_DIR . '/inc/class.field-groups.php');
+    require_once(RHSEO_DIR . '/inc/class.meta-tags.php');
+    require_once(RHSEO_DIR . '/inc/class.xml-sitemaps.php');
+    require_once(RHSEO_DIR . '/inc/class.disable-feeds.php');
+    require_once(RHSEO_DIR . '/inc/class.redirects.php');
+
+    $this->get_instance('Field_Groups');
+    $this->get_instance('MetaTags');
+    $this->get_instance('XML_Sitemaps');
+    $this->get_instance('DisableFeeds');
+    $this->get_instance('Redirects');
+  }
+
+  /**
+   * Get an instance of a class by name, or create a new instance if it doesn't exist
+   */
+  public function get_instance($class = '')
+  {
+    $namespaced_class_name = __NAMESPACE__ . '\\' . $class;
+    if (!isset($this->instances[$class])) {
+      $this->instances[$class] = new $namespaced_class_name();
+    }
+    return $this->instances[$class];
   }
 
   /**
@@ -74,7 +92,8 @@ class SEO {
    *
    * @return void
    */
-  public function admin_init() {
+  public function admin_init()
+  {
     $this->delete_deprecated_plugins();
   }
 
@@ -83,8 +102,9 @@ class SEO {
    *
    * @return String $url
    */
-  public function get_current_url( $path = '' ): string {
-    $url = set_url_scheme( 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] );
+  public function get_current_url($path = ''): string
+  {
+    $url = set_url_scheme('http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
     return $url;
   }
 
@@ -94,11 +114,12 @@ class SEO {
    * @param string $path
    * @return string
    */
-  private function asset_uri( string $path ): string {
-    $uri = plugins_url( $path, __FILE__ );
-    $file = $this->get_file_path( $path );
-    if( file_exists( $file ) ) {
-      $version = filemtime( $file );
+  private function asset_uri(string $path): string
+  {
+    $uri = plugins_url($path, __FILE__);
+    $file = $this->get_file_path($path);
+    if (file_exists($file)) {
+      $version = filemtime($file);
       $uri .= "?v=$version";
     }
     return $uri;
@@ -109,9 +130,10 @@ class SEO {
    *
    * @return string
    */
-  public function get_file_path( string $path ): string {
-    $path = ltrim( $path, '/' );
-    $file = plugin_dir_path( __FILE__ ) . $path;
+  public function get_file_path(string $path): string
+  {
+    $path = ltrim($path, '/');
+    $file = plugin_dir_path(__FILE__) . $path;
     return $file;
   }
 
@@ -120,7 +142,8 @@ class SEO {
    *
    * @return void
    */
-  public function enqueue_styles() {
+  public function enqueue_styles()
+  {
     wp_enqueue_style('rhseo', $this->asset_uri('assets/rhseo.css'));
   }
 
@@ -129,7 +152,8 @@ class SEO {
    *
    * @return void
    */
-  public function enqueue_scripts() {
+  public function enqueue_scripts()
+  {
     wp_enqueue_script('rhseo', $this->asset_uri('assets/rhseo.js'), [], false, true);
   }
 
@@ -139,14 +163,16 @@ class SEO {
    * @param array $array
    * @return stdClass
    */
-  public function to_object( $array ) {
+  public function to_object($array)
+  {
     return json_decode(json_encode($array));
   }
 
   /**
    * Helper function to detect a development environment
    */
-  private function is_dev() {
+  private function is_dev()
+  {
     return defined('\WP_ENV') && \WP_ENV === 'development';
   }
 
@@ -157,14 +183,15 @@ class SEO {
    * @param mixed $value
    * @return string
    */
-  public function get_template($template_name, $value = null) {
+  public function get_template($template_name, $value = null)
+  {
     $value = $this->to_object($value);
     $path = $this->get_file_path("templates/$template_name.php");
     $path = apply_filters("rhseo/template/$template_name", $path);
-    if( !file_exists($path) ) return "<p>$template_name: Template doesn't exist</p>";
+    if (!file_exists($path)) return "<p>$template_name: Template doesn't exist</p>";
     ob_start();
-    if( $this->is_dev() ) echo "<!-- Template Path: $path -->";
-    include( $path );
+    if ($this->is_dev()) echo "<!-- Template Path: $path -->";
+    include($path);
     return ob_get_clean();
   }
 
@@ -173,12 +200,13 @@ class SEO {
    *
    * @return void
    */
-  public function delete_deprecated_plugins() {
-    foreach( $this->deprecated_plugins as $id => $plugin_slug ) {
+  public function delete_deprecated_plugins()
+  {
+    foreach ($this->deprecated_plugins as $id => $plugin_slug) {
       $plugin_file = WP_PLUGIN_DIR . '/' . $plugin_slug;
-      if( file_exists($plugin_file) ) {
+      if (file_exists($plugin_file)) {
         $plugin_data = get_plugin_data($plugin_file);
-        if( delete_plugins([$plugin_slug]) ) {
+        if (delete_plugins([$plugin_slug])) {
           $this->add_notice("plugin-deleted-$id", "[RH SEO] Deleted deprecated plugin „{$plugin_data['Name']}“.", "success");
         }
       }
@@ -194,9 +222,10 @@ class SEO {
    * @param string $type
    * @return void
    */
-  public function add_notice( $key, $message, $type = 'warning', $is_dismissible = false ) {
+  public function add_notice($key, $message, $type = 'warning', $is_dismissible = false)
+  {
     $notices = get_transient($this->get_notices_transient_name());
-    if( !$notices ) $notices = [];
+    if (!$notices) $notices = [];
     $notices[$key] = [
       'message' => $message,
       'type' => $type,
@@ -211,8 +240,9 @@ class SEO {
    * @return void
    * @author Rasso Hilber <mail@rassohilber.com>
    */
-  public function maybe_show_notice_acf_missing(): void {
-    if( defined('ACF') ) return;
+  public function maybe_show_notice_acf_missing(): void
+  {
+    if (defined('ACF')) return;
     $message = wp_sprintf(
       __("RHSEO requires the plugin %s to be installed and activated.", 'acfml'),
       '<a href="https://www.advancedcustomfields.com/" target="_blank">Advanced Custom Fields</a>',
@@ -225,15 +255,16 @@ class SEO {
    *
    * @return void
    */
-  public function show_notices() {
+  public function show_notices()
+  {
     $notices = get_transient($this->get_notices_transient_name()) ?: [];
     delete_transient($this->get_notices_transient_name());
-    foreach( $notices as $notice ) {
+    foreach ($notices as $notice) {
       ob_start() ?>
       <div class="notice notice-<?= $notice['type'] ?> <?= $notice['is_dismissible'] ? 'is-dismissible' : '' ?>">
         <p><?= $notice['message'] ?></p>
       </div>
-      <?php echo ob_get_clean();
+<?php echo ob_get_clean();
     }
   }
 
@@ -242,7 +273,8 @@ class SEO {
    *
    * @return string
    */
-  private function get_notices_transient_name(): string {
+  private function get_notices_transient_name(): string
+  {
     $user_id = get_current_user_id();
     return "rhseo-admin-notices-$user_id";
   }
@@ -255,7 +287,8 @@ class SEO {
    * @param	string $locale The plugin's current locale.
    * @return	void
    */
-  public function load_textdomain() {
+  public function load_textdomain()
+  {
 
     $domain = 'rhseo';
     /**
@@ -267,16 +300,16 @@ class SEO {
      * @param 	string $locale The plugin's current locale.
      * @param 	string $domain Text domain. Unique identifier for retrieving translated strings.
      */
-    $locale = apply_filters( 'plugin_locale', determine_locale(), $domain );
+    $locale = apply_filters('plugin_locale', determine_locale(), $domain);
     $mofile = "$locale.mo";
 
     // Try to load from the languages directory first.
-    if( load_textdomain( $domain, WP_LANG_DIR . '/plugins/' . $mofile ) ) {
+    if (load_textdomain($domain, WP_LANG_DIR . '/plugins/' . $mofile)) {
       return true;
     }
 
     // Load from plugin lang folder.
-    return load_textdomain( $domain, $this->get_file_path( 'lang/' . $mofile ) );
+    return load_textdomain($domain, $this->get_file_path('lang/' . $mofile));
   }
 
   /**
@@ -284,12 +317,13 @@ class SEO {
    *
    * @return void
    */
-  public function redirect_attachment_pages() {
-    if( !apply_filters('rhseo/redirect_attachment_pages', true ) ) return;
-    if( !is_attachment() ) return;
-    if( !$object_id = get_queried_object_id() ) return;
-    $url = wp_get_attachment_url( $object_id );
-    wp_safe_redirect( $url, 301 );
+  public function redirect_attachment_pages()
+  {
+    if (!apply_filters('rhseo/redirect_attachment_pages', true)) return;
+    if (!is_attachment()) return;
+    if (!$object_id = get_queried_object_id()) return;
+    $url = wp_get_attachment_url($object_id);
+    wp_safe_redirect($url, 301);
     exit;
   }
 
@@ -298,9 +332,10 @@ class SEO {
    *
    * @return void
    */
-  public function redirect_author_archives(): void {
-    if( !is_author() ) return;
-    wp_safe_redirect( home_url('/'), 301 );
+  public function redirect_author_archives(): void
+  {
+    if (!is_author()) return;
+    wp_safe_redirect(home_url('/'), 301);
     exit;
   }
 
@@ -310,7 +345,8 @@ class SEO {
    * @param string $name
    * @return mixed
    */
-  public function get_field($name, $post_id = 0) {
+  public function get_field($name, $post_id = 0)
+  {
     $value = \get_field("rhseo_{$name}", $post_id);
     return $value;
   }
@@ -321,8 +357,9 @@ class SEO {
    * @return \WP_Post|null
    * @author Rasso Hilber <mail@rassohilber.com>
    */
-  public function get_front_page(): ?\WP_Post {
-    if( 'page' !== get_option('show_on_front') ) return null;
+  public function get_front_page(): ?\WP_Post
+  {
+    if ('page' !== get_option('show_on_front')) return null;
     $page = get_post(intval(get_option('page_on_front')));
     return $page instanceof \WP_Post ? $page : null;
   }
@@ -334,7 +371,8 @@ class SEO {
    * @return mixed
    * @author Rasso Hilber <mail@rassohilber.com>
    */
-  public function get_global_options_field(string $name) {
+  public function get_global_options_field(string $name)
+  {
     return $this->get_field($name, $this->get_options_page_slug());
   }
 
@@ -344,8 +382,9 @@ class SEO {
    * @param null|WP_Post|WP_Term $object
    * @return boolean
    */
-  public function object_is_set_to_noindex( $object = null ): bool {
-    if( is_a($object, "WP_Post") || is_a($object, "WP_Term") ) {
+  public function object_is_set_to_noindex($object = null): bool
+  {
+    if (is_a($object, "WP_Post") || is_a($object, "WP_Term")) {
       return (bool) $this->get_field("noindex", $object);
     }
     return false;
@@ -356,7 +395,8 @@ class SEO {
    *
    * @return null|object
    */
-  public function get_queried_object(): ?object {
+  public function get_queried_object(): ?object
+  {
     return apply_filters('rhseo/queried_object', get_queried_object());
   }
 
@@ -365,7 +405,8 @@ class SEO {
    *
    * @return boolean
    */
-  public function is_front_page(): bool {
+  public function is_front_page(): bool
+  {
     return apply_filters('rhseo/is_front_page', is_front_page());
   }
 
@@ -374,9 +415,10 @@ class SEO {
    *
    * @return null|object
    */
-  public function get_polylang_languages(): ?object {
+  public function get_polylang_languages(): ?object
+  {
     $languages = null;
-    if( !function_exists('\pll_the_languages') ) return $languages;
+    if (!function_exists('\pll_the_languages')) return $languages;
     return seo()->to_object(\pll_the_languages([
       'echo' => 0,
       'raw' => 1,
@@ -389,9 +431,10 @@ class SEO {
    *
    * @return string
    */
-  public function get_options_page_slug(): string {
+  public function get_options_page_slug(): string
+  {
     $slug = "rhseo-options";
-    if( function_exists('\pll_current_language') ) {
+    if (function_exists('\pll_current_language')) {
       $slug = "rhseo-options--" . \pll_current_language();
     }
     return $slug;
@@ -403,10 +446,10 @@ class SEO {
    * @return void
    * @author Rasso Hilber <mail@rassohilber.com>
    */
-  public function delete_tagline(): void {
+  public function delete_tagline(): void
+  {
     update_option('blogdescription', '', true);
   }
-
 }
 
 /**
@@ -414,11 +457,11 @@ class SEO {
  *
  * @return SEO
  */
-function seo() {
+function seo()
+{
   static $instance;
-  if( !isset($instance) ) {
+  if (!isset($instance)) {
     $instance = new SEO();
-    $instance->initialize();
   }
   return $instance;
 }
