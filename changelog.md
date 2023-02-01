@@ -1,3 +1,7 @@
+#### 1.3.7 (2023-02-01)
+
+- Make blog name and description in general options `readonly` (#d71586d)
+
 #### 1.3.6 (2023-02-01)
 
 - v1.3.6 (#7602b56)
