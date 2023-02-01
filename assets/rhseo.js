@@ -1,1 +1,1 @@
-(function () {})();
+(function () {var a=window.jQuery;jQuery(function(){alert("test")});})();
