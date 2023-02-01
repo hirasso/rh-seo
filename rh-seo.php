@@ -2,7 +2,7 @@
 
 /**
  * Plugin Name: RH SEO
- * Version: 1.3.7
+ * Version: 1.3.8
  * Author: Rasso Hilber
  * Description: Lightweight SEO optimizations for WordPress
  * Author URI: https://rassohilber.com
