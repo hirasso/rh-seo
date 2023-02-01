@@ -96,7 +96,7 @@ class MetaTags
     // We never want the tagline in the document title
     unset($parts['tagline']);
 
-    // On the front page we don't want the title
+    // On the front page we want only the site name
     if (seo()->is_front_page()) {
       unset($parts['title']);
     }
