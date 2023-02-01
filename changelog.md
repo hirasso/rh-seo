@@ -1,6 +1,19 @@
+#### 1.3.6 (2023-02-01)
+
+- v1.3.6 (#2dde8a5)
+
+#### 1.3.5 (2023-02-01)
+
+- Optimize logic flow in MetaTags (#b0405ac)
+- Delete unused module (#e0c2db2)
+- Add function `get_instance` to retrieve the various instances from the outside (#d81bf99)
+- Move initialization from `wp` to `plugins_loaded` (#e6a2204)
+- Optimize documentation (#b8bf8bc)
+- Don't render the SEO box on the front page (#79883b5)
+
 #### 1.3.4 (2023-01-20)
 
-- Ensure posts always have a `rhseo_noindex` value (#9df67dc)
+- Ensure posts always have a `rhseo_noindex` value (#2eacac6)
 
 #### 1.3.3 (2023-01-20)
 
