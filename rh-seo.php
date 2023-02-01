@@ -64,7 +64,6 @@ class SEO {
     // must be initialized first, to make fields available
     new Field_Groups();
     new MetaTags();
-    // new Yoast_Compatibility(); // deactivated, Yoast keeps breaking sites badly
     new XML_Sitemaps();
     new DisableFeeds();
     new Redirects();
