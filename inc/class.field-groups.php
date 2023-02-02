@@ -188,21 +188,21 @@ class Field_Groups {
 
     $fields = [
       [
-        'key' => 'key_rhseo_tab_general',
+        'key' => 'field_rhseo_tab_general',
         'type' => 'tab',
         'label' => 'General',
         'rhseo_render_field' => $this->is_global_options_page(),
       ],
       [
         'type' => $field_types['text'],
-        'key' => "key_{$this->prefix}_site_name",
+        'key' => "field_{$this->prefix}_site_name",
         'name' => "{$this->prefix}_site_name",
         'label' => __('Site Name', 'rhseo'),
         'acfml_multilingual' => true,
         'rhseo_render_field' => $this->is_global_options_page()
       ],
       [
-        'key' => "key_{$this->prefix}_noindex",
+        'key' => "field_{$this->prefix}_noindex",
         'name' => "rhseo_noindex",
         'label' => __('Hide from search engines', 'rhseo'),
         'type' => 'true_false',
@@ -211,7 +211,7 @@ class Field_Groups {
       ],
       [
         'type' => $field_types['text'],
-        'key' => "key_{$this->prefix}_document_title",
+        'key' => "field_{$this->prefix}_document_title",
         'name' => "{$this->prefix}_document_title",
         'instructions' => __('Optional. Overwrites the title.', 'rhseo'),
         'label' => __('Document Title', 'rhseo'),
@@ -220,7 +220,7 @@ class Field_Groups {
       ],
       [
         'type' => $field_types['textarea'],
-        'key' => "key_{$this->prefix}_description",
+        'key' => "field_{$this->prefix}_description",
         'name' => "{$this->prefix}_description",
         'label' => $this->is_global_options_page() ? __('Site Description', 'rhseo') : __('Description', 'rhseo'),
         'required' => false,
@@ -231,7 +231,7 @@ class Field_Groups {
       ],
       [
         'type' => $field_types['image'],
-        'key' => "key_{$this->prefix}_image",
+        'key' => "field_{$this->prefix}_image",
         'preview_size' => 'medium',
         'return_format' => 'id',
         'name' => "{$this->prefix}_image",
@@ -241,13 +241,13 @@ class Field_Groups {
         'acfml_multilingual' => true,
       ],
       [
-        'key' => 'key_rhseo_tab_redirects',
+        'key' => 'field_rhseo_tab_redirects',
         'type' => 'tab',
         'label' => '404 Redirects',
         'rhseo_render_field' => $this->is_global_options_page(),
       ],
       [
-        'key' => 'key_rhseo_404_redirects',
+        'key' => 'field_rhseo_404_redirects',
         'type' => 'repeater',
         'max' => 100,
         'instructions' => __('Maximum 100 entries', 'rhseo'),
@@ -258,7 +258,7 @@ class Field_Groups {
         'layout' => 'block',
         'sub_fields' => [
           [
-            'key' => 'key_rhseo_redirect_from',
+            'key' => 'field_rhseo_redirect_from',
             'name' => 'rhseo_redirect_from',
             'label' => __('From', 'rhseo'),
             'instructions' => __('URL that should be redirected', 'rhseo'),
@@ -269,7 +269,7 @@ class Field_Groups {
             ]
           ],
           [
-            'key' => 'key_rhseo_redirect_to',
+            'key' => 'field_rhseo_redirect_to',
             'name' => 'rhseo_redirect_to',
             'label' => __('To', 'rhseo'),
             'instructions' => __('Redirect target URL', 'rhseo'),

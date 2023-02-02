@@ -2,7 +2,7 @@
 
 /**
  * Plugin Name: RH SEO
- * Version: 1.3.8
+ * Version: 1.3.9
  * Author: Rasso Hilber
  * Description: Lightweight SEO optimizations for WordPress
  * Author URI: https://rassohilber.com
@@ -13,6 +13,7 @@ namespace R\SEO;
 if (!defined('ABSPATH')) exit; // Exit if accessed directly
 
 define('RHSEO_DIR', __DIR__);
+define('RHSEO_UPGRADE_VERSION', '1.3.9'); // Highest version with an upgrade routine.
 
 /**
  * Main Class
@@ -67,12 +68,17 @@ class SEO
     require_once(RHSEO_DIR . '/inc/class.xml-sitemaps.php');
     require_once(RHSEO_DIR . '/inc/class.disable-feeds.php');
     require_once(RHSEO_DIR . '/inc/class.redirects.php');
+    require_once(RHSEO_DIR . '/inc/class.migrate-acf-field-keys.php');
+    require_once(RHSEO_DIR . '/inc/class.upgrades.php');
 
+    $this->get_instance('Migrate_ACF_Field_Keys');
     $this->get_instance('Field_Groups');
     $this->get_instance('MetaTags');
     $this->get_instance('XML_Sitemaps');
     $this->get_instance('DisableFeeds');
     $this->get_instance('Redirects');
+
+    $upgrades = new Upgrades();
   }
 
   /**

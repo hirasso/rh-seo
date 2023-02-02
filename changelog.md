@@ -1,6 +1,10 @@
+#### 1.3.9 (2023-02-02)
+
+- Fix acf field keys, introduce database upgrade logic (#f15c047)
+
 #### 1.3.8 (2023-02-01)
 
-- v1.3.8 (#8a408a6)
+- v1.3.8 (#d837a02)
 
 #### 1.3.7 (2023-02-01)
 
