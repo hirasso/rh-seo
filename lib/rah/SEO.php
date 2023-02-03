@@ -114,7 +114,7 @@ class SEO
    */
   private function asset_uri(string $path): string
   {
-    $uri = plugins_url($path, __FILE__);
+    $uri = plugins_url($path, RHSEO_BASENAME);
     $file = $this->get_file_path($path);
     if (file_exists($file)) {
       $version = filemtime($file);
@@ -131,7 +131,7 @@ class SEO
   public function get_file_path(string $path): string
   {
     $path = ltrim($path, '/');
-    $file = plugin_dir_path(__FILE__) . $path;
+    $file = RHSEO_PATH . $path;
     return $file;
   }
 
@@ -171,7 +171,9 @@ class SEO
    */
   private function is_dev()
   {
-    return defined('\WP_ENV') && \WP_ENV === 'development';
+    $is_custom_dev = defined('\WP_ENV') && \WP_ENV === 'development';
+    if ($is_custom_dev) return true;
+    return wp_get_environment_type() === 'development';
   }
 
   /**

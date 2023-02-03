@@ -116,14 +116,14 @@ class Sitemaps
   {
     if (!defined('QTX_VERSION')) return;
 
-    $default_language = qtranxf_getLanguageDefault();
-    $current_language = qtranxf_getLanguage();
+    $default_language = \qtranxf_getLanguageDefault();
+    $current_language = \qtranxf_getLanguage();
     // we only want to add the custom provider for the default language
     if ($current_language !== $default_language) return;
 
     // registers the new provider for the sitemap
-    require_once(RHSEO_DIR . '/inc/class.qtranslate-xt-sitemaps-provider.php');
-    $provider = new Qtranslate_XT_Sitemaps_Provider();
+    require_once(RHSEO_PATH . '/inc/class.qtranslate-xt-sitemaps-provider.php');
+    $provider = new SitemapsProviderQtranslateXT();
     wp_register_sitemap_provider('languages', $provider);
   }
 

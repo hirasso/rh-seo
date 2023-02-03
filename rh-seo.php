@@ -10,9 +10,10 @@
 
 if (!defined('ABSPATH')) exit; // Exit if accessed directly
 
-require_once( __DIR__ . '/lib/vendor/autoload.php' );
+require_once(__DIR__ . '/lib/vendor/autoload.php');
 
-define('RHSEO_DIR', __DIR__);
+define('RHSEO_PATH', plugin_dir_path(__FILE__));
+define('RHSEO_BASENAME', plugin_basename(__FILE__));
 define('RHSEO_UPGRADE_VERSION', '1.3.9'); // Highest version with an upgrade routine.
 
 /**

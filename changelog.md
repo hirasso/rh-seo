@@ -1,5 +1,6 @@
 #### 1.4.2 (2023-02-03)
 
+- Fix of various paths and references (#ce1c7ae)
 - Use PSR-4 autoloading (#5397f74)
 
 #### 1.4.1 (2023-02-03)
