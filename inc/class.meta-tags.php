@@ -59,7 +59,7 @@ class MetaTags
     <meta name="twitter:card" content="summary_large_image" />
     <!-- SEO: End -->
 
-<?php echo ob_get_clean();
+<?php echo seo()->trim_html(ob_get_clean());
   }
 
 

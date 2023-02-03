@@ -2,7 +2,7 @@
 
 /**
  * Plugin Name: RH SEO
- * Version: 1.4.0
+ * Version: 1.4.1
  * Author: Rasso Hilber
  * Description: Lightweight SEO optimizations for WordPress
  * Author URI: https://rassohilber.com
@@ -455,6 +455,16 @@ class SEO
   public function delete_tagline(): void
   {
     update_option('blogdescription', '', true);
+  }
+
+  /**
+   * Trim Newlines in HTML strings
+   *
+   * @see https://stackoverflow.com/a/7335208/586823
+   */
+  public function trim_html(string $html): string
+  {
+      return join("\n", array_map("trim", explode("\n", $html)));
   }
 }
 

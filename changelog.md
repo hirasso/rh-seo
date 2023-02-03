@@ -1,6 +1,10 @@
+#### 1.4.1 (2023-02-03)
+
+- Optimize meta tags HTML for cleaner `view-source` experience (#2407f8c)
+
 #### 1.4.0 (2023-02-03)
 
-- Update German translations (#31223b4)
+- Update German translations (#893dbda)
 
 #### 1.3.9 (2023-02-02)
 
