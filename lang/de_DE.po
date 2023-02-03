@@ -21,79 +21,79 @@ msgstr ""
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPathExcluded-0: *.js\n"
 
-#: ../inc/class.field-groups.php:90
+#: ../inc/class.field-groups.php:95
 msgid "Search Engine Optimization"
 msgstr "Suchmaschinen-Optimierung"
 
-#: ../inc/class.field-groups.php:91, ../inc/class.field-groups.php:309
+#: ../inc/class.field-groups.php:96, ../inc/class.field-groups.php:314
 msgid "SEO"
 msgstr "SEO"
 
-#: ../inc/class.field-groups.php:154, ../inc/class.field-groups.php:155
+#: ../inc/class.field-groups.php:159, ../inc/class.field-groups.php:160
 msgid "SEO Options"
 msgstr "SEO Optionen"
 
-#: ../inc/class.field-groups.php:195
+#: ../inc/class.field-groups.php:200
 msgid "Site Name"
 msgstr "Website-Name"
 
-#: ../inc/class.field-groups.php:202
+#: ../inc/class.field-groups.php:207
 msgid "Hide from search engines"
 msgstr "Vor Suchmaschinen verstecken"
 
-#: ../inc/class.field-groups.php:211
+#: ../inc/class.field-groups.php:216
 msgid "Optional. Overwrites the title."
 msgstr "Optional. Überschreibt den Titel."
 
-#: ../inc/class.field-groups.php:212
+#: ../inc/class.field-groups.php:217
 msgid "Document Title"
 msgstr "Titel des Dokuments"
 
-#: ../inc/class.field-groups.php:220
+#: ../inc/class.field-groups.php:225
 msgid "Site Description"
 msgstr "Website-Beschreibung"
 
-#: ../inc/class.field-groups.php:220
+#: ../inc/class.field-groups.php:225
 msgid "Description"
 msgstr "Beschreibung"
 
-#: ../inc/class.field-groups.php:222
+#: ../inc/class.field-groups.php:227
 msgid "Optimal length: 50–160 characters"
 msgstr "Optimale Länge: 50-160 Zeichen"
 
-#: ../inc/class.field-groups.php:233
+#: ../inc/class.field-groups.php:238
 msgid "Preview Image"
 msgstr "Vorschaubild"
 
-#: ../inc/class.field-groups.php:235
+#: ../inc/class.field-groups.php:240
 msgid "For services like Facebook or Twitter."
 msgstr "Für Websites wie Facebook oder Twitter."
 
-#: ../inc/class.field-groups.php:248
+#: ../inc/class.field-groups.php:253
 msgid "Maximum 100 entries"
 msgstr "Maximal 100 Einträge"
 
-#: ../inc/class.field-groups.php:258
+#: ../inc/class.field-groups.php:263
 msgid "From"
 msgstr "Von"
 
-#: ../inc/class.field-groups.php:259
+#: ../inc/class.field-groups.php:264
 msgid "URL that should be redirected"
 msgstr "URL die umgeleited werden soll"
 
-#: ../inc/class.field-groups.php:269
+#: ../inc/class.field-groups.php:274
 msgid "To"
 msgstr "Nach"
 
-#: ../inc/class.field-groups.php:270
+#: ../inc/class.field-groups.php:275
 msgid "Redirect target URL"
 msgstr "Ziel-URL"
 
-#: ../inc/class.field-groups.php:310
+#: ../inc/class.field-groups.php:315
 msgid "SEO Global Options"
 msgstr "SEO Globale Optionen"
 
-#: ../inc/class.field-groups.php:313
+#: ../inc/class.field-groups.php:318
 msgid "SEO Options: %s"
 msgstr "SEO Optionen: %s"
 
@@ -103,13 +103,31 @@ msgstr "Bitte geben Sie eine lokale URL ein"
 
 #: ../inc/class.redirects.php:89
 msgid "Conflict detected: URL also found in \"To\" column"
-msgstr ""
-"Konflikt erkannt: Die URL wurde auch in der \"Nach\"-Spalte gefunden"
+msgstr "Konflikt erkannt: Die URL wurde auch in der \"Nach\"-Spalte gefunden"
 
 #: ../inc/class.redirects.php:93
 msgid "Conflict detected: URL also found in \"From\" column"
-msgstr ""
-"Konflikt erkannt: Die URL wurde auch in der \"Von\"-Spalte gefunden"
+msgstr "Konflikt erkannt: Die URL wurde auch in der \"Von\"-Spalte gefunden"
+
+#: ../inc/class.upgrades.php:86
+msgid "RH SEO needs to upgrade the database."
+msgstr "RH SEO muss die Datenbank aktualisieren"
+
+#: ../inc/class.upgrades.php:86
+msgid "Upgrade Database Now"
+msgstr "Datenbank jetzt aktualisieren"
+
+#: ../inc/class.upgrades.php:110
+msgid "Something went wrong."
+msgstr "Etwas ist schiefgelaufen."
+
+#: ../inc/class.upgrades.php:110
+msgid "Error"
+msgstr "Fehler"
+
+#: ../inc/class.upgrades.php:155
+msgid "RH SEO successfully upgraded the database."
+msgstr "RH SEO hat die Datenbank erfolgreich aktualisiert."
 
 #~ msgid "Used for facebook and twitter."
 #~ msgstr "Für Facebook und Twitter."

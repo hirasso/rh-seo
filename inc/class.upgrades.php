@@ -83,7 +83,7 @@ class Upgrades
     $url = wp_nonce_url(add_query_arg(['action' => 'rhseo-upgrade-database']), 'rhseo-upgrade-database');
     ob_start() ?>
     <div class="notice notice-info">
-      <p><?php _e('RH SEO needs to upgrade the database.', 'rhseo'); ?> <a class="button-primary" href="<?= $url ?>"><?= __('Migrate Database Now', 'rhseo') ?></a></p>
+      <p><?php _e('RH SEO needs to upgrade the database.', 'rhseo'); ?> <a class="button-primary" href="<?= $url ?>"><?= __('Upgrade Database Now', 'rhseo') ?></a></p>
     </div>
   <?php echo ob_get_clean();
   }

@@ -13,79 +13,79 @@ msgstr ""
 "X-Poedit-SourceCharset: UTF-8\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: ../inc/class.field-groups.php:90
+#: ../inc/class.field-groups.php:95
 msgid "Search Engine Optimization"
 msgstr ""
 
-#: ../inc/class.field-groups.php:91, ../inc/class.field-groups.php:309
+#: ../inc/class.field-groups.php:96, ../inc/class.field-groups.php:314
 msgid "SEO"
 msgstr ""
 
-#: ../inc/class.field-groups.php:154, ../inc/class.field-groups.php:155
+#: ../inc/class.field-groups.php:159, ../inc/class.field-groups.php:160
 msgid "SEO Options"
 msgstr ""
 
-#: ../inc/class.field-groups.php:195
+#: ../inc/class.field-groups.php:200
 msgid "Site Name"
 msgstr ""
 
-#: ../inc/class.field-groups.php:202
+#: ../inc/class.field-groups.php:207
 msgid "Hide from search engines"
 msgstr ""
 
-#: ../inc/class.field-groups.php:211
+#: ../inc/class.field-groups.php:216
 msgid "Optional. Overwrites the title."
 msgstr ""
 
-#: ../inc/class.field-groups.php:212
+#: ../inc/class.field-groups.php:217
 msgid "Document Title"
 msgstr ""
 
-#: ../inc/class.field-groups.php:220
+#: ../inc/class.field-groups.php:225
 msgid "Site Description"
 msgstr ""
 
-#: ../inc/class.field-groups.php:220
+#: ../inc/class.field-groups.php:225
 msgid "Description"
 msgstr ""
 
-#: ../inc/class.field-groups.php:222
+#: ../inc/class.field-groups.php:227
 msgid "Optimal length: 50–160 characters"
 msgstr ""
 
-#: ../inc/class.field-groups.php:233
+#: ../inc/class.field-groups.php:238
 msgid "Preview Image"
 msgstr ""
 
-#: ../inc/class.field-groups.php:235
+#: ../inc/class.field-groups.php:240
 msgid "For services like Facebook or Twitter."
 msgstr ""
 
-#: ../inc/class.field-groups.php:248
+#: ../inc/class.field-groups.php:253
 msgid "Maximum 100 entries"
 msgstr ""
 
-#: ../inc/class.field-groups.php:258
+#: ../inc/class.field-groups.php:263
 msgid "From"
 msgstr ""
 
-#: ../inc/class.field-groups.php:259
+#: ../inc/class.field-groups.php:264
 msgid "URL that should be redirected"
 msgstr ""
 
-#: ../inc/class.field-groups.php:269
+#: ../inc/class.field-groups.php:274
 msgid "To"
 msgstr ""
 
-#: ../inc/class.field-groups.php:270
+#: ../inc/class.field-groups.php:275
 msgid "Redirect target URL"
 msgstr ""
 
-#: ../inc/class.field-groups.php:310
+#: ../inc/class.field-groups.php:315
 msgid "SEO Global Options"
 msgstr ""
 
-#: ../inc/class.field-groups.php:313
+#: ../inc/class.field-groups.php:318
 msgid "SEO Options: %s"
 msgstr ""
 
@@ -99,4 +99,24 @@ msgstr ""
 
 #: ../inc/class.redirects.php:93
 msgid "Conflict detected: URL also found in \"From\" column"
+msgstr ""
+
+#: ../inc/class.upgrades.php:86
+msgid "RH SEO needs to upgrade the database."
+msgstr ""
+
+#: ../inc/class.upgrades.php:86
+msgid "Upgrade Database Now"
+msgstr ""
+
+#: ../inc/class.upgrades.php:110
+msgid "Something went wrong."
+msgstr ""
+
+#: ../inc/class.upgrades.php:110
+msgid "Error"
+msgstr ""
+
+#: ../inc/class.upgrades.php:155
+msgid "RH SEO successfully upgraded the database."
 msgstr ""

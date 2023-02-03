@@ -1,6 +1,10 @@
+#### 1.4.0 (2023-02-03)
+
+- Update German translations (#31223b4)
+
 #### 1.3.9 (2023-02-02)
 
-- Fix acf field keys, introduce database upgrade logic (#f15c047)
+- Fix acf field keys, introduce database upgrade logic (#c1b2951)
 
 #### 1.3.8 (2023-02-01)
 
