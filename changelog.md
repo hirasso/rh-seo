@@ -1,6 +1,10 @@
+#### 1.4.3 (2023-02-03)
+
+- Do NOT ignore Composer 🤦‍♂️ (#05309d3)
+
 #### 1.4.2 (2023-02-03)
 
-- Fix of various paths and references (#ce1c7ae)
+- Fix of various paths and references (#1687264)
 - Use PSR-4 autoloading (#5397f74)
 
 #### 1.4.1 (2023-02-03)
