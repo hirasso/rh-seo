@@ -1,6 +1,6 @@
 #### 1.4.2 (2023-02-03)
 
-- Use PSR-4 autoloading (#74239eb)
+- Use PSR-4 autoloading (#5397f74)
 
 #### 1.4.1 (2023-02-03)
 
