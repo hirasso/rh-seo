@@ -1,6 +1,10 @@
+#### 1.4.4 (2023-02-03)
+
+- Set inputs in general options to `disabled` (#07e8b5b)
+
 #### 1.4.3 (2023-02-03)
 
-- Do NOT ignore Composer 🤦‍♂️ (#05309d3)
+- Do NOT ignore Composer 🤦‍♂️ (#0912a93)
 
 #### 1.4.2 (2023-02-03)
 

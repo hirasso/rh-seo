@@ -14,6 +14,8 @@ class RHSEO {
     const inputBlogdescription = document.querySelector('input#blogdescription');
     inputBlogname.setAttribute('readonly', 'readonly');
     inputBlogdescription.setAttribute('readonly', 'readonly');
+    inputBlogname.setAttribute('disabled', 'disabled');
+    inputBlogdescription.setAttribute('disabled', 'disabled');
   }
 }
 new RHSEO();
