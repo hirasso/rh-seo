@@ -1,6 +1,10 @@
+#### 1.4.5 (2023-02-03)
+
+- Remove broken reference for `SitemapsProviderQtranslateXT` (#858e2d8)
+
 #### 1.4.4 (2023-02-03)
 
-- Set inputs in general options to `disabled` (#07e8b5b)
+- Set inputs in general options to `disabled` (#2ab0421)
 
 #### 1.4.3 (2023-02-03)
 
