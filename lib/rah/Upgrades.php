@@ -1,6 +1,6 @@
 <?php
 
-namespace R\SEO;
+namespace RAH\SEO;
 
 if (!defined('ABSPATH')) exit; // Exit if accessed directly
 
@@ -13,7 +13,7 @@ class Upgrades
   public function __construct()
   {
     // for dev: reset the db version on each load
-    // $this->update_db_version('0.0.1');
+    $this->update_db_version('0.0.1');
 
     add_action('admin_notices', [$this, 'maybe_show_upgrade_notice']);
     add_action('admin_notices', [$this, 'maybe_show_upgrade_success_notice']);

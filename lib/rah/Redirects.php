@@ -1,6 +1,6 @@
 <?php
 
-namespace R\SEO;
+namespace RAH\SEO;
 
 if (!defined('ABSPATH')) exit; // Exit if accessed directly
 
@@ -153,7 +153,7 @@ class Redirects
   {
     if (!is_404()) return;
 
-    $request_uri = $this->get_request_uri(seo()->get_current_url());
+    $request_uri = $this->get_request_uri(rhseo()->get_current_url());
 
 
     foreach ($this->get_redirects() as $redirect) {

@@ -1,0 +1,21 @@
+{
+    "name": "rah/rh-seo",
+    "description": "Lightweight SEO optimizations for WordPress",
+    "type": "wordpress-plugin",
+    "license": "ISC",
+    "config": {
+      "vendor-dir": "./lib/vendor"
+    },
+    "autoload": {
+        "psr-4": {
+            "RAH\\SEO\\": "lib/rah"
+        }
+    },
+    "authors": [
+        {
+            "name": "Rasso Hilber",
+            "email": "mail@rassohilber.com"
+        }
+    ],
+    "require": {}
+}

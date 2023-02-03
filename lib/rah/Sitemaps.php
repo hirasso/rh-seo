@@ -1,20 +1,20 @@
 <?php
 
-namespace R\SEO;
+namespace RAH\SEO;
 
 if (!defined('ABSPATH')) exit; // Exit if accessed directly
 
 /**
  * Sitemaps
  */
-class XML_Sitemaps
+class Sitemaps
 {
 
   private $prefix;
 
   public function __construct()
   {
-    $this->prefix = seo()->prefix;
+    $this->prefix = rhseo()->prefix;
     add_action('init', [$this, 'add_qtranslate_sitemaps_provider']);
     add_action('registered_taxonomy', [$this, 'registered_taxonomy'], 10, 3);
     add_filter('wp_sitemaps_add_provider', [$this, 'sitemaps_providers'], 10, 2);

@@ -1,6 +1,6 @@
 <?php
 
-namespace R\SEO;
+namespace RAH\SEO;
 
 if (!defined('ABSPATH')) exit; // Exit if accessed directly
 
@@ -27,7 +27,7 @@ class MetaTags
   public function adjust_robots(): void
   {
     if (is_admin()) return;
-    $is_noindex = seo()->object_is_set_to_noindex(seo()->get_queried_object());
+    $is_noindex = rhseo()->object_is_set_to_noindex(rhseo()->get_queried_object());
     if ($is_noindex) add_filter('wp_robots', 'wp_robots_no_robots');
   }
 
@@ -51,7 +51,7 @@ class MetaTags
     <?php endif; ?>
     <meta property="og:locale" content="<?= esc_attr($this->get_locale()) ?>" />
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="<?= esc_attr(seo()->get_current_url()) ?>" />
+    <meta property="og:url" content="<?= esc_attr(rhseo()->get_current_url()) ?>" />
     <meta property="og:site_name" content="<?= esc_attr(get_bloginfo('name')) ?>" />
     <?php if ($image = $this->get_og_image_url()) : ?>
       <meta property="og:image" content="<?= esc_attr($image) ?>" />
@@ -59,7 +59,7 @@ class MetaTags
     <meta name="twitter:card" content="summary_large_image" />
     <!-- SEO: End -->
 
-<?php echo seo()->trim_html(ob_get_clean());
+<?php echo rhseo()->trim_html(ob_get_clean());
   }
 
 
@@ -86,7 +86,7 @@ class MetaTags
     unset($parts['tagline']);
 
     // On the front page we want only the site name
-    if (seo()->is_front_page()) {
+    if (rhseo()->is_front_page()) {
       unset($parts['title']);
     }
 
@@ -102,7 +102,7 @@ class MetaTags
   public function filter_option_blogname(string $value): string
   {
 
-    if ($custom_site_name = seo()->get_global_options_field('site_name')) {
+    if ($custom_site_name = rhseo()->get_global_options_field('site_name')) {
       return __($custom_site_name);
     }
 
@@ -135,9 +135,9 @@ class MetaTags
   public function get_seo_value(string $name, $object = null): ?string
   {
 
-    if (!$object) $object = seo()->get_queried_object();
+    if (!$object) $object = rhseo()->get_queried_object();
 
-    if ($object) $value = seo()->get_field($name, $this->get_acf_post_id($object));
+    if ($object) $value = rhseo()->get_field($name, $this->get_acf_post_id($object));
 
     // fallbacks for document_title
     if (empty($value) && $name === 'document_title') {
@@ -150,7 +150,7 @@ class MetaTags
       if ($object instanceof \WP_Post) $value = get_post_thumbnail_id($object->ID);
     }
     // finally fall back to global options
-    if (empty($value)) $value = seo()->get_global_options_field($name);
+    if (empty($value)) $value = rhseo()->get_global_options_field($name);
     /**
      * Allow themes to filter SEO values
      */
@@ -173,7 +173,7 @@ class MetaTags
     } elseif ($object instanceof \WP_Term) {
       $post_id = $object;
     } elseif ($object instanceof \WP_Post_Type) {
-      $post_id = seo()->get_options_page_slug() . "--$object->name";
+      $post_id = rhseo()->get_options_page_slug() . "--$object->name";
     }
     return $post_id;
   }

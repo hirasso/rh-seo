@@ -1,19 +1,19 @@
 <?php
 
-namespace R\SEO;
+namespace RAH\SEO;
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 /**
  * SEO Field_Groups
  */
-class Field_Groups {
+class FieldGroups {
 
   private $prefix;
   private $field_group_locations;
 
   public function __construct() {
-    $this->prefix = seo()->prefix;
+    $this->prefix = rhseo()->prefix;
     add_action('admin_bar_menu', [$this, 'add_post_type_archive_link_to_admin_bar'], 100);
     add_filter('acf/prepare_field/name=rhseo_noindex', [$this, 'prepare_field_noindex']);
     add_action('init', [$this, 'init'], 11);
@@ -53,7 +53,7 @@ class Field_Groups {
       ],
     ];
 
-    if( $pll_languages = seo()->get_polylang_languages() ) {
+    if( $pll_languages = rhseo()->get_polylang_languages() ) {
       foreach( $pll_languages as $language ) {
         $this->field_group_locations[] = [
           [
@@ -101,7 +101,7 @@ class Field_Groups {
     ]);
 
 
-    if( $pll_languages = seo()->get_polylang_languages() ) {
+    if( $pll_languages = rhseo()->get_polylang_languages() ) {
       foreach( $pll_languages as $language ) {
         acf_add_options_sub_page([
           'page_title' => $language->name,
@@ -135,7 +135,7 @@ class Field_Groups {
 
     $pt_object = get_post_type_object($post_type);
 
-    if( $pll_languages = seo()->get_polylang_languages() ) {
+    if( $pll_languages = rhseo()->get_polylang_languages() ) {
       foreach( $pll_languages as $language ) {
         $post_id = "rhseo-options--$language->slug--$post_type";
         acf_add_options_page([

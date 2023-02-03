@@ -1,6 +1,10 @@
+#### 1.4.2 (2023-02-03)
+
+- Use PSR-4 autoloading (#74239eb)
+
 #### 1.4.1 (2023-02-03)
 
-- Hide sitemap description visually (#39bf25d)
+- Hide sitemap description visually (#8f47890)
 - Optimize meta tags HTML for cleaner `view-source` experience (#a3a4d5f)
 
 #### 1.4.0 (2023-02-03)

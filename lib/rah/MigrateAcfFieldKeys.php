@@ -1,10 +1,10 @@
 <?php
 
-namespace R\SEO;
+namespace RAH\SEO;
 
 if (!defined('ABSPATH')) exit; // Exit if accessed directly
 
-class Migrate_ACF_Field_Keys
+class MigrateAcfFieldKeys
 {
 
   private array $migrated = [
@@ -48,12 +48,7 @@ class Migrate_ACF_Field_Keys
       $meta_id = (int) $entry->meta_id;
       $meta_value = $entry->meta_value;
 
-      /**
-       * Check again if the meta value really starts with "key_rhseo_"
-       */
-      if (!str_starts_with($meta_value, 'key_rhseo_')) continue;
-
-      $new_meta_value = str_replace('key_rhseo_', 'field_rhseo_', $meta_value);
+      $new_meta_value = preg_replace('/^key_rhseo_/', 'field_rhseo_', $meta_value);
 
       /**
        * Update the meta value with the recommended "field_" prefix
@@ -89,12 +84,7 @@ class Migrate_ACF_Field_Keys
       $id = (int) $entry->option_id;
       $value = $entry->option_value;
 
-      /**
-       * Check again if the meta value really starts with "key_rhseo_"
-       */
-      if (!str_starts_with($value, 'key_rhseo_')) continue;
-
-      $new_value = str_replace('key_rhseo_', 'field_rhseo_', $value);
+      $new_value = preg_replace('/^key_rhseo_/', 'field_rhseo_', $value);
 
       /**
        * Update the meta value with the recommended "field_" prefix

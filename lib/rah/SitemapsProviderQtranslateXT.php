@@ -1,10 +1,10 @@
-<?php 
+<?php
 
-namespace R\SEO;
+namespace RAH\SEO;
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
-class Qtranslate_XT_Sitemaps_Provider extends \WP_Sitemaps_Provider {
+class SitemapsProviderQtranslateXT extends \WP_Sitemaps_Provider {
 
   /**
    * WP_Sitemaps_Posts constructor.
@@ -41,7 +41,7 @@ class Qtranslate_XT_Sitemaps_Provider extends \WP_Sitemaps_Provider {
       );
       $url_list[] = $sitemaps_entry;
     }
-    
+
     return $url_list;
   }
 
@@ -80,7 +80,7 @@ class Qtranslate_XT_Sitemaps_Provider extends \WP_Sitemaps_Provider {
 
     return home_url( $basename );
   }
-  
+
   /**
    * Lists sitemap pages exposed by this provider.
    *
