@@ -23,6 +23,7 @@ class XML_Sitemaps
     add_filter('wp_sitemaps_posts_query_args', [$this, 'inject_meta_query_noindex']);
     add_filter('wp_sitemaps_taxonomies_query_args', [$this, 'inject_meta_query_noindex']);
     add_action('save_post', [$this, 'ensure_post_has_noindex_value']);
+    add_filter('wp_sitemaps_stylesheet_css', [$this, 'wp_sitemaps_stylesheet_css']);
   }
 
   /**
@@ -137,5 +138,21 @@ class XML_Sitemaps
     $noindex = get_post_meta($post_id, $noindex_key, true);
     // If noindex is empty, set it to 0
     if ($noindex === "") update_post_meta($post_id, $noindex_key, 0);
+  }
+
+  /**
+   * Hides the WordPress Sitemap description visually
+   *
+   * @param string $css
+   * @return string
+   */
+  public function wp_sitemaps_stylesheet_css(string $css): string
+  {
+      ob_start() ?>
+      #sitemap__header p {
+        display: none;
+      }
+  <?php $append = ob_get_clean();
+      return $css . $append;
   }
 }

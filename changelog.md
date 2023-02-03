@@ -1,6 +1,7 @@
 #### 1.4.1 (2023-02-03)
 
-- Optimize meta tags HTML for cleaner `view-source` experience (#2407f8c)
+- Hide sitemap description visually (#39bf25d)
+- Optimize meta tags HTML for cleaner `view-source` experience (#a3a4d5f)
 
 #### 1.4.0 (2023-02-03)
 
