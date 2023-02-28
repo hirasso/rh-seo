@@ -21,113 +21,116 @@ msgstr ""
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPathExcluded-0: *.js\n"
 
-#: ../inc/class.field-groups.php:95
+#: ../lib/rah/FieldGroups.php:108
 msgid "Search Engine Optimization"
 msgstr "Suchmaschinen-Optimierung"
 
-#: ../inc/class.field-groups.php:96, ../inc/class.field-groups.php:314
+#: ../lib/rah/FieldGroups.php:109, ../lib/rah/FieldGroups.php:330
 msgid "SEO"
 msgstr "SEO"
 
-#: ../inc/class.field-groups.php:159, ../inc/class.field-groups.php:160
+#: ../lib/rah/FieldGroups.php:173, ../lib/rah/FieldGroups.php:174
 msgid "SEO Options"
 msgstr "SEO Optionen"
 
-#: ../inc/class.field-groups.php:200
+#: ../lib/rah/FieldGroups.php:214
 msgid "Site Name"
 msgstr "Website-Name"
 
-#: ../inc/class.field-groups.php:207
-msgid "Hide from search engines"
-msgstr "Vor Suchmaschinen verstecken"
-
-#: ../inc/class.field-groups.php:216
+#: ../lib/rah/FieldGroups.php:222
 msgid "Optional. Overwrites the title."
 msgstr "Optional. Überschreibt den Titel."
 
-#: ../inc/class.field-groups.php:217
-msgid "Document Title"
-msgstr "Titel des Dokuments"
+#: ../lib/rah/FieldGroups.php:223
+msgid "Document Title for Search Engines"
+msgstr "Seitentitel für Suchmaschinen"
 
-#: ../inc/class.field-groups.php:225
+#: ../lib/rah/FieldGroups.php:231
 msgid "Site Description"
 msgstr "Website-Beschreibung"
 
-#: ../inc/class.field-groups.php:225
-msgid "Description"
-msgstr "Beschreibung"
+#: ../lib/rah/FieldGroups.php:231
+msgid "Meta Description"
+msgstr "Meta-Beschreibung"
 
-#: ../inc/class.field-groups.php:227
-msgid "Optimal length: 50–160 characters"
-msgstr "Optimale Länge: 50-160 Zeichen"
+#: ../lib/rah/FieldGroups.php:233
+msgid "Recommended length: 50–160 characters"
+msgstr "Empfohlene Länge: 50-160 Zeichen"
 
-#: ../inc/class.field-groups.php:238
+#: ../lib/rah/FieldGroups.php:244
 msgid "Preview Image"
 msgstr "Vorschaubild"
 
-#: ../inc/class.field-groups.php:240
+#: ../lib/rah/FieldGroups.php:246
 msgid "For services like Facebook or Twitter."
 msgstr "Für Websites wie Facebook oder Twitter."
 
-#: ../inc/class.field-groups.php:253
+#: ../lib/rah/FieldGroups.php:252
+msgid "Ask search engines to ignore this page"
+msgstr "Suchmaschinen instruieren, diese Seite zu ignorieren"
+
+#: ../lib/rah/FieldGroups.php:267
 msgid "Maximum 100 entries"
 msgstr "Maximal 100 Einträge"
 
-#: ../inc/class.field-groups.php:263
+#: ../lib/rah/FieldGroups.php:277
 msgid "From"
 msgstr "Von"
 
-#: ../inc/class.field-groups.php:264
+#: ../lib/rah/FieldGroups.php:278
 msgid "URL that should be redirected"
 msgstr "URL die umgeleited werden soll"
 
-#: ../inc/class.field-groups.php:274
+#: ../lib/rah/FieldGroups.php:288
 msgid "To"
 msgstr "Nach"
 
-#: ../inc/class.field-groups.php:275
+#: ../lib/rah/FieldGroups.php:289
 msgid "Redirect target URL"
-msgstr "Ziel-URL"
+msgstr "Umleitungs-Ziel-URL"
 
-#: ../inc/class.field-groups.php:315
+#: ../lib/rah/FieldGroups.php:331
 msgid "SEO Global Options"
 msgstr "SEO Globale Optionen"
 
-#: ../inc/class.field-groups.php:318
+#: ../lib/rah/FieldGroups.php:334
 msgid "SEO Options: %s"
 msgstr "SEO Optionen: %s"
 
-#: ../inc/class.redirects.php:44
+#: ../lib/rah/Redirects.php:44
 msgid "Please provide a local URL"
 msgstr "Bitte geben Sie eine lokale URL ein"
 
-#: ../inc/class.redirects.php:89
+#: ../lib/rah/Redirects.php:92
 msgid "Conflict detected: URL also found in \"To\" column"
 msgstr "Konflikt erkannt: Die URL wurde auch in der \"Nach\"-Spalte gefunden"
 
-#: ../inc/class.redirects.php:93
+#: ../lib/rah/Redirects.php:96
 msgid "Conflict detected: URL also found in \"From\" column"
 msgstr "Konflikt erkannt: Die URL wurde auch in der \"Von\"-Spalte gefunden"
 
-#: ../inc/class.upgrades.php:86
+#: ../lib/rah/Upgrades.php:86
 msgid "RH SEO needs to upgrade the database."
-msgstr "RH SEO muss die Datenbank aktualisieren"
+msgstr "RH SEO muss die Datenbank aktualisieren."
 
-#: ../inc/class.upgrades.php:86
+#: ../lib/rah/Upgrades.php:86
 msgid "Upgrade Database Now"
 msgstr "Datenbank jetzt aktualisieren"
 
-#: ../inc/class.upgrades.php:110
+#: ../lib/rah/Upgrades.php:110
 msgid "Something went wrong."
 msgstr "Etwas ist schiefgelaufen."
 
-#: ../inc/class.upgrades.php:110
+#: ../lib/rah/Upgrades.php:110
 msgid "Error"
 msgstr "Fehler"
 
-#: ../inc/class.upgrades.php:155
+#: ../lib/rah/Upgrades.php:155
 msgid "RH SEO successfully upgraded the database."
 msgstr "RH SEO hat die Datenbank erfolgreich aktualisiert."
+
+#~ msgid "Document Title"
+#~ msgstr "Titel des Dokuments"
 
 #~ msgid "Used for facebook and twitter."
 #~ msgstr "Für Facebook und Twitter."

@@ -1,6 +1,10 @@
+#### 1.4.8 (2023-02-28)
+
+- Update field labels and German translation (#a32494b)
+
 #### 1.4.7 (2023-02-28)
 
-- Move `rhseo_noindex` to the bottom of the SEO metabox (#fbd1761)
+- Move `rhseo_noindex` to the bottom of the SEO metabox (#f0941b8)
 
 #### 1.4.6 (2023-02-28)
 
