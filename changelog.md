@@ -1,6 +1,10 @@
+#### 1.4.7 (2023-02-28)
+
+- Move `rhseo_noindex` to the bottom of the SEO metabox (#fbd1761)
+
 #### 1.4.6 (2023-02-28)
 
-- Add filter `rhseo/field_group_location_match` for hiding the SEO metabox on the fly (#ebfbec9)
+- Add filter `rhseo/field_group_location_match` for hiding the SEO metabox on the fly (#e90029f)
 
 #### 1.4.5 (2023-02-28)
 

@@ -216,14 +216,6 @@ class FieldGroups
                 'rhseo_render_field' => $this->is_global_options_page()
             ],
             [
-                'key' => "field_{$this->prefix}_noindex",
-                'name' => "rhseo_noindex",
-                'label' => __('Hide from search engines', 'rhseo'),
-                'type' => 'true_false',
-                'ui' => true,
-                'rhseo_render_field' => !$this->is_global_options_page()
-            ],
-            [
                 'type' => $field_types['text'],
                 'key' => "field_{$this->prefix}_document_title",
                 'name' => "{$this->prefix}_document_title",
@@ -253,6 +245,14 @@ class FieldGroups
                 'required' => false,
                 'instructions' => __('For services like Facebook or Twitter.', 'rhseo'),
                 'acfml_multilingual' => true,
+            ],
+            [
+                'key' => "field_{$this->prefix}_noindex",
+                'name' => "rhseo_noindex",
+                'label' => __('Ask search engines to ignore this page', 'rhseo'),
+                'type' => 'true_false',
+                'ui' => true,
+                'rhseo_render_field' => !$this->is_global_options_page()
             ],
             [
                 'key' => 'field_rhseo_tab_redirects',
