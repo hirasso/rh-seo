@@ -1,6 +1,7 @@
-#### 1.4.5 (2023-02-03)
+#### 1.4.5 (2023-02-28)
 
-- Remove broken reference for `SitemapsProviderQtranslateXT` (#858e2d8)
+- add `.editorconfig` and `.prettierignore` (#0f317a6)
+- Remove broken reference for `SitemapsProviderQtranslateXT` (#aa45ecf)
 
 #### 1.4.4 (2023-02-03)
 
