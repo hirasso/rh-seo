@@ -2,7 +2,7 @@
 
 /**
  * Plugin Name: RH SEO
- * Version: 1.4.5
+ * Version: 1.4.6
  * Author: Rasso Hilber
  * Description: Lightweight SEO optimizations for WordPress
  * Author URI: https://rassohilber.com
@@ -23,10 +23,10 @@ define('RHSEO_UPGRADE_VERSION', '1.3.9'); // Highest version with an upgrade rou
  */
 function rhseo()
 {
-  static $instance;
-  if (!isset($instance)) {
-    $instance = new RAH\SEO\SEO();
-  }
-  return $instance;
+    static $instance;
+    if (!isset($instance)) {
+        $instance = new RAH\SEO\SEO();
+    }
+    return $instance;
 }
 rhseo();

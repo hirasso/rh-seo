@@ -1,6 +1,10 @@
+#### 1.4.6 (2023-02-28)
+
+- Add filter `rhseo/field_group_location_match` for hiding the SEO metabox on the fly (#ebfbec9)
+
 #### 1.4.5 (2023-02-28)
 
-- add `.editorconfig` and `.prettierignore` (#0f317a6)
+- add `.editorconfig` and `.prettierignore` (#5883a0e)
 - Remove broken reference for `SitemapsProviderQtranslateXT` (#aa45ecf)
 
 #### 1.4.4 (2023-02-03)
