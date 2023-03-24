@@ -1,6 +1,10 @@
+#### 1.5.0 (2023-03-24)
+
+- Optimize description for display in meta tag (#fc1521e)
+
 #### 1.4.9 (2023-03-24)
 
-- New filter `rhseo/add_post_type_options_page` (#2c806f1)
+- New filter `rhseo/add_post_type_options_page` (#b5a10a5)
 - New Filter `rhseo/og_image_id` (#eb783be)
 
 #### 1.4.8 (2023-02-28)

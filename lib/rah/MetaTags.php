@@ -118,8 +118,21 @@ class MetaTags
     public function filter_option_blogdescription($value)
     {
         if ($custom_value = $this->get_seo_value('description')) {
-            return __($custom_value);
+            return $this->prepare_meta_text_field($custom_value);
         }
+        return $value;
+    }
+
+    /**
+     * Prepare a text field for display in a meta tag
+     *
+     * @param string $value
+     * @return string
+     */
+    private function prepare_meta_text_field(string $value): string
+    {
+        $value = __($value);
+        $value = str_replace('&nbsp;', ' ', $value);
         return $value;
     }
 
@@ -176,17 +189,6 @@ class MetaTags
             $post_id = rhseo()->get_options_page_slug() . "--$object->name";
         }
         return $post_id;
-    }
-
-    /**
-     * Filter document title separator
-     *
-     * @param [type] $sep
-     * @return void
-     */
-    public function document_title_separator($sep)
-    {
-        return '—';
     }
 
     /**
