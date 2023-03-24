@@ -147,6 +147,11 @@ class FieldGroups
     private function add_post_type_options_page($post_type)
     {
 
+        /**
+         * Allow to skip adding the options page
+         */
+        if (!apply_filters('rhseo/add_post_type_options_page', true, $post_type)) return;
+
         $pt_object = get_post_type_object($post_type);
 
         if ($pll_languages = rhseo()->get_polylang_languages()) {

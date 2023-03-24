@@ -1,6 +1,7 @@
 #### 1.4.9 (2023-03-24)
 
-- New Filter `rhseo/og_image_id` (#0e26df6)
+- New filter `rhseo/add_post_type_options_page` (#2c806f1)
+- New Filter `rhseo/og_image_id` (#eb783be)
 
 #### 1.4.8 (2023-02-28)
 
