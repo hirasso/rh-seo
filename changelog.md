@@ -1,6 +1,10 @@
+#### 1.4.9 (2023-03-24)
+
+- New Filter `rhseo/og_image_id` (#0e26df6)
+
 #### 1.4.8 (2023-02-28)
 
-- Update field labels and German translation (#a32494b)
+- Update field labels and German translation (#17182fb)
 
 #### 1.4.7 (2023-02-28)
 

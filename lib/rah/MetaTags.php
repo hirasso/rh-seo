@@ -196,8 +196,12 @@ class MetaTags
      */
     private function get_og_image_url()
     {
-
-        $value = $this->get_seo_value('image');
+        /**
+         * Allow to short-circuit this request
+         */
+        if (!$value = apply_filters("rhseo/og_image_id", null)) {
+            $value = $this->get_seo_value('image');
+        }
 
         // bail early if empty
         if (empty($value)) return $value;
