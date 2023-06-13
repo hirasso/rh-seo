@@ -1,6 +1,10 @@
+#### 1.5.1 (2023-06-13)
+
+- Allow external redirects for attachment pages (#a87277e)
+
 #### 1.5.0 (2023-03-24)
 
-- Optimize description for display in meta tag (#fc1521e)
+- Optimize description for display in meta tag (#bfbf254)
 
 #### 1.4.9 (2023-03-24)
 

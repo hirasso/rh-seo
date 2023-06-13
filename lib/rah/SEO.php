@@ -322,9 +322,10 @@ class SEO
         if (!apply_filters('rhseo/redirect_attachment_pages', true)) return;
         if (!is_attachment()) return;
         if (!$object_id = get_queried_object_id()) return;
-        $url = wp_get_attachment_url($object_id);
-        wp_safe_redirect($url, 301);
-        exit;
+        if ($url = wp_get_attachment_url($object_id)) {
+            \wp_redirect($url, 301);
+            exit;
+        }
     }
 
     /**
