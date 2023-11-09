@@ -1,6 +1,10 @@
+#### 1.5.2 (2023-11-09)
+
+- Remove trailing slashes on void elements (#e98e639)
+
 #### 1.5.1 (2023-06-13)
 
-- Allow external redirects for attachment pages (#a87277e)
+- Allow external redirects for attachment pages (#e2a0aa4)
 
 #### 1.5.0 (2023-03-24)
 

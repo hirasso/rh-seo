@@ -44,19 +44,19 @@ class MetaTags
         ob_start() ?>
 
         <!-- SEO: Start -->
-        <meta property="og:title" content="<?= wp_get_document_title() ?>" />
+        <meta property="og:title" content="<?= wp_get_document_title() ?>">
         <?php if ($description = get_bloginfo('description')) : ?>
-            <meta name="description" content="<?= esc_attr($description) ?>" />
-            <meta property="og:description" content="<?= esc_attr($description) ?>" />
+            <meta name="description" content="<?= esc_attr($description) ?>">
+            <meta property="og:description" content="<?= esc_attr($description) ?>">
         <?php endif; ?>
-        <meta property="og:locale" content="<?= esc_attr($this->get_locale()) ?>" />
-        <meta property="og:type" content="website" />
-        <meta property="og:url" content="<?= esc_attr(rhseo()->get_current_url()) ?>" />
-        <meta property="og:site_name" content="<?= esc_attr(get_bloginfo('name')) ?>" />
+        <meta property="og:locale" content="<?= esc_attr($this->get_locale()) ?>">
+        <meta property="og:type" content="website">
+        <meta property="og:url" content="<?= esc_attr(rhseo()->get_current_url()) ?>">
+        <meta property="og:site_name" content="<?= esc_attr(get_bloginfo('name')) ?>">
         <?php if ($image = $this->get_og_image_url()) : ?>
-            <meta property="og:image" content="<?= esc_attr($image) ?>" />
+            <meta property="og:image" content="<?= esc_attr($image) ?>">
         <?php endif; ?>
-        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:card" content="summary_large_image">
         <!-- SEO: End -->
 
 <?php echo rhseo()->trim_html(ob_get_clean());
