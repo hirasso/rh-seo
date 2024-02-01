@@ -1,6 +1,7 @@
-#### 1.5.2 (2023-11-09)
+#### 1.5.2 (2024-02-01)
 
-- Remove trailing slashes on void elements (#e98e639)
+- Add version constraint and correct name to composer.json (#d10aae6)
+- Remove trailing slashes on void elements (#35927d6)
 
 #### 1.5.1 (2023-06-13)
 
