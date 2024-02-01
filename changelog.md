@@ -1,5 +1,6 @@
 #### 1.5.2 (2024-02-01)
 
+- Maintenance: node modules (#55199c7)
 - Add version constraint and correct name to composer.json (#d10aae6)
 - Remove trailing slashes on void elements (#35927d6)
 
