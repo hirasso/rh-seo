@@ -412,24 +412,6 @@ class SEO
     }
 
     /**
-     * Checks if polylang is enabled
-     *
-     * @return null|object
-     */
-    public function get_polylang_languages(): ?object
-    {
-        $languages = null;
-        if (!function_exists('\pll_the_languages')) return $languages;
-        $languages = rhseo()->to_object(\pll_the_languages([
-            'echo' => 0,
-            'raw' => 1,
-            'hide_if_empty' => false
-        ]));
-        if (empty($languages)) return null;
-        return $languages;
-    }
-
-    /**
      * Retrieve the options page slug
      *
      * @return string
@@ -437,9 +419,6 @@ class SEO
     public function get_options_page_slug(): string
     {
         $slug = "rhseo-options";
-        if (function_exists('\pll_current_language')) {
-            $slug = "rhseo-options--" . \pll_current_language();
-        }
         return $slug;
     }
 

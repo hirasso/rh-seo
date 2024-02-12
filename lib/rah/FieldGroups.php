@@ -65,18 +65,6 @@ class FieldGroups
             ],
         ];
 
-        if ($pll_languages = rhseo()->get_polylang_languages()) {
-            foreach ($pll_languages as $language) {
-                $this->field_group_locations[] = [
-                    [
-                        'param' => 'options_page',
-                        'operator' => '==',
-                        'value' => "rhseo-options--$language->slug"
-                    ]
-                ];
-            }
-        }
-
         $post_types = get_post_types(['public' => true]);
 
         foreach ($post_types as $post_type) {
@@ -113,19 +101,6 @@ class FieldGroups
             'icon_url' => 'dashicons-share',
         ]);
 
-
-        if ($pll_languages = rhseo()->get_polylang_languages()) {
-            foreach ($pll_languages as $language) {
-                acf_add_options_sub_page([
-                    'page_title' => $language->name,
-                    'menu_title' => $language->name,
-                    'parent_slug' => $parent['menu_slug'],
-                    'menu_slug' => $parent['menu_slug'] . "--$language->slug",
-                    'post_id' => "rhseo-options--$language->slug"
-                ]);
-            }
-        }
-
         // add post type archive options pages
         $post_types = \get_post_types([
             'public' => true
@@ -154,41 +129,21 @@ class FieldGroups
 
         $pt_object = get_post_type_object($post_type);
 
-        if ($pll_languages = rhseo()->get_polylang_languages()) {
-            foreach ($pll_languages as $language) {
-                $post_id = "rhseo-options--$language->slug--$post_type";
-                acf_add_options_page([
-                    'page_title' => "SEO $language->name" . ": {$pt_object->labels->name}",
-                    'menu_title' => "SEO $language->name",
-                    'menu_slug' => $post_id,
-                    'post_id' => $post_id,
-                    'parent_slug' => "edit.php?post_type=$post_type",
-                ]);
-                $this->field_group_locations[] = [
-                    [
-                        'param' => 'options_page',
-                        'operator' => '==',
-                        'value' => $post_id,
-                    ],
-                ];
-            }
-        } else {
-            $post_id = "rhseo-options--$post_type";
-            acf_add_options_page([
-                'page_title' => __('SEO Options', 'rhseo') . ": {$pt_object->labels->name}",
-                'menu_title' => __('SEO Options', 'rhseo'),
-                'menu_slug' => $post_id,
-                'post_id' => $post_id,
-                'parent_slug' => "edit.php?post_type=$post_type",
-            ]);
-            $this->field_group_locations[] = [
-                [
-                    'param' => 'options_page',
-                    'operator' => '==',
-                    'value' => $post_id,
-                ],
-            ];
-        }
+        $post_id = "rhseo-options--$post_type";
+        acf_add_options_page([
+            'page_title' => __('SEO Options', 'rhseo') . ": {$pt_object->labels->name}",
+            'menu_title' => __('SEO Options', 'rhseo'),
+            'menu_slug' => $post_id,
+            'post_id' => $post_id,
+            'parent_slug' => "edit.php?post_type=$post_type",
+        ]);
+        $this->field_group_locations[] = [
+            [
+                'param' => 'options_page',
+                'operator' => '==',
+                'value' => $post_id,
+            ],
+        ];
     }
 
     /**

@@ -1,6 +1,10 @@
+#### 1.5.4 (2024-02-12)
+
+- Remove all custom polylang code in favor of the plugin `acf-options-for-polylang` (#ddea13e)
+
 #### 1.5.3 (2024-02-12)
 
-- V 1.5.3 (#09a4dcc)
+- V 1.5.3 (#3aca990)
 
 #### 1.5.2 (2024-02-12)
 
