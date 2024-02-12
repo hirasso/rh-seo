@@ -1,6 +1,10 @@
+#### 1.5.3 (2024-02-12)
+
+- V 1.5.3 (#09a4dcc)
+
 #### 1.5.2 (2024-02-12)
 
-- Handle empty polylang languages (#8329e86)
+- Handle empty polylang languages (#d00a696)
 - Maintenance: node modules (#cbb6f4b)
 - Add version constraint and correct name to composer.json (#d10aae6)
 - Remove trailing slashes on void elements (#35927d6)
