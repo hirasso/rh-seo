@@ -1,6 +1,7 @@
-#### 1.5.2 (2024-02-01)
+#### 1.5.2 (2024-02-12)
 
-- Maintenance: node modules (#55199c7)
+- Handle empty polylang languages (#8329e86)
+- Maintenance: node modules (#cbb6f4b)
 - Add version constraint and correct name to composer.json (#d10aae6)
 - Remove trailing slashes on void elements (#35927d6)
 

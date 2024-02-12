@@ -420,11 +420,13 @@ class SEO
     {
         $languages = null;
         if (!function_exists('\pll_the_languages')) return $languages;
-        return rhseo()->to_object(\pll_the_languages([
+        $languages = rhseo()->to_object(\pll_the_languages([
             'echo' => 0,
             'raw' => 1,
             'hide_if_empty' => false
         ]));
+        if (empty($languages)) return null;
+        return $languages;
     }
 
     /**
