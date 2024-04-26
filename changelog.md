@@ -1,6 +1,10 @@
+#### 1.5.5 (2024-04-26)
+
+- Allow plain strings for get_og_image_url (#ef24f82)
+
 #### 1.5.4 (2024-02-12)
 
-- Remove all custom polylang code in favor of the plugin `acf-options-for-polylang` (#ddea13e)
+- Remove all custom polylang code in favor of the plugin `acf-options-for-polylang` (#fb1d206)
 
 #### 1.5.3 (2024-02-12)
 

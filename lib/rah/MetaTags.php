@@ -208,8 +208,11 @@ class MetaTags
         // bail early if empty
         if (empty($value)) return $value;
 
+        // Handle objects or scalars
+        $value = $value['ID'] ?? $value;
+
         // get the URL
-        $value = wp_get_attachment_url($value['ID'] ?? $value);
+        $value = is_numeric($value) ? wp_get_attachment_url($value) : $value;
 
         return $value;
     }
