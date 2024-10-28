@@ -6,6 +6,9 @@
  * Author: Rasso Hilber
  * Description: Lightweight SEO optimizations for WordPress
  * Author URI: https://rassohilber.com
+ * Requires PHP: 8.2
+ * License: GPL-2.0-or-later
+ * GitHub Plugin URI: hirasso/rh-seo
  **/
 
 if (!defined('ABSPATH')) exit; // Exit if accessed directly
