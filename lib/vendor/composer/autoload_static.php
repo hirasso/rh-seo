@@ -22,14 +22,6 @@ class ComposerStaticInited84a760b1cd22e0930b85edb8a7f503
 
     public static $classMap = array (
         'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
-        'RAH\\SEO\\DisableFeeds' => __DIR__ . '/../../..' . '/lib/rah/DisableFeeds.php',
-        'RAH\\SEO\\FieldGroups' => __DIR__ . '/../../..' . '/lib/rah/FieldGroups.php',
-        'RAH\\SEO\\MetaTags' => __DIR__ . '/../../..' . '/lib/rah/MetaTags.php',
-        'RAH\\SEO\\MigrateAcfFieldKeys' => __DIR__ . '/../../..' . '/lib/rah/MigrateAcfFieldKeys.php',
-        'RAH\\SEO\\Redirects' => __DIR__ . '/../../..' . '/lib/rah/Redirects.php',
-        'RAH\\SEO\\Sitemaps' => __DIR__ . '/../../..' . '/lib/rah/Sitemaps.php',
-        'RAH\\SEO\\SitemapsProviderQtranslateXT' => __DIR__ . '/../../..' . '/lib/rah/SitemapsProviderQtranslateXT.php',
-        'RAH\\SEO\\Upgrades' => __DIR__ . '/../../..' . '/lib/rah/Upgrades.php',
     );
 
     public static function getInitializer(ClassLoader $loader)

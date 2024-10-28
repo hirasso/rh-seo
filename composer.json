@@ -1,11 +1,12 @@
 {
-  "name": "rhilber/rh-seo",
+  "name": "hirasso/rh-seo",
   "description": "Lightweight SEO optimizations for WordPress",
   "type": "wordpress-plugin",
   "license": "ISC",
   "config": {
     "vendor-dir": "./lib/vendor"
   },
+  "minimum-stability": "dev",
   "autoload": {
     "psr-4": {
       "RAH\\SEO\\": "lib/rah"

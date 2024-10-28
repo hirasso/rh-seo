@@ -7,12 +7,4 @@ $baseDir = dirname(dirname($vendorDir));
 
 return array(
     'Composer\\InstalledVersions' => $vendorDir . '/composer/InstalledVersions.php',
-    'RAH\\SEO\\DisableFeeds' => $baseDir . '/lib/rah/DisableFeeds.php',
-    'RAH\\SEO\\FieldGroups' => $baseDir . '/lib/rah/FieldGroups.php',
-    'RAH\\SEO\\MetaTags' => $baseDir . '/lib/rah/MetaTags.php',
-    'RAH\\SEO\\MigrateAcfFieldKeys' => $baseDir . '/lib/rah/MigrateAcfFieldKeys.php',
-    'RAH\\SEO\\Redirects' => $baseDir . '/lib/rah/Redirects.php',
-    'RAH\\SEO\\Sitemaps' => $baseDir . '/lib/rah/Sitemaps.php',
-    'RAH\\SEO\\SitemapsProviderQtranslateXT' => $baseDir . '/lib/rah/SitemapsProviderQtranslateXT.php',
-    'RAH\\SEO\\Upgrades' => $baseDir . '/lib/rah/Upgrades.php',
 );
