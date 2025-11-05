@@ -348,8 +348,7 @@ class SEO
      */
     public function get_field($name, $post_id = 0)
     {
-        $value = \get_field("rhseo_{$name}", $post_id);
-        return $value;
+        return \get_field("rhseo_{$name}", $post_id);
     }
 
     /**

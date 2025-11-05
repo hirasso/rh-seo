@@ -3,7 +3,7 @@
         'name' => 'hirasso/rh-seo',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
-        'reference' => '023b022028d78344f587672d5d8d066387f97e26',
+        'reference' => 'e782441fa1b4d6e8ae863b5e99fcf02000eab735',
         'type' => 'wordpress-plugin',
         'install_path' => __DIR__ . '/../../../',
         'aliases' => array(),
@@ -13,7 +13,7 @@
         'hirasso/rh-seo' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => '023b022028d78344f587672d5d8d066387f97e26',
+            'reference' => 'e782441fa1b4d6e8ae863b5e99fcf02000eab735',
             'type' => 'wordpress-plugin',
             'install_path' => __DIR__ . '/../../../',
             'aliases' => array(),

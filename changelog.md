@@ -1,6 +1,12 @@
-#### 1.5.5 (2024-04-26)
+#### 1.5.6 (2025-11-05)
 
-- Allow plain strings for get_og_image_url (#ef24f82)
+- Make loading of values more robust (#9bb4a44)
+
+#### 1.5.5 (2024-10-28)
+
+- Add readme and GitHub Plugin URI (#e782441)
+- Change package name to `hirasso/rh-seo` (#635d749)
+- Allow plain strings for get_og_image_url (#023b022)
 
 #### 1.5.4 (2024-02-12)
 

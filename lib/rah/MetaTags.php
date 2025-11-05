@@ -101,8 +101,9 @@ class MetaTags
      */
     public function filter_option_blogname(string $value): string
     {
+        $custom_site_name = rhseo()->get_global_options_field('site_name');
 
-        if ($custom_site_name = rhseo()->get_global_options_field('site_name')) {
+        if (is_string($custom_site_name) && !empty($custom_site_name)) {
             return __($custom_site_name);
         }
 
@@ -169,7 +170,7 @@ class MetaTags
          */
         $value = apply_filters("rhseo/get_seo_value/name=$name", $value, $object);
 
-        return $value ?? null;
+        return is_string($value) && !empty($value) ? $value : null;
     }
 
     /**
