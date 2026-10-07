@@ -74,7 +74,11 @@ class Sitemaps
     {
         $meta_query = $args['meta_query'] ?? [];
         $meta_query[] = [
-            'relation' => 'AND',
+            'relation' => 'OR',
+            [
+                'key' => "{$this->prefix}_noindex",
+                'compare' => 'NOT EXISTS',
+            ],
             [
                 'key' => "{$this->prefix}_noindex",
                 'value' => 1,
