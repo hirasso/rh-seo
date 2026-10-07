@@ -1,5 +1,10 @@
 # Changelog
 
+#### 1.5.7 (2026-10-07)
+
+- Install composer/installers (#8d034bc)
+- Add Primary Branch header, composer/installers, tidy .gitignore (#e0541f8)
+
 #### 1.5.6 (2025-11-05)
 
 - Make loading of values more robust (#9bb4a44)
