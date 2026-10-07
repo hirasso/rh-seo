@@ -1,5 +1,11 @@
 # Changelog
 
+#### 1.5.8 (2026-10-07)
+
+- Don't show upgrade notice on fresh installs (#9e26709)
+- Include items without noindex meta in sitemaps (#3acaf0b)
+- Fix og:image not being rendered (#a1d9c02)
+
 #### 1.5.7 (2026-10-07)
 
 - Install composer/installers (#8d034bc)
