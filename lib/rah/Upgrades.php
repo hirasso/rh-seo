@@ -53,7 +53,16 @@ class Upgrades
      */
     public function get_db_version(): string
     {
-        return get_option('rhseo_version', '0.0.1');
+        $version = get_option('rhseo_version');
+        if ($version) return $version;
+
+        // No version stored: only legacy data requires an upgrade
+        $migration = rhseo()->get_instance('MigrateAcfFieldKeys');
+        if ($migration->has_legacy_entries()) return '0.0.1';
+
+        // Fresh install
+        $this->update_db_version(RHSEO_UPGRADE_VERSION);
+        return RHSEO_UPGRADE_VERSION;
     }
 
     /**

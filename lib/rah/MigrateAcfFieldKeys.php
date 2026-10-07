@@ -27,6 +27,20 @@ class MigrateAcfFieldKeys
     }
 
     /**
+     * Check if there are any entries using the legacy "key_rhseo_" prefix
+     *
+     * @return bool
+     */
+    public function has_legacy_entries(): bool
+    {
+        global $wpdb;
+        foreach ([$wpdb->postmeta => 'meta_value', $wpdb->termmeta => 'meta_value', $wpdb->options => 'option_value'] as $table => $column) {
+            if ($wpdb->get_var("SELECT 1 FROM $table WHERE $column LIKE 'key\_rhseo\_%' LIMIT 1")) return true;
+        }
+        return false;
+    }
+
+    /**
      * Migrate meta entries to use "field_" instead of "key_"
      *
      * @param string $table
