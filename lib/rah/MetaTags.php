@@ -144,9 +144,9 @@ class MetaTags
      * Do not use get_option() or get_bloginfo() here, to prevent infinite loops.
      *
      * @param string $name
-     * @return string|null
+     * @return mixed
      */
-    public function get_seo_value(string $name, $object = null): ?string
+    public function get_seo_value(string $name, $object = null): mixed
     {
 
         if (!$object) $object = rhseo()->get_queried_object();
@@ -169,6 +169,9 @@ class MetaTags
          * Allow themes to filter SEO values
          */
         $value = apply_filters("rhseo/get_seo_value/name=$name", $value, $object);
+
+        // images can be IDs (int), arrays or URLs
+        if ($name === 'image') return !empty($value) ? $value : null;
 
         return is_string($value) && !empty($value) ? $value : null;
     }
