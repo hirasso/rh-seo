@@ -4,7 +4,10 @@
   "type": "wordpress-plugin",
   "license": "ISC",
   "config": {
-    "vendor-dir": "./lib/vendor"
+    "vendor-dir": "./lib/vendor",
+    "allow-plugins": {
+      "composer/installers": true
+    }
   },
   "minimum-stability": "dev",
   "autoload": {

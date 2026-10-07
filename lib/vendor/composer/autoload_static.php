@@ -7,16 +7,24 @@ namespace Composer\Autoload;
 class ComposerStaticInited84a760b1cd22e0930b85edb8a7f503
 {
     public static $prefixLengthsPsr4 = array (
-        'R' => 
+        'R' =>
         array (
             'RAH\\SEO\\' => 8,
+        ),
+        'C' =>
+        array (
+            'Composer\\Installers\\' => 20,
         ),
     );
 
     public static $prefixDirsPsr4 = array (
-        'RAH\\SEO\\' => 
+        'RAH\\SEO\\' =>
         array (
             0 => __DIR__ . '/../../..' . '/lib/rah',
+        ),
+        'Composer\\Installers\\' =>
+        array (
+            0 => __DIR__ . '/..' . '/composer/installers/src/Composer/Installers',
         ),
     );
 
