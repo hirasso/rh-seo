@@ -9,6 +9,7 @@
  * Requires PHP: 8.2
  * License: GPL-2.0-or-later
  * GitHub Plugin URI: hirasso/rh-seo
+ * Primary Branch: main
  **/
 
 if (!defined('ABSPATH')) exit; // Exit if accessed directly

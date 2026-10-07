@@ -1,3 +1,5 @@
+# Changelog
+
 #### 1.5.6 (2025-11-05)
 
 - Make loading of values more robust (#9bb4a44)

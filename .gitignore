@@ -1,5 +1,15 @@
+# System
 .DS_Store
+
+# JS tooling
 npm-debug.log
-node_modules
+node_modules/
 .cache
 *.map
+.is-built
+
+# Composer
+/vendor/
+
+# Strauss
+bin/strauss.phar
