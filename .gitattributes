@@ -1,0 +1,20 @@
+# Excluded from GitHub zipballs (used by Git Updater)
+/.editorconfig export-ignore
+/.gitattributes export-ignore
+/.githooks export-ignore
+/.gitignore export-ignore
+/.prettierignore export-ignore
+/README.md export-ignore
+/TODO export-ignore
+/assets-src export-ignore
+/build.mjs export-ignore
+/changelog.js export-ignore
+/composer.json export-ignore
+/composer.lock export-ignore
+/lang/*.po export-ignore
+/lang/*.pot export-ignore
+/lang/rhseo-pot.js export-ignore
+/package.json export-ignore
+/package-lock.json export-ignore
+/vendor export-ignore
+/lib/vendor/composer/installers/.github export-ignore
