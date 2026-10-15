@@ -1,0 +1,90 @@
+#!/usr/bin/env bash
+#
+# Release a new version of the plugin
+#
+# Usage: ./release.sh <version>    e.g. ./release.sh 1.5.9
+#
+# - bumps "Version:" in rh-seo.php
+# - prepends a changelog section built from commits since the last tag (opened in your editor for review)
+# - builds assets, commits "Release <version>", tags and pushes
+# - creates a GitHub release with the changelog section as notes (if gh is installed)
+
+set -euo pipefail
+
+cd "$(dirname "$0")"
+
+PLUGIN_FILE="rh-seo.php"
+CHANGELOG="changelog.md"
+BRANCH="main"
+# commit subjects matching one of these (extended regex, case-insensitive) are left out of the changelog
+IGNORE=("^Merge branch " "^Release [0-9]" "#ignore" "update todo" "cleanup")
+
+die() { echo "✘ $*" >&2; exit 1; }
+
+version="${1:-}"
+[[ "$version" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]] || die "Usage: ./release.sh <major.minor.patch>"
+
+[[ "$(git branch --show-current)" == "$BRANCH" ]] || die "Not on $BRANCH"
+[[ -z "$(git status --porcelain)" ]] || die "Working tree not clean"
+git rev-parse -q --verify "refs/tags/$version" >/dev/null && die "Tag $version already exists"
+
+last_tag="$(git describe --tags --abbrev=0)"
+newest="$(printf '%s\n%s\n' "$last_tag" "$version" | sort -V | tail -1)"
+[[ "$newest" == "$version" ]] || die "$version is not newer than $last_tag"
+
+# Collect commit subjects since the last tag
+ignore_args=()
+for pattern in "${IGNORE[@]}"; do ignore_args+=(-e "$pattern"); done
+entries="$(git log --no-merges --pretty=format:'%s (#%h)' "$last_tag"..HEAD | grep -viE "${ignore_args[@]}" | sed 's/^/- /' || true)"
+[[ -n "$entries" ]] || die "No changes since $last_tag"
+
+# Let the user review the new section
+section_file="$(mktemp -t rhseo-release)"
+trap 'rm -f "$section_file"' EXIT
+printf '#### %s (%s)\n\n%s\n' "$version" "$(date +%F)" "$entries" > "$section_file"
+
+editor="${VISUAL:-${EDITOR:-}}"
+if [[ -z "$editor" ]]; then
+  command -v code >/dev/null && editor="code --wait" || editor="vi"
+fi
+echo "Review the changelog in $editor (empty the file to abort)…"
+$editor "$section_file"
+[[ -n "$(tr -d '[:space:]' < "$section_file")" ]] || die "Empty changelog, aborted"
+
+# Prepend the section below the "# Changelog" heading
+{
+  echo "# Changelog"
+  echo
+  cat "$section_file"
+  echo
+  tail -n +3 "$CHANGELOG"
+} > "$CHANGELOG.tmp"
+mv "$CHANGELOG.tmp" "$CHANGELOG"
+
+# Bump the version header
+sed -i.bak -E "s/^( \* Version: ).*/\1$version/" "$PLUGIN_FILE" && rm "$PLUGIN_FILE.bak"
+grep -q "^ \* Version: $version$" "$PLUGIN_FILE" || die "Failed to bump version in $PLUGIN_FILE"
+
+npm run build
+
+git add "$PLUGIN_FILE" "$CHANGELOG" assets
+git commit -m "Release $version"
+git tag "$version"
+
+echo
+git show --stat HEAD
+echo
+read -rp "Push $BRANCH and tag $version to origin? [y/N] " answer
+if [[ "$answer" != [yY] ]]; then
+  echo "Not pushed. Undo with: git tag -d $version && git reset --hard HEAD~1"
+  exit 0
+fi
+
+git push origin "$BRANCH" "$version"
+
+if command -v gh >/dev/null; then
+  # Release notes: the section without its heading
+  gh release create "$version" --title "$version" --notes "$(tail -n +3 "$section_file")"
+fi
+
+echo "✔ Released $version"

@@ -5,7 +5,7 @@
   "description": "Build process for frontend assets",
   "main": "index.js",
   "scripts": {
-    "preinstall": "git config core.hooksPath .githooks",
+    "prepare": "git config core.hooksPath .githooks || true",
     "bundle": "node build.mjs -f \"assets-src/*.js\" -o \"assets\"",
     "watch": "npm run bundle",
     "build": "npm run bundle -- --production",
@@ -18,7 +18,6 @@
   },
   "devDependencies": {
     "esbuild": "^0.28.2",
-    "minimist": "^1.2.5",
     "sass": "^1.26.5",
     "wp-pot": "^1.9.8"
   }
