@@ -1,5 +1,12 @@
 # Changelog
 
+#### 1.5.9 (2026-10-15)
+
+- Bundle plugin-update-checker, attach rh-seo.zip to releases @see https://github.com/YahnisElsts/plugin-update-checker (#7e1ec69)
+- Replace changelog hook with release script, check assets in CI (#23d2f7e)
+- Add .gitattributes to slim down release zips (#25b3853)
+- Migrate assets build from Parcel to esbuild (#d92a583)
+
 #### 1.5.8 (2026-10-07)
 
 - Don't show upgrade notice on fresh installs (#9e26709)
