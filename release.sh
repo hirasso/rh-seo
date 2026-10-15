@@ -60,7 +60,7 @@ editor="${VISUAL:-${EDITOR:-}}"
 if [[ -z "$editor" ]]; then
   command -v code >/dev/null && editor="code --wait" || editor="vi"
 fi
-echo "Review the changelog in $editor (empty the file to abort)…"
+echo "Opening the changelog in ${editor%% *}: save and close it to continue, empty it to abort…"
 $editor "$section_file"
 [[ -n "$(tr -d '[:space:]' < "$section_file")" ]] || die "Empty changelog, aborted"
 
@@ -81,7 +81,8 @@ grep -q "^ \* Version: $version$" "$PLUGIN_FILE" || die "Failed to bump version 
 npm run build
 
 git add "$PLUGIN_FILE" "$CHANGELOG" assets
-git commit -m "Release $version"
+# --no-verify: assets were just built, skip the pre-commit hook building them again
+git commit --no-verify -m "Release $version"
 git tag "$version"
 
 echo
