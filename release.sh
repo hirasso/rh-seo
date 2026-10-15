@@ -2,7 +2,7 @@
 #
 # Release a new version of the plugin
 #
-# Usage: ./release.sh <version>    e.g. ./release.sh 1.5.9
+# Usage: ./release.sh <patch|minor|major>    (bumps the last tag, e.g. 1.5.8 → 1.5.9 | 1.6.0 | 2.0.0)
 #
 # - bumps "Version:" in rh-seo.php
 # - prepends a changelog section built from commits since the last tag (opened in your editor for review)
@@ -21,22 +21,33 @@ IGNORE=("^Merge branch " "^Release [0-9]" "#ignore" "update todo" "cleanup")
 
 die() { echo "✘ $*" >&2; exit 1; }
 
-version="${1:-}"
-[[ "$version" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]] || die "Usage: ./release.sh <major.minor.patch>"
-
 [[ "$(git branch --show-current)" == "$BRANCH" ]] || die "Not on $BRANCH"
 [[ -z "$(git status --porcelain)" ]] || die "Working tree not clean"
-git rev-parse -q --verify "refs/tags/$version" >/dev/null && die "Tag $version already exists"
 
 last_tag="$(git describe --tags --abbrev=0)"
-newest="$(printf '%s\n%s\n' "$last_tag" "$version" | sort -V | tail -1)"
-[[ "$newest" == "$version" ]] || die "$version is not newer than $last_tag"
+[[ "$last_tag" =~ ^([0-9]+)\.([0-9]+)\.([0-9]+)$ ]] || die "Last tag $last_tag is not major.minor.patch"
+major="${BASH_REMATCH[1]}" minor="${BASH_REMATCH[2]}" patch="${BASH_REMATCH[3]}"
+
+case "${1:-}" in
+  patch) version="$major.$minor.$((patch + 1))" ;;
+  minor) version="$major.$((minor + 1)).0" ;;
+  major) version="$((major + 1)).0.0" ;;
+  *) die "Usage: ./release.sh <patch|minor|major>" ;;
+esac
+git rev-parse -q --verify "refs/tags/$version" >/dev/null && die "Tag $version already exists"
+echo "Releasing $last_tag → $version"
 
 # Collect commit subjects since the last tag
 ignore_args=()
 for pattern in "${IGNORE[@]}"; do ignore_args+=(-e "$pattern"); done
 entries="$(git log --no-merges --pretty=format:'%s (#%h)' "$last_tag"..HEAD | grep -viE "${ignore_args[@]}" | sed 's/^/- /' || true)"
 [[ -n "$entries" ]] || die "No changes since $last_tag"
+
+echo
+echo "$entries"
+echo
+read -rp "Continue with $version? [y/N] " answer
+[[ "$answer" == [yY] ]] || die "Aborted"
 
 # Let the user review the new section
 section_file="$(mktemp -t rhseo-release)"
