@@ -6,41 +6,19 @@
   "main": "index.js",
   "scripts": {
     "preinstall": "git config core.hooksPath .githooks",
-    "bundle": "node parcel-bundler.js -f \"assets-src/*.js\" -o \"assets\"",
+    "bundle": "node build.mjs -f \"assets-src/*.js\" -o \"assets\"",
     "watch": "npm run bundle",
     "build": "npm run bundle -- --production",
     "generate-pot": "node ./lang/rhseo-pot.js"
   },
-  "babel": {
-    "presets": [
-      "@babel/preset-env"
-    ],
-    "plugins": [
-      "@babel/plugin-proposal-class-properties",
-      "@babel/plugin-transform-runtime"
-    ]
-  },
-  "watchreload": {
-    "files": "**/*.php"
-  },
-  "postcss": {
-    "plugins": {
-      "autoprefixer": true
-    }
-  },
   "author": "Rasso Hilber",
   "license": "ISC",
+  "engines": {
+    "node": ">=22"
+  },
   "devDependencies": {
-    "@babel/core": "^7.9.6",
-    "@babel/plugin-proposal-class-properties": "^7.8.3",
-    "@babel/plugin-transform-runtime": "^7.9.6",
-    "autoprefixer": "^9.7.6",
-    "find-parent-dir": "^0.3.1",
-    "glob": "^7.1.6",
+    "esbuild": "^0.28.2",
     "minimist": "^1.2.5",
-    "parcel-bundler": "^1.12.4",
-    "parcel-plugin-watch-reload": "^1.0.0",
-    "rimraf": "^3.0.2",
     "sass": "^1.26.5",
     "wp-pot": "^1.9.8"
   }
