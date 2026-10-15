@@ -1,5 +1,9 @@
 # Changelog
 
+#### 1.5.10 (2026-10-15)
+
+- Release script: clearer editor message, build only once (#4278d50)
+
 #### 1.5.9 (2026-10-15)
 
 - Bundle plugin-update-checker, attach rh-seo.zip to releases @see https://github.com/YahnisElsts/plugin-update-checker (#7e1ec69)
