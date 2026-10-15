@@ -20,6 +20,8 @@ define('RHSEO_PATH', plugin_dir_path(__FILE__));
 define('RHSEO_BASENAME', plugin_basename(__FILE__));
 define('RHSEO_UPGRADE_VERSION', '1.3.9'); // Highest version with an upgrade routine.
 
+RAH\SEO\UpdateChecker::init(__FILE__);
+
 /**
  * Initialize the $seo instance
  *

@@ -7,7 +7,7 @@
 # - bumps "Version:" in rh-seo.php
 # - prepends a changelog section built from commits since the last tag (opened in your editor for review)
 # - builds assets, commits "Release <version>", tags and pushes
-# - creates a GitHub release with the changelog section as notes (if gh is installed)
+# - creates a GitHub release with the changelog section as notes and rh-seo.zip attached (requires gh)
 
 set -euo pipefail
 
@@ -20,6 +20,8 @@ BRANCH="main"
 IGNORE=("^Merge branch " "^Release [0-9]" "#ignore" "update todo" "cleanup")
 
 die() { echo "✘ $*" >&2; exit 1; }
+
+command -v gh >/dev/null || die "gh (GitHub CLI) is required"
 
 [[ "$(git branch --show-current)" == "$BRANCH" ]] || die "Not on $BRANCH"
 [[ -z "$(git status --porcelain)" ]] || die "Working tree not clean"
@@ -93,9 +95,13 @@ fi
 
 git push origin "$BRANCH" "$version"
 
-if command -v gh >/dev/null; then
-  # Release notes: the section without its heading
-  gh release create "$version" --title "$version" --notes "$(tail -n +3 "$section_file")"
-fi
+# Plugin zip with a stable folder name, for manual installs and update checks.
+# git archive respects export-ignore in .gitattributes
+zip_dir="$(mktemp -d)"
+trap 'rm -rf "$section_file" "$zip_dir"' EXIT
+git archive --format=zip --prefix=rh-seo/ -o "$zip_dir/rh-seo.zip" "$version"
+
+# Release notes: the section without its heading
+gh release create "$version" "$zip_dir/rh-seo.zip" --title "$version" --notes "$(tail -n +3 "$section_file")"
 
 echo "✔ Released $version"
