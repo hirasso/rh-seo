@@ -1,5 +1,9 @@
 # Changelog
 
+#### 1.5.11 (2026-11-04)
+
+- Remove update checker hooks on deactivation (#74796ab)
+
 #### 1.5.10 (2026-10-15)
 
 - Release script: clearer editor message, build only once (#4278d50)
