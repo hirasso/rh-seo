@@ -1,5 +1,16 @@
 # Changelog
 
+#### 1.6.0 (2026-11-20)
+
+- Integration tests folder, wp-phpunit for the IDE (#b23da16)
+- Fix empty site name without a custom RH SEO site name, reset test env between Pest and e2e (#7b9c66c)
+- Require PHP 8.2 in composer.json (#6eea3a1)
+- Formatting (#974cacd)
+- wp-env, Pest and Playwright tests, CI (#e572805)
+- Ship plugin-update-checker via composer + Strauss (#6dce002)
+- Update URI header, .pot on release, CI timeout (#3cb0282)
+- Add AGENTS.md, dev commands in README (#416085c)
+
 #### 1.5.11 (2026-11-04)
 
 - Remove update checker hooks on deactivation (#74796ab)
