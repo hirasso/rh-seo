@@ -53,8 +53,15 @@ class MetaTags
         <meta property="og:type" content="website">
         <meta property="og:url" content="<?= esc_attr(rhseo()->get_current_url()) ?>">
         <meta property="og:site_name" content="<?= esc_attr(get_bloginfo('name')) ?>">
-        <?php if ($image = $this->get_og_image_url()) : ?>
-            <meta property="og:image" content="<?= esc_attr($image) ?>">
+        <?php if ($image = $this->get_og_image()) : ?>
+            <meta property="og:image" content="<?= esc_attr($image['url']) ?>">
+            <?php if (!empty($image['width']) && !empty($image['height'])) : ?>
+                <meta property="og:image:width" content="<?= esc_attr($image['width']) ?>">
+                <meta property="og:image:height" content="<?= esc_attr($image['height']) ?>">
+            <?php endif; ?>
+            <?php if (!empty($image['alt'])) : ?>
+                <meta property="og:image:alt" content="<?= esc_attr($image['alt']) ?>">
+            <?php endif; ?>
         <?php endif; ?>
         <meta name="twitter:card" content="summary_large_image">
         <!-- SEO: End -->
@@ -196,11 +203,11 @@ class MetaTags
     }
 
     /**
-     * Get OG Image
+     * Get the OG image's url, width, height and alt
      *
-     * @return mixed
+     * @return array{url: string, width?: int, height?: int, alt?: string}|null
      */
-    private function get_og_image_url()
+    private function get_og_image(): ?array
     {
         /**
          * Allow to short-circuit this request
@@ -210,14 +217,40 @@ class MetaTags
         }
 
         // bail early if empty
-        if (empty($value)) return $value;
+        if (empty($value)) return null;
 
         // Handle objects or scalars
         $value = $value['ID'] ?? $value;
 
-        // get the URL
-        $value = is_numeric($value) ? wp_get_attachment_url($value) : $value;
+        // Plain URL
+        if (!is_numeric($value)) {
+            return is_string($value) ? ['url' => $value] : null;
+        }
 
-        return $value;
+        $id = (int) $value;
+        $src = wp_get_attachment_image_src($id, $this->get_og_image_size($id));
+        if (!$src) return null;
+
+        return [
+            'url' => $src[0],
+            'width' => (int) $src[1],
+            'height' => (int) $src[2],
+            'alt' => trim(strip_tags((string) get_post_meta($id, '_wp_attachment_image_alt', true))),
+        ];
+    }
+
+    /**
+     * Get the smallest image size at least 1200px wide, fall back to 'full'
+     */
+    private function get_og_image_size(int $id): string
+    {
+        $sizes = wp_get_attachment_metadata($id)['sizes'] ?? [];
+
+        $sizes = array_filter($sizes, fn ($size) => ($size['width'] ?? 0) >= 1200);
+        if (empty($sizes)) return 'full';
+
+        uasort($sizes, fn ($a, $b) => $a['width'] <=> $b['width']);
+
+        return (string) array_key_first($sizes);
     }
 }
