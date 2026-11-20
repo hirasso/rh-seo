@@ -1,122 +1,146 @@
-# Copyright (C) 2026 RH SEO
-# This file is distributed under the same license as the RH SEO package.
+# Copyright (C) 2026 Rasso Hilber
+# This file is distributed under the GPL-2.0-or-later.
 msgid ""
 msgstr ""
-"Project-Id-Version: RH SEO\n"
+"Project-Id-Version: RH SEO 1.5.11\n"
+"Report-Msgid-Bugs-To: https://github.com/hirasso/rh-seo/\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Poedit-Basepath: ..\n"
-"X-Poedit-KeywordsList: __;_e;_ex:1,2c;_n:1,2;_n_noop:1,2;_nx:1,2,4c;_nx_noop:1,2,3c;_x:1,2c;esc_attr__;esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c\n"
-"X-Poedit-SearchPath-0: .\n"
-"X-Poedit-SearchPathExcluded-0: *.js\n"
-"X-Poedit-SourceCharset: UTF-8\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.12.0\n"
+"X-Domain: rhseo\n"
 
-#: ../lib/rah/FieldGroups.php:96
+#. Plugin Name of the plugin
+#: rh-seo.php:4
+msgid "RH SEO"
+msgstr ""
+
+#. Description of the plugin
+#: rh-seo.php:7
+msgid "Lightweight SEO optimizations for WordPress"
+msgstr ""
+
+#. Author of the plugin
+#: rh-seo.php:6
+msgid "Rasso Hilber"
+msgstr ""
+
+#. Author URI of the plugin
+#: rh-seo.php:8
+msgid "https://rassohilber.com"
+msgstr ""
+
+#: lib/rah/FieldGroups.php:96
 msgid "Search Engine Optimization"
 msgstr ""
 
-#: ../lib/rah/FieldGroups.php:97, ../lib/rah/FieldGroups.php:290
+#: lib/rah/FieldGroups.php:97
+#: lib/rah/FieldGroups.php:290
 msgid "SEO"
 msgstr ""
 
-#: ../lib/rah/FieldGroups.php:134, ../lib/rah/FieldGroups.php:135
+#: lib/rah/FieldGroups.php:134
+#: lib/rah/FieldGroups.php:135
 msgid "SEO Options"
 msgstr ""
 
-#: ../lib/rah/FieldGroups.php:174
+#: lib/rah/FieldGroups.php:174
 msgid "Site Name"
 msgstr ""
 
-#: ../lib/rah/FieldGroups.php:182
+#: lib/rah/FieldGroups.php:182
 msgid "Optional. Overwrites the title."
 msgstr ""
 
-#: ../lib/rah/FieldGroups.php:183
+#: lib/rah/FieldGroups.php:183
 msgid "Document Title for Search Engines"
 msgstr ""
 
-#: ../lib/rah/FieldGroups.php:191
+#: lib/rah/FieldGroups.php:191
 msgid "Site Description"
 msgstr ""
 
-#: ../lib/rah/FieldGroups.php:191
+#: lib/rah/FieldGroups.php:191
 msgid "Meta Description"
 msgstr ""
 
-#: ../lib/rah/FieldGroups.php:193
+#: lib/rah/FieldGroups.php:193
 msgid "Recommended length: 50–160 characters"
 msgstr ""
 
-#: ../lib/rah/FieldGroups.php:204
+#: lib/rah/FieldGroups.php:204
 msgid "Preview Image"
 msgstr ""
 
-#: ../lib/rah/FieldGroups.php:206
+#: lib/rah/FieldGroups.php:206
 msgid "For services like Facebook or Twitter."
 msgstr ""
 
-#: ../lib/rah/FieldGroups.php:212
+#: lib/rah/FieldGroups.php:212
 msgid "Ask search engines to ignore this page"
 msgstr ""
 
-#: ../lib/rah/FieldGroups.php:227
+#: lib/rah/FieldGroups.php:227
 msgid "Maximum 100 entries"
 msgstr ""
 
-#: ../lib/rah/FieldGroups.php:237
+#: lib/rah/FieldGroups.php:237
 msgid "From"
 msgstr ""
 
-#: ../lib/rah/FieldGroups.php:238
+#: lib/rah/FieldGroups.php:238
 msgid "URL that should be redirected"
 msgstr ""
 
-#: ../lib/rah/FieldGroups.php:248
+#: lib/rah/FieldGroups.php:248
 msgid "To"
 msgstr ""
 
-#: ../lib/rah/FieldGroups.php:249
+#: lib/rah/FieldGroups.php:249
 msgid "Redirect target URL"
 msgstr ""
 
-#: ../lib/rah/FieldGroups.php:291
+#: lib/rah/FieldGroups.php:291
 msgid "SEO Global Options"
 msgstr ""
 
-#: ../lib/rah/FieldGroups.php:294
+#: lib/rah/FieldGroups.php:294
+#, php-format
 msgid "SEO Options: %s"
 msgstr ""
 
-#: ../lib/rah/Redirects.php:44
+#: lib/rah/Redirects.php:44
 msgid "Please provide a local URL"
 msgstr ""
 
-#: ../lib/rah/Redirects.php:92
+#: lib/rah/Redirects.php:92
 msgid "Conflict detected: URL also found in \"To\" column"
 msgstr ""
 
-#: ../lib/rah/Redirects.php:96
+#: lib/rah/Redirects.php:96
 msgid "Conflict detected: URL also found in \"From\" column"
 msgstr ""
 
-#: ../lib/rah/Upgrades.php:95
+#: lib/rah/Upgrades.php:95
 msgid "RH SEO needs to upgrade the database."
 msgstr ""
 
-#: ../lib/rah/Upgrades.php:95
+#: lib/rah/Upgrades.php:95
 msgid "Upgrade Database Now"
 msgstr ""
 
-#: ../lib/rah/Upgrades.php:119
+#: lib/rah/Upgrades.php:119
 msgid "Something went wrong."
 msgstr ""
 
-#: ../lib/rah/Upgrades.php:119
+#: lib/rah/Upgrades.php:119
 msgid "Error"
 msgstr ""
 
-#: ../lib/rah/Upgrades.php:164
+#: lib/rah/Upgrades.php:164
 msgid "RH SEO successfully upgraded the database."
 msgstr ""

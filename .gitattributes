@@ -12,7 +12,6 @@
 /composer.lock export-ignore
 /lang/*.po export-ignore
 /lang/*.pot export-ignore
-/lang/rhseo-pot.js export-ignore
 /package-lock.json export-ignore
 /package.json export-ignore
 /README.md export-ignore
