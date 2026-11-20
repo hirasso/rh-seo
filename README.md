@@ -47,3 +47,12 @@ If `DISALLOW_FILE_MODS` is not set to `true`, you can update the plugin directly
 // wp-config.php:
 define('RHSEO_GITHUB_TOKEN', 'qwf_sdgad142...');
 ```
+
+## Development
+
+```shell
+npm ci              # also installs the pre-commit hook (rebuilds assets/)
+npm run build       # build assets/ from assets-src/
+npm run generate-pot
+./release.sh <patch|minor|major>
+```
