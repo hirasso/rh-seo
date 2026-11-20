@@ -103,7 +103,7 @@ class MetaTags
     /**
      * Filters get_bloginfo('name')
      */
-    public function filter_option_blogname(string $value): string
+    public function filter_option_blogname(string|false $value): string|false
     {
         $custom_site_name = rhseo()->get_global_options_field('site_name');
 

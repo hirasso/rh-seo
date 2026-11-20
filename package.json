@@ -13,7 +13,7 @@
     "env": "wp-env",
     "env:test": "wp-env --config .wp-env.test.json",
     "wp": "wp-env run cli wp --env-cwd=wp-content/plugins/rh-seo",
-    "test": "npm run test:pest && npm run test:e2e",
+    "test": "npm run test:pest && npm run env:test reset && npm run env:test start && npm run test:e2e",
     "test:pest": "wp-env --config .wp-env.test.json run cli --env-cwd=wp-content/plugins/rh-seo vendor/bin/pest --no-coverage",
     "test:e2e": "playwright test --config ./tests/E2E/playwright.config.ts",
     "test:e2e:install": "playwright install --with-deps firefox"

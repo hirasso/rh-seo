@@ -1,5 +1,9 @@
 <?php
 
+use RAH\SEO\Tests\Unit\TestCase;
+
+uses(TestCase::class);
+
 test('the plugin boots', function () {
     expect(rhseo())->toBeInstanceOf(RAH\SEO\SEO::class);
 });
