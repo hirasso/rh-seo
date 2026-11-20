@@ -36,3 +36,66 @@ jobs:
       # Shipped dependencies live in require-dev, so audit those too
       - name: Audit composer dependencies
         run: composer audit
+
+      - name: Verify wp-env core matches composer.lock
+        run: |
+          tools/sync-wp-env-core.sh
+          git diff --exit-code -- .wp-env.json .wp-env.test.json \
+            || { echo "::error::Run tools/sync-wp-env-core.sh and commit .wp-env*.json"; exit 1; }
+
+  php-tests:
+    name: PHP Tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+
+      - uses: shivammathur/setup-php@accd6127cb78bee3e8082180cb391013d204ef9f # 2.37.0
+        with:
+          php-version: 8.2
+          tools: composer:v2
+          coverage: none
+
+      - uses: ramsey/composer-install@65e4f84970763564f46a70b8a54b90d033b3bdda # 4.0.0
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      - run: npm run env:test start
+
+      - run: npm run test:pest
+
+  e2e-tests:
+    name: E2E Tests
+    runs-on: ubuntu-latest
+    # Playwright's browser download sometimes hangs
+    timeout-minutes: 15
+
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      # Test what the release zip contains (release.sh uses git archive, too)
+      - name: Use the release files in wp-env
+        run: |
+          mkdir -p build/rh-seo
+          git archive HEAD | tar -x -C build/rh-seo
+          jq '.plugins[0] = "./build/rh-seo"' .wp-env.test.json > tmp.json
+          mv tmp.json .wp-env.test.json
+
+      - run: npm run env:test start
+
+      - run: npm run test:e2e:install
+
+      - run: npm run test:e2e

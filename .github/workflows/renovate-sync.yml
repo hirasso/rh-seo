@@ -15,7 +15,7 @@ concurrency:
 
 jobs:
   sync:
-    name: Sync prefixed dependencies
+    name: Sync prefixed dependencies and wp-env core
     if: >-
       github.actor == 'renovate[bot]'
       && startsWith(github.head_ref, 'renovate/')
@@ -43,12 +43,13 @@ jobs:
         run: |
           composer prefix --quiet
           git checkout -- vendor-prefixed/composer/installed.php
+          tools/sync-wp-env-core.sh
 
       - name: Commit and push
         run: |
-          git add -A -- vendor-prefixed
+          git add -A -- vendor-prefixed .wp-env.json .wp-env.test.json
           git diff --cached --quiet && exit 0
           git config user.email "bot@rassohilber.com"
           git config user.name "Rasso Hilber's Bot"
-          git commit -m "Regenerate prefixed dependencies"
+          git commit -m "Regenerate prefixed dependencies and wp-env core"
           git push

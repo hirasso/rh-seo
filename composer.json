@@ -6,7 +6,11 @@
   "config": {
     "sort-packages": true,
     "allow-plugins": {
-      "composer/installers": true
+      "composer/installers": true,
+      "pestphp/pest-plugin": true
+    },
+    "platform": {
+      "php": "8.2"
     }
   },
   "minimum-stability": "dev",
@@ -27,14 +31,22 @@
     "composer/installers": "^1.0 || ^2.0"
   },
   "require-dev": {
-    "yahnis-elsts/plugin-update-checker": "^5.7"
+    "pestphp/pest": "^3.8",
+    "roots/wordpress-no-content": "7.1.5",
+    "yahnis-elsts/plugin-update-checker": "^5.7",
+    "yoast/phpunit-polyfills": "^4.0"
   },
   "scripts": {
     "prefix": [
       "sh -c 'test -f ./tools/strauss.phar || curl -sfL https://github.com/BrianHenryIE/strauss/releases/download/0.30.0/strauss.phar -o tools/strauss.phar'",
       "@php tools/strauss.phar"
     ],
-    "post-update-cmd": "@prefix"
+    "post-update-cmd": [
+      "@prefix",
+      "tools/sync-wp-env-core.sh"
+    ],
+    "post-install-cmd": "tools/sync-wp-env-core.sh",
+    "test": "pest --no-coverage"
   },
   "extra": {
     "strauss": {

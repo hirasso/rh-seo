@@ -59,6 +59,12 @@ npm ci              # also installs the pre-commit hook (rebuilds assets/)
 composer install    # dev dependencies, incl. the ones copied to vendor-prefixed/
 composer prefix     # regenerate vendor-prefixed/ (Strauss)
 tools/verify-prefixed.sh
+
+npm run env start       # dev env (http://localhost:7373), needs Docker
+npm run env:test start  # test env (http://localhost:7374)
+npm run wp <command>    # WP-CLI inside the dev env
+npm run test:pest       # Pest tests inside the test env
+npm run test:e2e        # Playwright e2e tests (once: npm run test:e2e:install)
 npm run build       # build assets/ from assets-src/
 npm run generate-pot
 ./release.sh <patch|minor|major>

@@ -23,6 +23,8 @@ Lightweight SEO plugin for WordPress (requires ACF Pro). Setup, commands and rel
 ### PHP
 
 - Must stay compatible with `Requires PHP` in `rh-seo.php`
+- After making changes, run `npm run test:pest` (and `npm run test:e2e` for frontend behavior). Add tests when it makes sense, don't overdo it. Pest in `tests/Unit/`, e2e in `tests/E2E/tests/`
+- WordPress core version: pinned `roots/wordpress-no-content` in `composer.json`; `tools/sync-wp-env-core.sh` copies it into `.wp-env*.json`. Don't bump it without asking
 - Classes in `CamelCase`, methods in `snake_case` (`UpdateChecker` is the camelCase exception; match the class you're in)
 - Prefer WordPress-native functionality over reimplementing it (e.g. `list_files()` over `glob()`)
 - Keep new code DRY. Propose deduplicating existing code
@@ -50,7 +52,9 @@ Lightweight SEO plugin for WordPress (requires ACF Pro). Setup, commands and rel
 | `rh-seo.php` | Plugin bootstrap |
 | `lib/rah/` | PHP classes (`RAH\SEO\` namespace) |
 | `vendor-prefixed/` | Dependencies copied by Strauss (committed, don't edit) |
-| `tools/` | `verify-prefixed.sh`, `strauss.phar` |
+| `tools/` | `verify-prefixed.sh`, wp-env lifecycle scripts, `strauss.phar` |
+| `tests/Unit/` | Pest tests (run in the wp-env test env) |
+| `tests/E2E/` | Playwright e2e tests |
 | `assets-src/` | JS/SCSS source, built with esbuild (`build.mjs`) |
 | `assets/` | Built assets (committed) |
 | `lang/` | Translations, `.pot` generator |

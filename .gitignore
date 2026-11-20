@@ -12,3 +12,7 @@ node_modules/
 
 # Strauss
 /tools/strauss.phar
+# Tests
+/build/
+/tests/E2E/results/
+/tests/E2E/reports/

@@ -20,6 +20,10 @@
 /renovate.json export-ignore
 /TODO export-ignore
 /tools export-ignore
+/tests export-ignore
+/phpunit.xml export-ignore
+/.wp-env.json export-ignore
+/.wp-env.test.json export-ignore
 
 # Prefixed dependencies: shipped, but collapsed in diffs
 vendor-prefixed/** linguist-vendored

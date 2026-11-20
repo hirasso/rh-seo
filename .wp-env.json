@@ -1,0 +1,14 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/wp-env.json",
+  "testsEnvironment": false,
+  "core": "https://wordpress.org/wordpress-7.1.5.zip",
+  "plugins": [
+    ".",
+    "pronamic/advanced-custom-fields-pro#v6.8.11"
+  ],
+  "phpVersion": "8.2",
+  "port": 7373,
+  "lifecycleScripts": {
+    "afterStart": "./tools/wp-env-after-start.sh"
+  }
+}
