@@ -17,7 +17,6 @@
 /package.json export-ignore
 /README.md export-ignore
 /release.sh export-ignore
-/renovate.json export-ignore
 /TODO export-ignore
 /tools export-ignore
 /tests export-ignore
