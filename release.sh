@@ -19,7 +19,10 @@ BRANCH="main"
 # commit subjects matching one of these (extended regex, case-insensitive) are left out of the changelog
 IGNORE=("^Merge branch " "^Release [0-9]" "#ignore" "update todo" "cleanup")
 
-die() { echo "✘ $*" >&2; exit 1; }
+die() {
+	echo "✘ $*" >&2
+	exit 1
+}
 
 command -v gh >/dev/null || die "gh (GitHub CLI) is required"
 
@@ -32,10 +35,10 @@ last_tag="$(git describe --tags --abbrev=0)"
 major="${BASH_REMATCH[1]}" minor="${BASH_REMATCH[2]}" patch="${BASH_REMATCH[3]}"
 
 case "${1:-}" in
-  patch) version="$major.$minor.$((patch + 1))" ;;
-  minor) version="$major.$((minor + 1)).0" ;;
-  major) version="$((major + 1)).0.0" ;;
-  *) die "Usage: ./release.sh <patch|minor|major>" ;;
+patch) version="$major.$minor.$((patch + 1))" ;;
+minor) version="$major.$((minor + 1)).0" ;;
+major) version="$((major + 1)).0.0" ;;
+*) die "Usage: ./release.sh <patch|minor|major>" ;;
 esac
 git rev-parse -q --verify "refs/tags/$version" >/dev/null && die "Tag $version already exists"
 echo "Releasing $last_tag → $version"
@@ -55,24 +58,24 @@ read -rp "Continue with $version? [y/N] " answer
 # Let the user review the new section
 section_file="$(mktemp -t rhseo-release)"
 trap 'rm -f "$section_file"' EXIT
-printf '#### %s (%s)\n\n%s\n' "$version" "$(date +%F)" "$entries" > "$section_file"
+printf '#### %s (%s)\n\n%s\n' "$version" "$(date +%F)" "$entries" >"$section_file"
 
 editor="${VISUAL:-${EDITOR:-}}"
 if [[ -z "$editor" ]]; then
-  command -v code >/dev/null && editor="code --wait" || editor="vi"
+	command -v code >/dev/null && editor="code --wait" || editor="vi"
 fi
 echo "Opening the changelog in ${editor%% *}: save and close it to continue, empty it to abort…"
 $editor "$section_file"
-[[ -n "$(tr -d '[:space:]' < "$section_file")" ]] || die "Empty changelog, aborted"
+[[ -n "$(tr -d '[:space:]' <"$section_file")" ]] || die "Empty changelog, aborted"
 
 # Prepend the section below the "# Changelog" heading
 {
-  echo "# Changelog"
-  echo
-  cat "$section_file"
-  echo
-  tail -n +3 "$CHANGELOG"
-} > "$CHANGELOG.tmp"
+	echo "# Changelog"
+	echo
+	cat "$section_file"
+	echo
+	tail -n +3 "$CHANGELOG"
+} >"$CHANGELOG.tmp"
 mv "$CHANGELOG.tmp" "$CHANGELOG"
 
 # Bump the version header
@@ -92,8 +95,8 @@ git show --stat HEAD
 echo
 read -rp "Push $BRANCH and tag $version to origin? [y/N] " answer
 if [[ "$answer" != [yY] ]]; then
-  echo "Not pushed. Undo with: git tag -d $version && git reset --hard HEAD~1"
-  exit 0
+	echo "Not pushed. Undo with: git tag -d $version && git reset --hard HEAD~1"
+	exit 0
 fi
 
 git push origin "$BRANCH" "$version"

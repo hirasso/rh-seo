@@ -12,12 +12,15 @@ composer prefix --quiet
 git checkout -- vendor-prefixed/composer/installed.php 2>/dev/null || true
 
 # Against the index: staged changes count as in sync
-changed="$(git diff --name-only -- vendor-prefixed; git ls-files --others --exclude-standard -- vendor-prefixed)"
+changed="$(
+	git diff --name-only -- vendor-prefixed
+	git ls-files --others --exclude-standard -- vendor-prefixed
+)"
 
 if [[ -n "$changed" ]]; then
-  echo "✘ vendor-prefixed/ is out of sync with composer.lock. Run 'composer prefix' and commit the result:" >&2
-  echo "$changed" >&2
-  exit 1
+	echo "✘ vendor-prefixed/ is out of sync with composer.lock. Run 'composer prefix' and commit the result:" >&2
+	echo "$changed" >&2
+	exit 1
 fi
 
 echo "✔ vendor-prefixed/ is in sync with composer.lock"

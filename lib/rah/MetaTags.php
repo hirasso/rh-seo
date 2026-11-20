@@ -2,6 +2,10 @@
 
 namespace RAH\SEO;
 
+use WP_Post_Type;
+use WP_Post;
+use WP_Term;
+
 if (!defined('ABSPATH')) exit; // Exit if accessed directly
 
 /**
@@ -112,9 +116,6 @@ class MetaTags
 
     /**
      * Filters get_bloginfo('description')
-     *
-     * @param string $name
-     * @return string|bool
      */
     public function filter_option_blogdescription($value)
     {
