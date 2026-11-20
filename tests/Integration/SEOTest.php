@@ -1,6 +1,6 @@
 <?php
 
-use RAH\SEO\Tests\Unit\TestCase;
+use RAH\SEO\Tests\Integration\TestCase;
 
 uses(TestCase::class);
 
@@ -21,6 +21,7 @@ test('the sitemap leaves out users, posts and default taxonomies', function () {
 });
 
 test('wp_head renders the meta tags', function () {
+    /** @var TestCase $this */
     update_option('blogname', 'RH SEO Test');
     $this->go_to(home_url('/'));
 

@@ -4,7 +4,7 @@
  * WP integration test bootstrap, runs inside the wp-env test env (`npm run test:pest`)
  */
 
-namespace RAH\SEO\Tests\Unit;
+namespace RAH\SEO\Tests\Integration;
 
 /** Before WordPress, for the PHPUnit polyfills */
 require_once \dirname(__DIR__, 2) . '/vendor/autoload.php';

@@ -33,6 +33,7 @@
   "require-dev": {
     "pestphp/pest": "^3.8",
     "roots/wordpress-no-content": "7.1.5",
+    "wp-phpunit/wp-phpunit": "^7.1",
     "yahnis-elsts/plugin-update-checker": "^5.7",
     "yoast/phpunit-polyfills": "^4.0"
   },
