@@ -9,6 +9,7 @@
  * Requires PHP: 8.2
  * License: GPL-2.0-or-later
  * GitHub Plugin URI: hirasso/rh-seo
+ * Update URI: https://github.com/hirasso/rh-seo
  * Primary Branch: main
  **/
 

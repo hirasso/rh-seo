@@ -4,5 +4,5 @@ wpPot({
   destFile: './lang/rhseo.pot',
   domain: 'rhseo',
   package: 'RH SEO',
-  src: '../**/*.php'
+  src: ['rh-seo.php', 'lib/rah/**/*.php']
 });

@@ -1,4 +1,4 @@
-# Copyright (C) 2023 RH SEO
+# Copyright (C) 2026 RH SEO
 # This file is distributed under the same license as the RH SEO package.
 msgid ""
 msgstr ""
@@ -13,79 +13,79 @@ msgstr ""
 "X-Poedit-SourceCharset: UTF-8\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: ../lib/rah/FieldGroups.php:108
+#: ../lib/rah/FieldGroups.php:96
 msgid "Search Engine Optimization"
 msgstr ""
 
-#: ../lib/rah/FieldGroups.php:109, ../lib/rah/FieldGroups.php:330
+#: ../lib/rah/FieldGroups.php:97, ../lib/rah/FieldGroups.php:290
 msgid "SEO"
 msgstr ""
 
-#: ../lib/rah/FieldGroups.php:173, ../lib/rah/FieldGroups.php:174
+#: ../lib/rah/FieldGroups.php:134, ../lib/rah/FieldGroups.php:135
 msgid "SEO Options"
 msgstr ""
 
-#: ../lib/rah/FieldGroups.php:214
+#: ../lib/rah/FieldGroups.php:174
 msgid "Site Name"
 msgstr ""
 
-#: ../lib/rah/FieldGroups.php:222
+#: ../lib/rah/FieldGroups.php:182
 msgid "Optional. Overwrites the title."
 msgstr ""
 
-#: ../lib/rah/FieldGroups.php:223
+#: ../lib/rah/FieldGroups.php:183
 msgid "Document Title for Search Engines"
 msgstr ""
 
-#: ../lib/rah/FieldGroups.php:231
+#: ../lib/rah/FieldGroups.php:191
 msgid "Site Description"
 msgstr ""
 
-#: ../lib/rah/FieldGroups.php:231
+#: ../lib/rah/FieldGroups.php:191
 msgid "Meta Description"
 msgstr ""
 
-#: ../lib/rah/FieldGroups.php:233
+#: ../lib/rah/FieldGroups.php:193
 msgid "Recommended length: 50–160 characters"
 msgstr ""
 
-#: ../lib/rah/FieldGroups.php:244
+#: ../lib/rah/FieldGroups.php:204
 msgid "Preview Image"
 msgstr ""
 
-#: ../lib/rah/FieldGroups.php:246
+#: ../lib/rah/FieldGroups.php:206
 msgid "For services like Facebook or Twitter."
 msgstr ""
 
-#: ../lib/rah/FieldGroups.php:252
+#: ../lib/rah/FieldGroups.php:212
 msgid "Ask search engines to ignore this page"
 msgstr ""
 
-#: ../lib/rah/FieldGroups.php:267
+#: ../lib/rah/FieldGroups.php:227
 msgid "Maximum 100 entries"
 msgstr ""
 
-#: ../lib/rah/FieldGroups.php:277
+#: ../lib/rah/FieldGroups.php:237
 msgid "From"
 msgstr ""
 
-#: ../lib/rah/FieldGroups.php:278
+#: ../lib/rah/FieldGroups.php:238
 msgid "URL that should be redirected"
 msgstr ""
 
-#: ../lib/rah/FieldGroups.php:288
+#: ../lib/rah/FieldGroups.php:248
 msgid "To"
 msgstr ""
 
-#: ../lib/rah/FieldGroups.php:289
+#: ../lib/rah/FieldGroups.php:249
 msgid "Redirect target URL"
 msgstr ""
 
-#: ../lib/rah/FieldGroups.php:331
+#: ../lib/rah/FieldGroups.php:291
 msgid "SEO Global Options"
 msgstr ""
 
-#: ../lib/rah/FieldGroups.php:334
+#: ../lib/rah/FieldGroups.php:294
 msgid "SEO Options: %s"
 msgstr ""
 
@@ -101,22 +101,22 @@ msgstr ""
 msgid "Conflict detected: URL also found in \"From\" column"
 msgstr ""
 
-#: ../lib/rah/Upgrades.php:86
+#: ../lib/rah/Upgrades.php:95
 msgid "RH SEO needs to upgrade the database."
 msgstr ""
 
-#: ../lib/rah/Upgrades.php:86
+#: ../lib/rah/Upgrades.php:95
 msgid "Upgrade Database Now"
 msgstr ""
 
-#: ../lib/rah/Upgrades.php:110
+#: ../lib/rah/Upgrades.php:119
 msgid "Something went wrong."
 msgstr ""
 
-#: ../lib/rah/Upgrades.php:110
+#: ../lib/rah/Upgrades.php:119
 msgid "Error"
 msgstr ""
 
-#: ../lib/rah/Upgrades.php:155
+#: ../lib/rah/Upgrades.php:164
 msgid "RH SEO successfully upgraded the database."
 msgstr ""

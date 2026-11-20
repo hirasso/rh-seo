@@ -6,7 +6,7 @@
 #
 # - bumps "Version:" in rh-seo.php
 # - prepends a changelog section built from commits since the last tag (opened in your editor for review)
-# - builds assets, commits "Release <version>", tags and pushes
+# - builds assets and lang/rhseo.pot, commits "Release <version>", tags and pushes
 # - creates a GitHub release with the changelog section as notes and rh-seo.zip attached (requires gh)
 
 set -euo pipefail
@@ -79,8 +79,9 @@ sed -i.bak -E "s/^( \* Version: ).*/\1$version/" "$PLUGIN_FILE" && rm "$PLUGIN_F
 grep -q "^ \* Version: $version$" "$PLUGIN_FILE" || die "Failed to bump version in $PLUGIN_FILE"
 
 npm run build
+npm run generate-pot
 
-git add "$PLUGIN_FILE" "$CHANGELOG" assets
+git add "$PLUGIN_FILE" "$CHANGELOG" assets lang/rhseo.pot
 # --no-verify: assets were just built, skip the pre-commit hook building them again
 git commit --no-verify -m "Release $version"
 git tag "$version"
