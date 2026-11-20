@@ -1,10 +1,11 @@
-# Excluded from GitHub zipballs (used by Git Updater)
+# Excluded from the release zip and GitHub zipballs (Composer dist)
 /.editorconfig export-ignore
 /.gitattributes export-ignore
 /.githooks export-ignore
 /.github export-ignore
 /.gitignore export-ignore
 /.prettierignore export-ignore
+/AGENTS.md export-ignore
 /assets-src export-ignore
 /build.mjs export-ignore
 /composer.json export-ignore
@@ -12,10 +13,14 @@
 /lang/*.po export-ignore
 /lang/*.pot export-ignore
 /lang/rhseo-pot.js export-ignore
-/lib/vendor/composer/installers/.github export-ignore
 /package-lock.json export-ignore
 /package.json export-ignore
 /README.md export-ignore
 /release.sh export-ignore
+/renovate.json export-ignore
 /TODO export-ignore
-/vendor export-ignore
+/tools export-ignore
+
+# Prefixed dependencies: shipped, but collapsed in diffs
+vendor-prefixed/** linguist-vendored
+vendor-prefixed/** -diff

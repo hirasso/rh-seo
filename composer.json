@@ -4,12 +4,13 @@
   "type": "wordpress-plugin",
   "license": "ISC",
   "config": {
-    "vendor-dir": "./lib/vendor",
+    "sort-packages": true,
     "allow-plugins": {
       "composer/installers": true
     }
   },
   "minimum-stability": "dev",
+  "prefer-stable": true,
   "autoload": {
     "psr-4": {
       "RAH\\SEO\\": "lib/rah"
@@ -24,5 +25,36 @@
   "require": {
     "php": ">=8.0",
     "composer/installers": "^1.0 || ^2.0"
+  },
+  "require-dev": {
+    "yahnis-elsts/plugin-update-checker": "^5.7"
+  },
+  "scripts": {
+    "prefix": [
+      "sh -c 'test -f ./tools/strauss.phar || curl -sfL https://github.com/BrianHenryIE/strauss/releases/download/0.30.0/strauss.phar -o tools/strauss.phar'",
+      "@php tools/strauss.phar"
+    ],
+    "post-update-cmd": "@prefix"
+  },
+  "extra": {
+    "strauss": {
+      "target_directory": "vendor-prefixed",
+      "namespace_prefix": "RAH\\SEO\\Vendor\\",
+      "classmap_prefix": "RHSEO_Vendor_",
+      "constant_prefix": "RHSEO_VENDOR_",
+      "function_prefix": false,
+      "packages": [
+        "yahnis-elsts/plugin-update-checker"
+      ],
+      "exclude_from_prefix": {
+        "packages": [
+          "yahnis-elsts/plugin-update-checker"
+        ]
+      },
+      "delete_vendor_packages": false,
+      "delete_vendor_files": false,
+      "include_modified_date": false,
+      "include_author": false
+    }
   }
 }

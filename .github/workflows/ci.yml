@@ -1,0 +1,38 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event_name == 'pull_request' && github.head_ref || github.sha }}
+  cancel-in-progress: true
+
+jobs:
+  static-analysis:
+    name: Static Analysis
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+
+      - uses: shivammathur/setup-php@accd6127cb78bee3e8082180cb391013d204ef9f # 2.37.0
+        with:
+          php-version: 8.2
+          tools: composer:v2
+          coverage: none
+
+      - uses: ramsey/composer-install@65e4f84970763564f46a70b8a54b90d033b3bdda # 4.0.0
+
+      # extra.strauss is part of composer's content hash, so changing it silently invalidates the lock
+      - name: Validate composer.json and composer.lock
+        run: composer validate --no-check-all --no-check-publish
+
+      - name: Verify prefixed dependencies
+        run: tools/verify-prefixed.sh
+
+      # Shipped dependencies live in require-dev, so audit those too
+      - name: Audit composer dependencies
+        run: composer audit

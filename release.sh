@@ -25,6 +25,7 @@ command -v gh >/dev/null || die "gh (GitHub CLI) is required"
 
 [[ "$(git branch --show-current)" == "$BRANCH" ]] || die "Not on $BRANCH"
 [[ -z "$(git status --porcelain)" ]] || die "Working tree not clean"
+tools/verify-prefixed.sh
 
 last_tag="$(git describe --tags --abbrev=0)"
 [[ "$last_tag" =~ ^([0-9]+)\.([0-9]+)\.([0-9]+)$ ]] || die "Last tag $last_tag is not major.minor.patch"

@@ -11,4 +11,4 @@ node_modules/
 /vendor/
 
 # Strauss
-bin/strauss.phar
+/tools/strauss.phar

@@ -46,8 +46,7 @@ class UpdateChecker
     }
 
     /**
-     * Load the bundled copy of plugin-update-checker.
-     * Vendored into lib/ so composer installs don't pull it into the consuming project.
+     * Load the bundled copy of plugin-update-checker (excluded from prefixing, so no autoload entry).
      * A second copy is safe to load; skipping it just avoids a redundant autoloader.
      */
     private static function loadLibrary(): void
@@ -56,7 +55,7 @@ class UpdateChecker
             return;
         }
 
-        require_once dirname(__DIR__) . '/plugin-update-checker/plugin-update-checker.php';
+        require_once dirname(__DIR__, 2) . '/vendor-prefixed/yahnis-elsts/plugin-update-checker/plugin-update-checker.php';
     }
 
     /**
